@@ -1,0 +1,13 @@
+{
+  "name": "idiom-arena-server",
+  "version": "1.0.0",
+  "description": "成語擂台 — 連線伺服器（遊戲製作：Eric Hu）",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "pg": "^8.12.0",
+    "socket.io": "^4.7.5"
+  }
+}
