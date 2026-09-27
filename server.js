@@ -126,8 +126,8 @@ function cleanName(s) { return String(s || '').trim().replace(/\s+/g, ' '); }
 function validName(n) { return [...n].length >= 1 && [...n].length <= 12 && !/[<>"'&]/.test(n); }
 
 // ═════════════════════════ HTTP ═════════════════════════
-const STATIC = { '/': 'index.html', '/index.html': 'index.html', '/engine.js': 'engine.js' };
-const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'application/javascript; charset=utf-8' };
+const STATIC = { '/': 'index.html', '/index.html': 'index.html', '/engine.js': 'engine.js', '/bgm.mp3': 'bgm.mp3' };
+const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'application/javascript; charset=utf-8', '.mp3': 'audio/mpeg' };
 
 function sendJson(res, code, obj) {
   res.writeHead(code, { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Content-Type', 'Access-Control-Allow-Methods': 'GET,POST,OPTIONS' });
@@ -195,6 +195,16 @@ const server = http.createServer((req, res) => {
   const f = STATIC[url.pathname];
   if (f) {
     const fp = path.join(__dirname, f);
+    if (fs.existsSync(fp) && f.endsWith('.mp3')) {
+      const size = fs.statSync(fp).size; const m = /bytes=(\d*)-(\d*)/.exec(req.headers.range || '');
+      if (m) {
+        const start = m[1] ? +m[1] : 0; const end = m[2] ? Math.min(+m[2], size - 1) : size - 1;
+        res.writeHead(206, { 'Content-Type': 'audio/mpeg', 'Content-Range': `bytes ${start}-${end}/${size}`, 'Accept-Ranges': 'bytes', 'Content-Length': end - start + 1, 'Cache-Control': 'public, max-age=86400' });
+        return fs.createReadStream(fp, { start, end }).pipe(res);
+      }
+      res.writeHead(200, { 'Content-Type': 'audio/mpeg', 'Accept-Ranges': 'bytes', 'Content-Length': size, 'Cache-Control': 'public, max-age=86400' });
+      return fs.createReadStream(fp).pipe(res);
+    }
     if (fs.existsSync(fp)) {
       res.writeHead(200, { 'Content-Type': MIME[path.extname(f)], 'Cache-Control': 'no-cache' });
       return fs.createReadStream(fp).pipe(res);

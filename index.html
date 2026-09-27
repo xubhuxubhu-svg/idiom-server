@@ -1078,6 +1078,7 @@ input{font:inherit}
   <div class="topbar">
     <div class="pill"><span class="ico" id="me-av">🐯</span><span id="me-name">玩家</span></div>
     <div class="grow"></div>
+    <button class="round-btn" id="btn-music" aria-label="音樂" style="margin-right:8px">🎵</button>
     <button class="round-btn" id="btn-settings" aria-label="設定">⚙</button>
   </div>
   <div class="lobby-main">
@@ -1674,6 +1675,7 @@ input{font:inherit}
   <div class="credits">
     <div class="logo" style="font-size:44px">成語擂台</div>
     <h4>遊戲製作</h4><p class="mk">Eric Hu</p>
+    <h4>背景音樂</h4><p style="font-size:15px">StockTune（免版稅音樂）</p>
     <h4>字型</h4><p style="font-size:15px">霞鶩文楷（開源授權）<br>思源黑體・思源宋體（開源授權）</p>
     <h4>畫面與角色</h4><p style="font-size:15px">全部以程式繪製</p>
   </div>
@@ -1692,7 +1694,7 @@ input{font:inherit}
    ═══════════════════════════════════════════════════════════ */
 
 // ▼▼▼ 若畫面放在 Netlify，請把下面改成 Render 伺服器網址，例如 'https://idiom-arena.onrender.com'
-const DEFAULT_SERVER = '';
+const DEFAULT_SERVER = 'https://idiom-arena.onrender.com';
 // ▲▲▲
 
 const E = window.IdiomEngine;
@@ -1722,6 +1724,7 @@ let current = 's-login';
 function show(id) {
   $$('.screen').forEach((s) => s.classList.toggle('on', s.id === id));
   current = id;
+  BGM.hold(id === 's-tone');
   const th = $('#' + id).dataset.theme;
   document.body.dataset.theme = th;
   const page = { sky: '#1b9fe0', cream: '#f5e7a3', ink: '#e9efdf', navy: '#1c2e4a', paper: '#d9e4ea', 'candy-sky': '#1ea4e0', candy: '#ff8fbd', night: '#260f2c', gold: '#7a1414', star: '#120f33', porcelain: '#eef3fa', blocks: '#8fd3ff', taiji: '#efe9dc', garden: '#fde6ee', telegraph: '#16211b', map: '#e3cd98', sea: '#0c3f4c', bamboo: '#e4ecd2', storybook: '#fff4d0', chat: '#2f6b54', neon: '#0b0820', puzzle: '#f4c27a', goboard: '#d9a35a', manga: '#f4f4f4', palace: '#8a1a1a', mist: '#8fa3a0', apothecary: '#3a2416', cave: '#26221f', studio: '#fbf8f2', glass: '#5a3a9a', steam: '#2a1c12', aqua: '#6cc6e0', prism: '#1a0a30', puppet: '#2a1208', qin: '#24142e', strata: '#6a3e22' }[th] || '#333';
@@ -1751,6 +1754,23 @@ function beep(notes) {
     });
   } catch (e) {}
 }
+/* ───────── 背景音樂 ───────── */
+const BGM = {
+  on: store.get('music') !== '0', el: null, started: false, held: false,
+  init() {
+    this.el = new Audio(window.BGM_DATA || 'bgm.mp3'); this.el.loop = true; this.el.volume = 0.32; this.el.preload = 'auto';
+    const kick = () => { this.started = true; this.play(); };
+    document.addEventListener('pointerdown', kick, { once: true }); document.addEventListener('keydown', kick, { once: true });
+    document.addEventListener('visibilitychange', () => { if (document.hidden) this.el.pause(); else this.play(); });
+    this.icon();
+  },
+  play() { if (this.on && this.started && !this.held && this.el) this.el.play().catch(() => {}); },
+  pause() { if (this.el) this.el.pause(); },
+  hold(v) { this.held = v; if (v) this.pause(); else this.play(); },
+  duck(ms) { if (!this.el) return; this.el.volume = 0.06; clearTimeout(this.dt); this.dt = setTimeout(() => { this.el.volume = 0.32; }, ms); },
+  set(v) { this.on = v; store.set('music', v ? '1' : '0'); if (v) { this.started = true; this.play(); } else this.pause(); this.icon(); },
+  icon() { const b = $('#btn-music'); if (b) { b.textContent = this.on ? '🎵' : '🔇'; b.title = this.on ? '關閉音樂' : '開啟音樂'; } },
+};
 const SFX = {
   ok: () => beep([[660, .1], [880, .1], [1320, .18]]),
   bad: () => beep([[200, .18, 'sawtooth'], [150, .22, 'sawtooth']]),
@@ -1920,10 +1940,12 @@ function serverDialog() {
 }
 function settingsDialog() {
   modal(`<h2>設定</h2>
+    <div class="opt-line" style="justify-content:space-between;font-weight:700;margin:12px 0">背景音樂<div class="seg"><button data-mus="1" class="${BGM.on ? 'on' : ''}">開</button><button data-mus="0" class="${BGM.on ? '' : 'on'}">關</button></div></div>
     <div class="opt-line" style="justify-content:space-between;font-weight:700;margin:12px 0">音效<div class="seg"><button data-snd="1" class="${ST.sound ? 'on' : ''}">開</button><button data-snd="0" class="${ST.sound ? '' : 'on'}">關</button></div></div>
     ${ST.guest ? '' : `<div class="field"><span>更換頭像</span></div><div class="avatars" id="av-change">${E.AVATARS.map((a) => `<button data-av="${a}" class="${a === ST.avatar ? 'on' : ''}">${a}</button>`).join('')}</div>`}
     <div class="row" style="margin-top:14px"><button class="btn sm white" id="st-full">全螢幕</button><button class="btn sm white" id="st-srv">伺服器</button><button class="btn sm red" id="st-out">${ST.guest ? '回登入頁' : '登出'}</button></div>
     <div style="margin-top:14px"><button class="btn sm" id="st-close">關閉</button></div>`);
+  $$('[data-mus]').forEach((b) => b.onclick = () => { BGM.set(b.dataset.mus === '1'); $$('[data-mus]').forEach((x) => x.classList.toggle('on', x === b)); });
   $$('[data-snd]').forEach((b) => b.onclick = () => { ST.sound = b.dataset.snd === '1'; store.set('sound', ST.sound ? '1' : '0'); $$('[data-snd]').forEach((x) => x.classList.toggle('on', x === b)); });
   const avc = $('#av-change');
   if (avc) avc.onclick = async (e) => {
@@ -2617,6 +2639,7 @@ function toneSVG(t, color = '#ffd66b') {
   return `<div class="tone-row">${[...t].map((d) => `<svg viewBox="0 0 40 42" class="tone-svg"><line x1="3" y1="4" x2="37" y2="4" stroke="${color}" opacity=".25"/><line x1="3" y1="38" x2="37" y2="38" stroke="${color}" opacity=".25"/><polyline points="${P[d]}" fill="none" stroke="${color}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>`).join('')}</div>`;
 }
 function playTones(t) {
+  BGM.duck(t.length * 600 + 800);
   try {
     AC = AC || new (window.AudioContext || window.webkitAudioContext)();
     let at = AC.currentTime + 0.05;
@@ -3894,10 +3917,12 @@ document.addEventListener('click', (e) => {
   else if (to === 'lobby') show('s-lobby');
 });
 $('#btn-settings').onclick = settingsDialog;
+$('#btn-music').onclick = () => BGM.set(!BGM.on);
 
 /* ───────── 啟動 ───────── */
 decorate();
 addHelpButtons();
+BGM.init();
 setupLogin();
 (async () => {
   await pingServer();
