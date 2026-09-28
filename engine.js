@@ -591,6 +591,18 @@
     井底之蛙: [['🐸🕳️', '我住在井裡，天空只有井口那麼大。'], ['🐢👋', '東海的烏龜來拜訪。'], ['🐢🌊', '大海遼闊，千里都不足以形容。'], ['🐸😳', '原來我見識這麼少…']],
     杞人憂天: [['🧑☁️😟', '萬一天塌下來怎麼辦？'], ['🧑🛏️😰', '嚇得吃不下、睡不著。'], ['🧓💬', '天是一團氣，不會塌的。'], ['🧑😌', '原來是我想太多了。']],
     望梅止渴: [['🪖🪖☀️', '士兵行軍，又熱又渴。'], ['🐴🧔☝️', '前面有一大片梅林！'], ['🪖😋💧', '想到酸梅，口水都流出來了。'], ['🪖🚶🚶', '大家打起精神繼續前進。']],
+    塞翁失馬: [['👴🐎💨', '老翁的馬跑掉了。'], ['👥😢', '鄰居都來安慰他。'], ['👴😌', '「說不定是件好事呢。」'], ['🐎🐎👴😲', '幾個月後，馬帶著一匹駿馬回來了！']],
+    愚公移山: [['⛰️⛰️🏠', '家門前擋著兩座大山。'], ['👴⛏️🧺', '老人帶著子孫挖山搬土。'], ['🧓😏💬', '「你年紀這麼大，挖得完嗎？」'], ['👴👦👶⛏️', '「子子孫孫一直挖，總有挖平的一天！」']],
+    臥薪嘗膽: [['👑⚔️😣', '越王打了敗仗。'], ['👑🪵🛌', '晚上睡在柴草上。'], ['👑🫙👅', '每天嚐苦膽提醒自己。'], ['👑⚔️🏆', '多年努力，終於打敗吳國。']],
+    三顧茅廬: [['🧔🐎🛖', '劉備去草屋拜訪諸葛亮，沒見到。'], ['🧔❄️🛖', '冒著風雪第二次去，還是沒見到。'], ['🧔🙇🛖', '第三次去，恭敬地在門外等候。'], ['🧔🤝🧙', '終於請到諸葛亮出山幫忙。']],
+    完璧歸趙: [['💍👑', '趙國有一塊珍貴的玉璧。'], ['👑🏰💬', '秦王說要用十五座城來換。'], ['🧑‍💼💍🤨', '藺相如發現秦王沒有誠意。'], ['🧑‍💼🏃💍🏠', '設法把玉璧完整地帶回趙國。']],
+    負荊請罪: [['🧑‍💼⬆️', '藺相如立了大功，官位升得很高。'], ['👴⚔️😠', '老將廉頗很不服氣，到處找麻煩。'], ['🧑‍💼🙏', '藺相如一再避讓：「國家比較重要。」'], ['👴🌿🙇', '廉頗背著荊條上門認錯。']],
+    紙上談兵: [['👦📚⚔️', '趙括從小熟讀兵書。'], ['👦🗣️💯', '講起打仗頭頭是道。'], ['👦🐎⚔️', '真的帶兵上戰場。'], ['⚔️💥😵', '不懂變通，結果全軍大敗。']],
+    葉公好龍: [['🧓🐉🖼️', '葉公說他最喜歡龍。'], ['🏠🐉🐉', '家裡到處都畫著龍、刻著龍。'], ['🐉👀🪟', '真龍知道了，從窗戶探頭進來。'], ['🧓😱🏃', '葉公嚇得轉身就跑。']],
+    邯鄲學步: [['🧑🚶', '一個年輕人覺得自己走路不好看。'], ['🏙️🚶‍♀️🚶', '到邯鄲去學當地人走路。'], ['🧑🤸❓', '學來學去都學不像。'], ['🧑🧎🏠', '連原本怎麼走路都忘了，只好爬回家。']],
+    東施效顰: [['👩✨😣', '西施心口痛時皺著眉，大家覺得好美。'], ['👩‍🦱👀', '東施看見了，也想變漂亮。'], ['👩‍🦱😖', '東施也捧著心口皺眉頭。'], ['👥🏃💨', '鄰居看了都嚇得躲起來。']],
+    指鹿為馬: [['🧔🦌', '趙高牽來一頭鹿。'], ['🧔☝️🐎', '「這是一匹馬。」'], ['👑❓🦌', '皇帝說：「這明明是鹿啊！」'], ['👥😨🐎', '大臣怕趙高，有的跟著說是馬。']],
+    聞雞起舞: [['🌙🐓', '半夜聽到雞叫聲。'], ['🧑🛏️❗', '祖逖立刻叫醒好友。'], ['🧑‍🤝‍🧑🗡️', '兩人一起到院子裡練劍。'], ['🗡️🏆', '天天苦練，後來都成了大將。']],
     濫竽充數: [['👑🎶👥', '國王愛聽三百人一起吹竽。'], ['🧑🎺🙊', '有個人不會吹，也混在裡面。'], ['👑🔄👑', '新國王喜歡一個一個獨奏。'], ['🧑🏃💨', '那人只好偷偷溜走了。']],
   };
   const COMIC_LIST = Object.keys(COMICS).filter((w) => BY_WORD.has(w));
@@ -818,6 +830,8 @@
   }
 
   const MAKERS = { fill: qFill, meaning: qMeaning, error: qError, chain: qChain, antonym: qAntonym, history: qHistory, compass: qCompass, code: qCode, pic: qPic, emoji: qEmoji, color: qColor, tone: qTone, overlap: qOverlap };
+  /** 搶答每題的思考秒數（較難的題型給比較久） */
+  const TYPE_TIME = { fill: 15, meaning: 16, error: 16, chain: 16, antonym: 16, history: 22, compass: 15, code: 25, pic: 18, emoji: 16, color: 18, tone: 22, overlap: 22 };
   const RUSH_TYPES = ['fill', 'meaning', 'error', 'chain', 'antonym', 'history', 'compass', 'code', 'pic', 'emoji', 'color', 'tone', 'overlap'];
   function makeQuestion(type, rng, nOpt, avoid) {
     const q = MAKERS[type](rng, nOpt || 4, avoid);
@@ -924,10 +938,11 @@
       this.locked = new Set();
       this.phase = 'question';
       this.qStart = Date.now();
-      this.emit('question', { index: this.qi, total: this.rounds, timeLimit: this.timeLimit, q: publicQuestion(this.q) });
-      const lv = AI_LEVELS[this.aiLevel];
+      this.qLimit = (TYPE_TIME[type] || 15) * 1000;
+      this.emit('question', { index: this.qi, total: this.rounds, timeLimit: this.qLimit, q: publicQuestion(this.q) });
+      const lv = AI_LEVELS[this.aiLevel]; const slow = this.qLimit / 15000;
       this.players.filter((p) => p.ai).forEach((p) => {
-        const delay = lv.min + this.rng() * (lv.max - lv.min);
+        const delay = (lv.min + this.rng() * (lv.max - lv.min)) * slow;
         const ok = this.rng() < lv.acc;
         const qid = this.q.id;
         this.later(() => {
@@ -940,7 +955,7 @@
           this.answer(p.id, choice);
         }, delay);
       });
-      this.qTimer = this.later(() => this.reveal(null, 0), this.timeLimit);
+      this.qTimer = this.later(() => this.reveal(null, 0), this.qLimit);
     }
     answer(pid, choice) {
       if (this.phase !== 'question' || this.locked.has(pid)) return;
@@ -948,7 +963,7 @@
       if (!p) return;
       if (choice === this.q.answer) {
         const elapsed = Date.now() - this.qStart;
-        const pts = 100 + Math.max(0, Math.round(50 * (1 - elapsed / this.timeLimit)));
+        const pts = 100 + Math.max(0, Math.round(50 * (1 - elapsed / this.qLimit)));
         p.score += pts; p.correct++;
         this.reveal(pid, pts);
       } else {
@@ -983,7 +998,7 @@
     snapshot() {
       return {
         phase: this.phase, index: this.qi, total: this.rounds, timeLimit: this.timeLimit,
-        remain: this.phase === 'question' ? Math.max(0, this.timeLimit - (Date.now() - this.qStart)) : 0,
+        remain: this.phase === 'question' ? Math.max(0, this.qLimit - (Date.now() - this.qStart)) : 0, timeLimit: this.qLimit,
         q: this.phase === 'question' && this.q ? publicQuestion(this.q) : null,
         locked: [...this.locked],
         players: this.players.map(({ id, name, ai, avatar }) => ({ id, name, ai, avatar })),
@@ -994,72 +1009,100 @@
 
 
   // ───────────────────────── 競速對戰：大家玩同一關，先完成的人拿下 ─────────────────────────
-  /** 一般玩家完成一關大約需要的秒數（電腦對手依此估算） */
+  /** 一般玩家完成一關大約需要的秒數（電腦對手依此估算；每關時限約為三倍半） */
   const RACE_TIME = {
-    fill: 7, meaning: 8, error: 10, chain: 8, link: 45, search: 40, crush: 35, tower: 45, antonym: 8, flower: 30, code: 16,
-    history: 16, compass: 8, cross: 55, pic: 14, emoji: 9, tetris: 70, radical: 18, sudoku: 45, comic: 14, fog: 22, balance: 22,
-    maze: 32, color: 10, overlap: 10, gears: 35, eco: 8, kaleido: 12, shadow: 14, tone: 12, fossil: 16,
+    fill: 8, meaning: 10, error: 12, chain: 9, link: 45, search: 45, crush: 40, tower: 50, antonym: 10, flower: 35, code: 22,
+    history: 22, compass: 10, cross: 65, pic: 16, emoji: 11, tetris: 120, radical: 22, sudoku: 55, comic: 16, fog: 26, balance: 28,
+    maze: 38, color: 12, overlap: 14, gears: 28, eco: 10, kaleido: 14, shadow: 16, tone: 14, fossil: 18, slide: 70,
   };
+  const RACE_MIX = Object.keys(RACE_TIME).filter((k) => k !== 'tetris');
+  const SCORE_GAMES = ['tetris'];   // 這些遊戲比「時限內完成幾句」，不是比誰先完成
   const RACE_AI = { easy: { f: 1.5, acc: 0.75 }, normal: { f: 1.0, acc: 0.85 }, hard: { f: 0.72, acc: 0.95 } };
+  const raceLimit = (g) => (SCORE_GAMES.includes(g) ? 120 : Math.min(180, Math.max(30, RACE_TIME[g] * 3.5))) * 1000;
   class RaceMatch {
     constructor(opts) {
-      this.game = RACE_TIME[opts.game] ? opts.game : 'fill';
-      this.rounds = opts.rounds || 5;
+      this.game = opts.game === 'mix' || RACE_TIME[opts.game] ? opts.game : 'mix';
+      this.rounds = opts.rounds || 10;
       this.aiLevel = RACE_AI[opts.aiLevel] ? opts.aiLevel : 'normal';
       this.rng = makeRng(opts.seed);
       this.emit = opts.emit || function () {};
-      this.limit = Math.min(150, Math.max(30, RACE_TIME[this.game] * 3)) * 1000;
-      this.players = opts.players.map((p) => ({ id: p.id, name: p.name, ai: !!p.ai, avatar: p.avatar || '🙂', score: 0, correct: 0 }));
-      this.k = 0; this.phase = 'idle'; this.timers = new Set();
+      this.players = opts.players.map((p) => ({ id: p.id, name: p.name, ai: !!p.ai, avatar: p.avatar || '🙂', score: 0, correct: 0, cur: 0, curT: 0 }));
+      this.k = 0; this.phase = 'idle'; this.timers = new Set(); this.lastMix = [];
     }
     later(fn, ms) { const h = setTimeout(() => { this.timers.delete(h); fn(); }, ms); this.timers.add(h); return h; }
     clearTimers() { this.timers.forEach((h) => clearTimeout(h)); this.timers.clear(); }
     scores() { return this.players.map((p) => ({ id: p.id, score: p.score, correct: p.correct })); }
     start() {
       this.phase = 'countdown';
-      this.emit('race_start', { game: this.game, rounds: this.rounds, limit: this.limit, players: this.players.map(({ id, name, ai, avatar }) => ({ id, name, ai, avatar })) });
+      this.emit('race_start', { game: this.game, rounds: this.rounds, players: this.players.map(({ id, name, ai, avatar }) => ({ id, name, ai, avatar })) });
       this.later(() => this.next(), 3200);
+    }
+    pickGame() {
+      if (this.game !== 'mix') return this.game;
+      let g; for (let t = 0; t < 30; t++) { g = pick(this.rng, RACE_MIX); if (!this.lastMix.includes(g)) break; }
+      this.lastMix.push(g); if (this.lastMix.length > 8) this.lastMix.shift();
+      return g;
     }
     next() {
       if (this.k >= this.rounds) return this.finish();
       this.k++; this.phase = 'play'; this.t0 = Date.now();
+      this.cur = this.pickGame(); this.limit = raceLimit(this.cur); this.scoreMode = SCORE_GAMES.includes(this.cur);
       this.seed = Math.floor(this.rng() * 2147483646) + 1;
-      this.emit('race_round', { k: this.k, total: this.rounds, seed: this.seed, limit: this.limit });
-      const lv = RACE_AI[this.aiLevel]; const base = RACE_TIME[this.game] * 1000;
+      this.players.forEach((p) => { p.cur = 0; p.curT = 0; });
+      this.emit('race_round', { k: this.k, total: this.rounds, seed: this.seed, limit: this.limit, game: this.cur, scoreMode: this.scoreMode });
+      const lv = RACE_AI[this.aiLevel]; const k = this.k;
       this.players.filter((p) => p.ai).forEach((p) => {
+        if (this.scoreMode) {
+          // 電腦每隔一段時間完成一句
+          let t = 0;
+          for (;;) { t += 24000 * lv.f * (0.7 + this.rng() * 0.7); if (t >= this.limit - 1000) break; const at = t; this.later(() => this.progress(p.id, k, p.cur + 1), at); }
+          return;
+        }
         if (this.rng() > lv.acc) return;
-        const t = base * lv.f * (0.7 + this.rng() * 0.7) + 2500;
-        const k = this.k;
+        const t = RACE_TIME[this.cur] * 1000 * lv.f * (0.7 + this.rng() * 0.7) + 2500;
         if (t < this.limit) this.later(() => this.done(p.id, k), t);
       });
-      this.later(() => this.reveal(null, 0), this.limit);
+      this.later(() => (this.scoreMode ? this.judge() : this.reveal(null, 0)), this.limit);
+    }
+    progress(pid, k, n) {
+      if (this.phase !== 'play' || k !== this.k || !this.scoreMode) return;
+      const p = this.players.find((x) => x.id === pid); if (!p) return;
+      n = Math.max(0, Math.min(99, n | 0)); if (n <= p.cur) return;
+      p.cur = n; p.curT = Date.now();
+      this.emit('race_progress', { id: pid, n });
+    }
+    judge() {
+      const best = this.players.filter((p) => p.cur > 0).sort((a, b) => b.cur - a.cur || a.curT - b.curT)[0];
+      if (!best) return this.reveal(null, 0);
+      const pts = 100 + best.cur * 10; best.score += pts; best.correct++;
+      this.reveal(best.id, pts, best.cur);
     }
     done(pid, k) {
-      if (this.phase !== 'play' || k !== this.k) return;
+      if (this.phase !== 'play' || k !== this.k || this.scoreMode) return;
       const p = this.players.find((x) => x.id === pid); if (!p) return;
       const pts = 100 + Math.max(0, Math.round(50 * (1 - (Date.now() - this.t0) / this.limit)));
       p.score += pts; p.correct++;
       this.reveal(pid, pts);
     }
-    reveal(winner, pts) {
+    reveal(winner, pts, count) {
       if (this.phase !== 'play') return;
       this.phase = 'reveal'; this.clearTimers();
-      this.emit('race_reveal', { k: this.k, winner, pts, scores: this.scores() });
-      this.later(() => this.next(), 3200);
+      this.emit('race_reveal', { k: this.k, winner, pts, count, scoreMode: this.scoreMode, counts: this.players.map((p) => ({ id: p.id, n: p.cur })), scores: this.scores() });
+      this.later(() => this.next(), 3400);
     }
     finish() {
       this.phase = 'ended'; this.clearTimers();
       const ranking = this.players.slice().sort((a, b) => b.score - a.score || b.correct - a.correct)
         .map((p, i) => ({ rank: i + 1, id: p.id, name: p.name, ai: p.ai, avatar: p.avatar, score: p.score, correct: p.correct }));
       this.ranking = ranking;
-      this.emit('match_end', { ranking, race: true });
+      this.emit('match_end', { ranking, race: true, game: this.game });
     }
     stop() { this.phase = 'ended'; this.clearTimers(); }
     snapshot() {
       return {
-        race: true, game: this.game, phase: this.phase, k: this.k, total: this.rounds, seed: this.seed, limit: this.limit,
+        race: true, game: this.game, cur: this.cur, scoreMode: this.scoreMode, phase: this.phase, k: this.k, total: this.rounds, seed: this.seed, limit: this.limit,
         remain: this.phase === 'play' ? Math.max(0, this.limit - (Date.now() - this.t0)) : 0,
-        players: this.players.map(({ id, name, ai, avatar }) => ({ id, name, ai, avatar })), scores: this.scores(),
+        players: this.players.map(({ id, name, ai, avatar }) => ({ id, name, ai, avatar })), scores: this.scores(), counts: this.players.map((p) => ({ id: p.id, n: p.cur })),
       };
     }
   }
@@ -1097,6 +1140,7 @@
     shadow:  { name: '影子魔術', desc: '轉動燈光，讓影子顯出成語', cat: 3 },
     tone:    { name: '聲調旋律', desc: '聽旋律起伏，找出聲調相符的成語', cat: 3 },
     fossil:  { name: '成語化石挖掘', desc: '敲開岩層，辨認石碑上的成語', cat: 3 },
+    slide:   { name: '成語推盤', desc: '推動木塊，排出兩句成語就過關', cat: 2 },
   };
 
   return {
@@ -1104,6 +1148,6 @@
     ANTONYMS, HISTORY, DIRS, COMPASS, CHAR_IDIOMS, FLOWER_CENTERS, ROWS, COLS,
     COLORS, COLOR_IDIOMS, colorChoices, ECO, ECO_IDIOMS, EMOJIS, PICS, PIC_LIST, COMICS, COMIC_LIST, TONES, TONE_IDIOMS, STROKES, strokesOf, radicalOf, RADS, RADCHARS, RAD_VARIANT, RAD_IDIOMS,
     makeRng, shuffle, pick, makeQuestion, publicQuestion, makeLinkBoard, linkPair,
-    AI_LEVELS, AI_NAMES, AVATARS, RushMatch, RaceMatch, RACE_TIME,
+    AI_LEVELS, AI_NAMES, AVATARS, RushMatch, RaceMatch, RACE_TIME, RACE_MIX, SCORE_GAMES,
   };
 });

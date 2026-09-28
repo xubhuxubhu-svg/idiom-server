@@ -15,7 +15,11 @@ const { Server } = require('socket.io');
 const E = require('./engine.js');
 
 const PORT = process.env.PORT || 3000;
-const GAME_KEYS = Object.keys(E.GAMES);
+const DIFFS = ['easy', 'normal', 'hard'];
+const BASE_KEYS = [...Object.keys(E.GAMES), 'mix'];
+// 成績代號：遊戲＋難易度，例如 fill:hard、mix:normal；升官記沒有難易度
+const validGame = (g) => { const [k, d] = String(g).split(':'); return BASE_KEYS.includes(k) && (d === undefined || DIFFS.includes(d)); };
+const ROUNDS = [5, 10, 15, 20, 30];
 
 // ═════════════════════════ 資料庫 ═════════════════════════
 function makeDb() {
@@ -171,14 +175,14 @@ async function api(req, res, url) {
       const b = await readBody(req); const name = verify(b.token);
       if (!name) return sendJson(res, 401, { error: '請先登入才能登上金榜' });
       const game = String(b.game); const score = Math.floor(Number(b.score));
-      if (!GAME_KEYS.includes(game) || !(score >= 0) || score > (game === 'rank' ? 10000000 : 50000)) return sendJson(res, 400, { error: '成績格式不正確' });
+      if (!validGame(game) || !(score >= 0) || score > (game === 'rank' ? 10000000 : game.startsWith('mix') ? 2000000 : 100000)) return sendJson(res, 400, { error: '成績格式不正確' });
       const best = await db.submitScore(name, game, score);
       return sendJson(res, 200, { best });
     }
     if (p === '/api/leaderboard') {
       const game = url.searchParams.get('game') || 'rush';
       if (game === 'rush') return sendJson(res, 200, { game, rows: await db.topRush(50) });
-      if (!GAME_KEYS.includes(game)) return sendJson(res, 400, { error: '沒有這個遊戲' });
+      if (!validGame(game)) return sendJson(res, 400, { error: '沒有這個遊戲' });
       return sendJson(res, 200, { game, rows: await db.topScores(game, 50) });
     }
     return sendJson(res, 404, { error: '找不到' });
@@ -267,16 +271,16 @@ io.on('connection', (socket) => {
   socket.on('create_room', (opt = {}, cb = () => {}) => {
     if (!me) return cb({ error: '請先登入' });
     leave();
-    const humanMax = Math.min(4, Math.max(1, opt.humanMax | 0 || 2));
+    const humanMax = Math.min(4, Math.max(1, opt.humanMax | 0 || 4));
     const aiCount = Math.min(4, Math.max(0, opt.aiCount | 0));
     const room = {
       code: makeCode(), host: me.name, humanMax, aiCount,
       aiLevel: E.AI_LEVELS[opt.aiLevel] ? opt.aiLevel : 'normal',
-      rounds: [10, 15, 20].includes(opt.rounds) ? opt.rounds : 10,
+      rounds: ROUNDS.includes(opt.rounds) ? opt.rounds : 10,
       qtype: E.RUSH_TYPES.includes(opt.qtype) ? opt.qtype : 'mix',
       mode: opt.mode === 'race' ? 'race' : 'rush',
-      game: E.RACE_TIME[opt.game] ? opt.game : 'search',
-      raceRounds: [3, 5, 8].includes(opt.raceRounds) ? opt.raceRounds : 5,
+      game: E.RACE_TIME[opt.game] || opt.game === 'mix' ? opt.game : 'mix',
+      raceRounds: ROUNDS.includes(opt.raceRounds) ? opt.raceRounds : 10,
       state: 'waiting', members: [{ name: me.name, avatar: me.avatar, socketId: socket.id }], match: null,
     };
     rooms.set(room.code, room);
@@ -308,11 +312,11 @@ io.on('connection', (socket) => {
     if (opt.humanMax) room.humanMax = Math.min(4, Math.max(room.members.length, opt.humanMax | 0));
     if (opt.aiCount !== undefined) room.aiCount = Math.min(4, Math.max(0, opt.aiCount | 0));
     if (E.AI_LEVELS[opt.aiLevel]) room.aiLevel = opt.aiLevel;
-    if ([10, 15, 20].includes(opt.rounds)) room.rounds = opt.rounds;
+    if (ROUNDS.includes(opt.rounds)) room.rounds = opt.rounds;
     if (opt.qtype === 'mix' || E.RUSH_TYPES.includes(opt.qtype)) room.qtype = opt.qtype;
     if (opt.mode === 'race' || opt.mode === 'rush') room.mode = opt.mode;
-    if (E.RACE_TIME[opt.game]) room.game = opt.game;
-    if ([3, 5, 8].includes(opt.raceRounds)) room.raceRounds = opt.raceRounds;
+    if (E.RACE_TIME[opt.game] || opt.game === 'mix') room.game = opt.game;
+    if (ROUNDS.includes(opt.raceRounds)) room.raceRounds = opt.raceRounds;
     pushRoom(room);
   });
 
@@ -344,6 +348,11 @@ io.on('connection', (socket) => {
   socket.on('answer', ({ choice } = {}) => {
     if (!myRoom || !myRoom.match || !me) return;
     myRoom.match.answer(me.name, choice | 0);
+  });
+
+  socket.on('race_progress', ({ k, n } = {}) => {
+    if (!myRoom || !myRoom.match || !me || !myRoom.match.progress) return;
+    myRoom.match.progress(me.name, k | 0, n | 0);
   });
 
   socket.on('race_done', ({ k } = {}) => {

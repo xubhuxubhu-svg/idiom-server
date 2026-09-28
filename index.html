@@ -129,6 +129,14 @@ input{font:inherit}
 .gcard p{font-size:13px;color:#8a6a4a;margin-top:2px}
 .gcard .best{margin-left:auto;text-align:center;font-weight:900;color:#c0562b;font-size:18px;flex:none}
 .gcard .best small{display:block;font-size:11px;color:#a58a6a}
+.solo-top{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:10px;margin:0 16px 4px;flex-wrap:wrap}
+.diff-seg{background:#f3d9a6}
+.diff-seg button{display:flex;flex-direction:column;line-height:1.05;height:40px;justify-content:center;padding:0 12px}
+.diff-seg button small{font-size:10px;opacity:.8}
+.qprog{position:absolute;top:88px;left:14px;z-index:6;font-size:12px;font-weight:900;padding:2px 10px;border-radius:99px;background:rgba(0,0,0,.35);color:#fff}
+.qprog b{font-size:14px;color:#ffe066}
+.mix-sum{margin-top:10px;padding:8px;border-radius:12px;background:#fff3d6;color:#8a4a12;font-weight:900}
+.mix-sum b{font-size:22px;color:#d62828}
 .cat-h{font-size:20px;font-weight:900;color:#8a4a1a;letter-spacing:.15em;margin:6px 4px -4px}
 .chip{display:inline-block;font-size:11px;font-weight:700;padding:1px 8px;border-radius:99px;margin-top:4px;background:#fbe3c8;color:#a0501e}
 
@@ -362,6 +370,9 @@ input{font:inherit}
 .bang-tabs{display:flex;gap:4px;padding:8px 8px 4px;overflow-x:auto}
 .bang-tabs button{flex:none;padding:5px 12px;border-radius:99px;font-weight:900;font-size:14px;color:#7a4a12;background:rgba(255,255,255,.5);border:2px solid #d9a95a}
 .bang-tabs button.on{background:#d62828;color:#fff;border-color:#9a1520}
+.bang-diff{display:flex;align-items:center;gap:6px;padding:2px 10px 6px;font-size:13px;font-weight:900;color:#7a4a12;flex-wrap:wrap}
+.bang-diff button{padding:3px 10px;border-radius:99px;border:2px solid #d9a95a;background:rgba(255,255,255,.5);color:#7a4a12;font-weight:900;font-size:13px}
+.bang-diff button.on{background:#7a4a12;color:#fff;border-color:#7a4a12}
 .bang-list{flex:1;overflow:auto;padding:4px 10px 10px}
 .brow{display:flex;align-items:center;gap:10px;padding:8px 8px;border-bottom:1px dashed rgba(154,106,31,.45);font-weight:700;color:#4a2a0a}
 .brow .rk{width:34px;text-align:center;font-size:18px;font-weight:900}
@@ -375,6 +386,8 @@ input{font:inherit}
 .credits{position:relative;z-index:3;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;color:#fff4d6;padding:20px}
 .credits h4{color:#ffd66b;font-size:15px;letter-spacing:.3em;margin-top:14px}
 .credits p{font-size:18px;font-weight:700}
+.credits .notice{margin-top:14px;padding:12px 14px;border-radius:12px;background:rgba(30,10,24,.94);border:1px solid rgba(242,193,78,.4);font-size:12.5px;line-height:1.7;text-align:left;color:#f3e2c0;max-width:420px}
+.credits .notice h5{text-align:center;color:#ffd66b;font-size:14px;letter-spacing:.3em;margin-bottom:6px}
 .credits .mk{font-size:30px;font-weight:900;color:#fff;letter-spacing:.1em}
 
 
@@ -706,7 +719,7 @@ input{font:inherit}
 #s-tetris .score{background:transparent;color:#4ff0ff;border:2px solid #4ff0ff;box-shadow:0 0 10px #4ff0ff}
 #s-tetris .tbar{background:rgba(255,255,255,.1)}#s-tetris .tbar i{background:linear-gradient(90deg,#4ff0ff,#ff4fd8)}
 #s-tetris .combo{color:#fff176;text-shadow:0 0 8px #fff176}
-.tet-top{position:relative;z-index:3;display:flex;justify-content:space-between;gap:10px;margin:8px 16px 0;color:#b9a8ff;font-size:12px;font-weight:900}
+.tet-top{position:relative;z-index:3;display:flex;justify-content:space-between;gap:10px;margin:30px 16px 0;color:#b9a8ff;font-size:12px;font-weight:900}
 .tet-next,.tet-targets{display:flex;gap:4px;margin-top:4px;flex-wrap:wrap;justify-content:flex-end}
 .tet-next span{width:30px;height:30px;border-radius:6px;display:grid;place-items:center;border:1px solid #4ff0ff;color:#4ff0ff;font-size:17px}
 .tet-next span:first-child{background:rgba(79,240,255,.2)}
@@ -715,6 +728,7 @@ input{font:inherit}
 .tcell{aspect-ratio:1;border-radius:5px;display:grid;place-items:center;font-size:clamp(14px,4.4vw,21px);font-weight:900;color:#fff;background:rgba(255,255,255,.03)}
 .tcell.on{background:hsl(var(--h) 90% 55%);box-shadow:0 0 8px hsl(var(--h) 90% 60%),inset 0 2px 0 rgba(255,255,255,.4);text-shadow:0 1px 2px rgba(0,0,0,.5)}
 .tcell.act{outline:2px solid #fff;animation:pop .5s infinite alternate}
+.tcell.boom{background:#fff!important;color:#ff4fd8;box-shadow:0 0 18px 6px #fff176;animation:pop .4s}
 .tet-keys{position:relative;z-index:3;display:flex;justify-content:center;gap:12px;margin-top:10px}
 .tet-keys button{width:60px;height:48px;border-radius:12px;font-size:22px;color:#4ff0ff;border:2px solid #4ff0ff;background:rgba(79,240,255,.08);box-shadow:0 0 10px rgba(79,240,255,.4)}
 .tet-keys button:active{background:rgba(79,240,255,.35)}
@@ -913,6 +927,10 @@ input{font:inherit}
 .gear:nth-child(even){margin-top:24px}
 .gear svg{width:100%}
 .gear-rot{transform-origin:0 0}
+.gear.lock svg{filter:drop-shadow(0 0 8px #7dff9a)}
+.gear.spin .gear-rot{animation:gspin 1.2s linear infinite!important}
+.gear.spin:nth-child(even) .gear-rot{animation-direction:reverse!important}
+@keyframes gspin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .gtxt text{font-size:15px;font-weight:900;fill:#fff3dc}
 .gbtns{display:flex;gap:4px;margin-top:2px}
 .gbtns button{width:36px;height:32px;border-radius:8px;background:linear-gradient(#e0a060,#b87333);color:#2a1c12;font-size:18px;font-weight:900;border:2px solid #6b3f1a}
@@ -953,9 +971,10 @@ input{font:inherit}
 .scope-ring{position:relative;z-index:3;margin:8px auto 0;width:min(66vw,250px,calc(100vh - 470px));aspect-ratio:1;border-radius:50%;padding:10px;background:conic-gradient(#ff6bd6,#ffe66b,#6bffb0,#6bd6ff,#b46bff,#ff6bd6);box-shadow:0 0 30px rgba(255,107,214,.5)}
 .scope{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;background:#12061f;animation:spinS 16s linear infinite}
 @keyframes spinS{to{transform:rotate(360deg)}}
-.wedge{position:absolute;inset:0;clip-path:polygon(50% 50%,50% 0,79% 3%)}
-.wedge span{position:absolute;left:58%;top:12%;font-size:min(34vw,120px);font-weight:900;line-height:1;transform:translate(-50%,0) rotate(18deg);background:linear-gradient(135deg,#ff6bd6,#ffe66b,#6bd6ff);-webkit-background-clip:text;background-clip:text;color:transparent;animation:drift2 4s ease-in-out infinite alternate}
+.wedge{position:absolute;inset:0;clip-path:polygon(50% 50%,50% 0,93% 25%)}
+.wedge span{position:absolute;left:62%;top:6%;font-size:min(30vw,108px);font-weight:900;line-height:1;transform:translate(-50%,0) rotate(18deg);background:linear-gradient(135deg,#ff6bd6,#ffe66b,#6bd6ff);-webkit-background-clip:text;background-clip:text;color:transparent;animation:drift2 4s ease-in-out infinite alternate}
 @keyframes drift2{to{transform:translate(-40%,10%) rotate(-12deg)}}
+.kal-core{position:absolute;left:50%;top:50%;width:46%;height:46%;transform:translate(-50%,-50%);border-radius:50%;display:grid;place-items:center;font-size:min(22vw,84px);font-weight:900;color:#fff;background:radial-gradient(circle,rgba(18,6,31,.92) 55%,rgba(18,6,31,0) 72%);text-shadow:0 0 12px #ff6bd6;animation:spinS 16s linear infinite reverse}
 .kal-dots{position:relative;z-index:3;display:flex;justify-content:center;gap:8px;margin-top:10px}
 .kal-dots i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.25)}.kal-dots i.on{background:#ffe66b}
 .prism{background:rgba(255,255,255,.08);color:#ffd6ff;border:2px solid #b46bff}
@@ -1020,6 +1039,7 @@ input{font:inherit}
 .back:active{transform:translateY(2px)}
 .help-btn{flex:none;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.92);color:#284058;font-size:18px;font-weight:900;border:2px solid rgba(0,0,0,.25);box-shadow:0 2px 0 rgba(0,0,0,.25)}
 .help-btn:active{transform:translateY(2px)}
+.help-rule{margin-top:10px;padding:8px 10px;border-radius:10px;background:#fff3d6;color:#8a4a12;font-size:13px;line-height:1.5;text-align:left}
 .howto{text-align:left;display:flex;flex-direction:column;gap:8px;margin-top:6px}
 .howto p{display:flex;gap:10px;font-size:16px;line-height:1.55;color:#33404d}
 .howto p b{flex:none;width:24px;height:24px;border-radius:50%;background:#f08a16;color:#fff;display:grid;place-items:center;font-size:13px;margin-top:2px}
@@ -1046,6 +1066,25 @@ input{font:inherit}
 #race-banner .rbw span{color:#7dffb0;margin-left:6px}
 #race-banner .rbs{font-size:14px;margin-top:4px}
 #race-cd{position:absolute;inset:0;z-index:60}
+
+/* ═══════════════ 紅木推盤（成語推盤） ═══════════════ */
+[data-theme="rosewood"]{--page:#3a1c14}
+.rose-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,#6a3424,#2a120c 75%);background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.08) 0 3px,transparent 3px 40px),radial-gradient(ellipse at 50% 30%,#6a3424,#2a120c 75%)}
+#s-slide .hud .title,#s-slide .board-label{color:#f7dfb8}#s-slide .back{color:#f0c890}
+#s-slide .score{background:#f0c890;color:#3a1c14}
+#s-slide .tbar{background:rgba(255,255,255,.1)}#s-slide .tbar i{background:linear-gradient(90deg,#c8853a,#f7dfb8)}
+#s-slide .combo{color:#ffd66b}
+.slide-goal{position:relative;z-index:3;margin:8px 16px 0;padding:6px 10px;border-radius:10px;background:rgba(247,223,184,.12);color:#f7dfb8;text-align:center;font-size:15px;line-height:1.5}
+.slide-goal b{color:#ffd66b;font-size:18px;letter-spacing:.1em;margin:0 6px}
+.slide-frame{position:relative;z-index:3;margin:12px auto 0;width:min(86%,340px,calc(100vh - 360px));aspect-ratio:1;padding:10px;border-radius:14px;background:linear-gradient(135deg,#8a4a2a,#5a2a16);box-shadow:inset 0 0 0 3px #3a180c,0 12px 24px rgba(0,0,0,.45)}
+.slide-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);gap:4px;width:100%;height:100%;background:#2a0f06;border-radius:6px;padding:4px}
+.stile{border-radius:6px;font-size:clamp(28px,9vw,44px);font-weight:900;color:#6a3a14;text-shadow:0 1px 0 #fff3d8,0 -1px 0 rgba(90,40,10,.5);
+  background:repeating-linear-gradient(8deg,#f0cf98 0 6px,#e8c285 6px 7px,#f0cf98 7px 16px);border:2px solid #b8844a;box-shadow:inset 0 2px 0 rgba(255,255,255,.5),0 3px 0 #7a4a1c;transition:transform .12s}
+.stile:active{transform:scale(.95)}
+.stile.ok{background:repeating-linear-gradient(8deg,#bfe8a8 0 6px,#aede95 6px 7px,#bfe8a8 7px 16px);border-color:#4a8a2a;color:#1e4a10}
+.stile.hole{background:#1a0803;border:0;box-shadow:inset 0 3px 8px rgba(0,0,0,.8)}
+#s-slide .meaning-strip{background:rgba(247,223,184,.1);color:#f7dfb8}
+
 @media (min-height:760px){.jade{width:68px;height:68px;font-size:38px}.scroll-frame{margin-top:28px}.wood-frame{margin-top:40px}}
 @media (max-height:640px){.hero{width:26%}.logo{font-size:44px}.jade{width:54px;height:54px;font-size:28px}.opt-grid{padding-top:14px;gap:9px}}
 </style>
@@ -1101,7 +1140,8 @@ input{font:inherit}
   <div class="cream-bg"></div>
   <div class="topbar"><button class="back" data-go="lobby" style="color:#c0562b">◀</button><div class="grow"></div></div>
   <div class="page-title" style="margin-top:-38px">單人闖關</div>
-  <div class="page-sub">三十二種玩法・登上金榜</div>
+  <div class="page-sub">三十三種玩法・登上金榜</div>
+  <div class="solo-top"><div class="seg diff-seg" id="diff-seg"></div><button class="btn sm red outlined" id="btn-mix">🏆 綜合挑戰</button></div>
   <div class="game-list scroll" id="game-list"></div>
 </section>
 
@@ -1509,7 +1549,7 @@ input{font:inherit}
   <div class="board-label serif" data-count>第 1 組機關</div>
   <div class="gear-window serif" id="gear-window"></div>
   <div class="gear-row serif" id="gear-row"></div>
-  <div class="bal-hint" style="color:#f3d9a8">轉動一個齒輪，旁邊咬合的齒輪會反向轉一格。讓上方窗口拼出成語！</div>
+  <div class="bal-hint" style="color:#f3d9a8">每個齒輪各自轉動、互不影響，讓上方窗口拼出成語，齒輪就會一起轉起來！</div>
   <div class="meaning-strip" data-mean></div>
   <div class="sp" style="flex-grow:1.4"></div>
 </section>
@@ -1583,6 +1623,21 @@ input{font:inherit}
   <div class="sp" style="flex-grow:1.4"></div>
 </section>
 
+
+<!-- ═════════ 成語推盤：紅木推盤 ═════════ -->
+<section class="screen" id="s-slide" data-theme="rosewood">
+  <div class="rose-bg"></div>
+  <div class="hud"><button class="back" data-quit>◀</button><div class="title serif">成語推盤</div><div class="score" data-score>0</div></div>
+  <div class="tbar"><i data-bar></i></div><div class="combo" data-combo></div>
+  <div class="sp"></div>
+  <div class="board-label serif" data-count>第 1 盤</div>
+  <div class="slide-goal serif" id="slide-goal"></div>
+  <div class="slide-frame"><div class="slide-grid serif" id="slide-grid"></div></div>
+  <div class="bal-hint" style="color:#f3dcc0">點空格同一橫列或直行的木塊，就能推過去。排出兩橫列成語即過關！</div>
+  <div class="meaning-strip serif" data-mean></div>
+  <div class="sp" style="flex-grow:1.4"></div>
+</section>
+
 <!-- ═════════ 對戰選單：燈籠 ═════════ -->
 <section class="screen" id="s-battle" data-theme="night">
   <div class="night-bg"><div class="stars"></div></div><div class="lantern-row"></div>
@@ -1591,26 +1646,18 @@ input{font:inherit}
     <div class="menu-card">
       <h3>🏮 與電腦對戰<span class="muted" style="font-size:12px;letter-spacing:0">（不需連線）</span></h3>
       <div class="opt-line">對戰方式<div class="seg" data-seg="soloMode"><button data-v="rush" class="on">搶答</button><button data-v="race">競速</button></div></div>
-      <div class="mode-tip m-rush">搶答：大家同時看同一題，最先答對得分</div><div class="mode-tip m-race hidden">競速：大家玩同一關，最先完成的人拿下這關</div>
+      <div class="mode-tip m-rush">搶答：大家同時看同一題，最先答對得分</div><div class="mode-tip m-race hidden">競速：大家玩同一關，最先完成的人拿下這關（選「綜合」每關隨機換遊戲）</div>
       <div class="opt-line">電腦人數<div class="seg" data-seg="soloAi"><button>1</button><button class="on">2</button><button>3</button><button>4</button></div></div>
       <div class="opt-line">電腦程度<div class="seg" data-seg="soloLv"><button data-v="easy">書僮</button><button data-v="normal" class="on">秀才</button><button data-v="hard">狀元</button></div></div>
-      <div class="opt-line m-rush">題數<div class="seg" data-seg="soloRounds"><button class="on">10</button><button>15</button><button>20</button></div></div>
+      <div class="opt-line m-rush">題數<div class="seg" data-seg="soloRounds"><button>5</button><button class="on">10</button><button>15</button><button>20</button><button>30</button></div></div>
       <div class="opt-line m-race hidden">遊戲<select class="game-sel" id="solo-game"></select></div>
-      <div class="opt-line m-race hidden">關數<div class="seg" data-seg="soloRaceRounds"><button>3</button><button class="on">5</button><button>8</button></div></div>
+      <div class="opt-line m-race hidden">關數<div class="seg" data-seg="soloRaceRounds"><button>5</button><button class="on">10</button><button>15</button><button>20</button><button>30</button></div></div>
       <div class="opt-line m-rush" style="align-items:flex-start">題型<div class="seg wrap" data-seg="soloType"><button data-v="mix" class="on">綜合</button><button data-v="fill">缺字</button><button data-v="meaning">釋義</button><button data-v="error">錯字</button><button data-v="chain">接龍</button><button data-v="antonym">反義</button><button data-v="history">時光機</button><button data-v="compass">指南針</button><button data-v="code">密碼</button><button data-v="pic">看圖</button><button data-v="emoji">表情</button><button data-v="color">色彩</button><button data-v="tone">聲調</button><button data-v="overlap">疊影</button></div></div>
       <button class="btn red outlined" style="width:100%;margin-top:6px" id="btn-local">開始擂台賽</button>
     </div>
     <div class="menu-card">
       <h3>🌐 連線對戰<span class="muted" style="font-size:12px;letter-spacing:0">（1～4 位真人＋電腦）</span></h3>
-      <div class="opt-line">對戰方式<div class="seg" data-seg="onMode"><button data-v="rush" class="on">搶答</button><button data-v="race">競速</button></div></div>
-      <div class="mode-tip m-rush">搶答：大家同時看同一題，最先答對得分</div><div class="mode-tip m-race hidden">競速：大家玩同一關，最先完成的人拿下這關</div>
-      <div class="opt-line">真人座位<div class="seg" data-seg="onHuman"><button>1</button><button class="on">2</button><button>3</button><button>4</button></div></div>
-      <div class="opt-line">電腦人數<div class="seg" data-seg="onAi"><button class="on">0</button><button>1</button><button>2</button><button>3</button><button>4</button></div></div>
-      <div class="opt-line">電腦程度<div class="seg" data-seg="onLv"><button data-v="easy">書僮</button><button data-v="normal" class="on">秀才</button><button data-v="hard">狀元</button></div></div>
-      <div class="opt-line m-rush">題數<div class="seg" data-seg="onRounds"><button class="on">10</button><button>15</button><button>20</button></div></div>
-      <div class="opt-line m-race hidden">遊戲<select class="game-sel" id="on-game"></select></div>
-      <div class="opt-line m-race hidden">關數<div class="seg" data-seg="onRaceRounds"><button>3</button><button class="on">5</button><button>8</button></div></div>
-      <div class="opt-line m-rush" style="align-items:flex-start">題型<div class="seg wrap" data-seg="onType"><button data-v="mix" class="on">綜合</button><button data-v="fill">缺字</button><button data-v="meaning">釋義</button><button data-v="error">錯字</button><button data-v="chain">接龍</button><button data-v="antonym">反義</button><button data-v="history">時光機</button><button data-v="compass">指南針</button><button data-v="code">密碼</button><button data-v="pic">看圖</button><button data-v="emoji">表情</button><button data-v="color">色彩</button><button data-v="tone">聲調</button><button data-v="overlap">疊影</button></div></div>
+      <div class="muted" style="font-size:13px;margin-bottom:8px">建立房間後，對戰方式、人數、題數等都在房間裡設定。</div>
       <button class="btn orange outlined" style="width:100%;margin-top:6px" id="btn-create">建立房間</button>
       <div class="opt-line" style="margin-top:14px">加入房間<input class="code-input" id="in-code" maxlength="5" placeholder="房號"><button class="btn sm green" id="btn-join">加入</button></div>
       <div class="muted" id="online-hint" style="font-size:12px"></div>
@@ -1635,8 +1682,8 @@ input{font:inherit}
       <div class="opt-line">電腦程度<div class="seg" data-rs="aiLevel"><button data-v="easy">書僮</button><button data-v="normal">秀才</button><button data-v="hard">狀元</button></div></div>
       <div class="opt-line">對戰方式<div class="seg" data-rs="mode"><button data-v="rush">搶答</button><button data-v="race">競速</button></div></div>
       <div class="opt-line r-race">遊戲<select class="game-sel" id="room-game"></select></div>
-      <div class="opt-line r-race">關數<div class="seg" data-rs="raceRounds"><button>3</button><button>5</button><button>8</button></div></div>
-      <div class="opt-line r-rush">題數<div class="seg" data-rs="rounds"><button>10</button><button>15</button><button>20</button></div></div>
+      <div class="opt-line r-race">關數<div class="seg" data-rs="raceRounds"><button>5</button><button>10</button><button>15</button><button>20</button><button>30</button></div></div>
+      <div class="opt-line r-rush">題數<div class="seg" data-rs="rounds"><button>5</button><button>10</button><button>15</button><button>20</button><button>30</button></div></div>
       <div class="opt-line r-rush" style="align-items:flex-start">題型<div class="seg wrap" data-rs="qtype"><button data-v="mix">綜合</button><button data-v="fill">缺字</button><button data-v="meaning">釋義</button><button data-v="error">錯字</button><button data-v="chain">接龍</button><button data-v="antonym">反義</button><button data-v="history">時光機</button><button data-v="compass">指南針</button><button data-v="code">密碼</button><button data-v="pic">看圖</button><button data-v="emoji">表情</button><button data-v="color">色彩</button><button data-v="tone">聲調</button><button data-v="overlap">疊影</button></div></div>
     </div>
     <div style="text-align:center;margin-top:16px;position:relative;z-index:3"><button class="btn big red outlined" id="btn-start">開　擂</button><div class="muted" style="color:#ffd66b;margin-top:8px" id="room-wait"></div></div>
@@ -1665,19 +1712,25 @@ input{font:inherit}
 <section class="screen" id="s-board" data-theme="gold">
   <div class="gold-bg"></div>
   <div class="hud"><button class="back" data-go="lobby" style="color:#ffe7a0">◀</button><div class="title" style="color:#ffe7a0">排行榜</div><div style="width:44px"></div></div>
-  <div class="bang"><div class="bang-head kai">金榜題名</div><div class="bang-tabs" id="bang-tabs"></div><div class="bang-list" id="bang-list"></div></div>
+  <div class="bang"><div class="bang-head kai">金榜題名</div><div class="bang-tabs" id="bang-tabs"></div><div class="bang-diff" id="bang-diff"></div><div class="bang-list" id="bang-list"></div></div>
 </section>
 
 <!-- ═════════ 製作名單 ═════════ -->
 <section class="screen" id="s-credits" data-theme="night">
-  <div class="night-bg"><div class="stars"></div></div><div class="lantern-row"></div><div class="stage-floor"></div>
+  <div class="night-bg"><div class="stars"></div></div><div class="lantern-row"></div>
   <div class="hud"><button class="back" data-go="lobby" style="color:#ffd66b">◀</button><div class="title night-title">製作名單</div><div style="width:44px"></div></div>
-  <div class="credits">
+  <div class="credits scroll" style="justify-content:flex-start;padding-top:70px">
     <div class="logo" style="font-size:44px">成語擂台</div>
     <h4>遊戲製作</h4><p class="mk">Eric Hu</p>
     <h4>背景音樂</h4><p style="font-size:15px">StockTune（免版稅音樂）</p>
     <h4>字型</h4><p style="font-size:15px">霞鶩文楷（開源授權）<br>思源黑體・思源宋體（開源授權）</p>
     <h4>畫面與角色</h4><p style="font-size:15px">全部以程式繪製</p>
+    <div class="notice">
+      <h5>使用聲明</h5>
+      本遊戲為製作者 Eric Hu 之個人創作，僅供製作者本人及親友休閒同樂，不作任何商業用途。<br>
+      遊戲之程式、畫面設計與內容，其著作權均屬製作者所有；背景音樂與字型之著作權歸原作者所有，依其授權條款使用。<br>
+      未經製作者書面同意，任何人不得擅自重製、改作、散布、轉售或作其他營利使用。如有違反或藉此不當得利者，製作者保留依法追究法律責任之權利。
+    </div>
   </div>
 </section>
 
@@ -1727,7 +1780,7 @@ function show(id) {
   BGM.hold(id === 's-tone');
   const th = $('#' + id).dataset.theme;
   document.body.dataset.theme = th;
-  const page = { sky: '#1b9fe0', cream: '#f5e7a3', ink: '#e9efdf', navy: '#1c2e4a', paper: '#d9e4ea', 'candy-sky': '#1ea4e0', candy: '#ff8fbd', night: '#260f2c', gold: '#7a1414', star: '#120f33', porcelain: '#eef3fa', blocks: '#8fd3ff', taiji: '#efe9dc', garden: '#fde6ee', telegraph: '#16211b', map: '#e3cd98', sea: '#0c3f4c', bamboo: '#e4ecd2', storybook: '#fff4d0', chat: '#2f6b54', neon: '#0b0820', puzzle: '#f4c27a', goboard: '#d9a35a', manga: '#f4f4f4', palace: '#8a1a1a', mist: '#8fa3a0', apothecary: '#3a2416', cave: '#26221f', studio: '#fbf8f2', glass: '#5a3a9a', steam: '#2a1c12', aqua: '#6cc6e0', prism: '#1a0a30', puppet: '#2a1208', qin: '#24142e', strata: '#6a3e22' }[th] || '#333';
+  const page = { sky: '#1b9fe0', cream: '#f5e7a3', ink: '#e9efdf', navy: '#1c2e4a', paper: '#d9e4ea', 'candy-sky': '#1ea4e0', candy: '#ff8fbd', night: '#260f2c', gold: '#7a1414', star: '#120f33', porcelain: '#eef3fa', blocks: '#8fd3ff', taiji: '#efe9dc', garden: '#fde6ee', telegraph: '#16211b', map: '#e3cd98', sea: '#0c3f4c', bamboo: '#e4ecd2', storybook: '#fff4d0', chat: '#2f6b54', neon: '#0b0820', puzzle: '#f4c27a', goboard: '#d9a35a', manga: '#f4f4f4', palace: '#8a1a1a', mist: '#8fa3a0', apothecary: '#3a2416', cave: '#26221f', studio: '#fbf8f2', glass: '#5a3a9a', steam: '#2a1c12', aqua: '#6cc6e0', prism: '#1a0a30', puppet: '#2a1208', qin: '#24142e', strata: '#6a3e22', rosewood: '#3a1c14' }[th] || '#333';
   document.body.style.setProperty('--page', page);
   $('meta[name=theme-color]').setAttribute('content', page);
 }
@@ -1994,11 +2047,18 @@ const THUMBS = {
   shadow: ['影', 'radial-gradient(#fff0c8,#b86a20)', '#1e0c04', '皮影戲'],
   tone: ['聲', 'radial-gradient(#5a3a1e,#24142e)', '#ffe3a3', '古琴'],
   fossil: ['石', 'linear-gradient(#a8744a,#5a341c)', '#fff3dc', '岩層考古'],
+  slide: ['推', 'repeating-linear-gradient(8deg,#f0cf98 0 6px,#e8c285 6px 7px)', '#6a3a14', '紅木推盤'],
 };
+function renderDiffSeg() {
+  $('#diff-seg').innerHTML = Object.entries(DIFF).map(([k, d]) => `<button data-d="${k}" class="${k === Solo.diff ? 'on' : ''}">${d.label}<small>${d.n} 題</small></button>`).join('');
+}
+$('#diff-seg').onclick = (e) => { const b = e.target.closest('[data-d]'); if (!b) return; Solo.diff = b.dataset.d; store.set('diff', Solo.diff); SFX.tap(); renderSoloList(); };
+$('#btn-mix').onclick = () => Solo.startMix();
 const CAT_NAME = { 1: '📜 經典玩法', 2: '🎲 趣味變化', 3: '💡 創意玩法' };
 function renderSoloList() {
+  renderDiffSeg();
   $('#game-list').innerHTML = [1, 2, 3].map((cat) => `<div class="cat-h kai">${CAT_NAME[cat]}</div>` + Object.entries(E.GAMES).filter(([, g]) => (g.cat || 1) === cat).map(([k, g]) => {
-    const t = THUMBS[k]; const best = k === 'rank' ? localGet('rank_pts', 0) : (ST.guest ? ST.localBests : ST.bests)[k] || 0;
+    const t = THUMBS[k]; const best = k === 'rank' ? localGet('rank_pts', 0) : (ST.guest ? ST.localBests : ST.bests)[`${k}:${Solo.diff}`] || 0;
     return `<button class="gcard" data-game="${k}"><div class="gthumb kai" style="background:${t[1]};color:${t[2]}">${t[0]}</div>
       <div><h3 class="kai">${g.name}</h3><p>${g.desc}</p><span class="chip">${t[3]}</span></div>
       <div class="best">${best}<small>${k === 'rank' ? '功名' : '最佳成績'}</small></div></button>`;
@@ -2006,16 +2066,29 @@ function renderSoloList() {
 }
 $('#game-list').onclick = (e) => { const b = e.target.closest('[data-game]'); if (b) Solo.start(b.dataset.game); };
 
+/* 單人闖關：難易度決定題數與時間 */
+const DIFF = { easy: { n: 5, f: 2.0, label: '簡單' }, normal: { n: 10, f: 1.5, label: '普通' }, hard: { n: 20, f: 1.15, label: '困難' } };
+/** 每答對一題（或完成一句）大約需要的秒數；較難的遊戲給比較多時間 */
+const UNIT_TIME = {
+  fill: 9, meaning: 11, error: 13, chain: 10, link: 7, search: 10, crush: 13, tower: 13, antonym: 11, flower: 9, code: 20, history: 22,
+  compass: 11, cross: 14, pic: 17, emoji: 12, tetris: 25, radical: 22, sudoku: 55, comic: 17, fog: 26, balance: 28, maze: 15, color: 13,
+  overlap: 15, gears: 30, eco: 11, kaleido: 15, shadow: 17, tone: 15, fossil: 19, slide: 40,
+};
+const Q_FACTOR = { sudoku: 0.4, gears: 0.6, slide: 0.6 };
 const Solo = {
   game: null, time: 60000,
   gen: 0,
+  diff: store.get('diff') || 'normal', mix: null,
   wait(ms) { const g = this.gen; return new Promise((r) => setTimeout(() => { if (g === this.gen && !this.over) r(); }, ms)); },
   racing: false,
   unit(ms, fn) { if (this.racing) { Race.iDone(); return; } return this.wait(ms).then(fn); },
   start(game, skipHelp) {
     if (!skipHelp && !localGet('seen_' + game, false)) { localSet('seen_' + game, true); show('s-' + game); showHelp(game, () => this.start(game, true)); return; }
     this.racing = false; this.el && this.el.classList.remove('racing'); $('#race-bar') && $('#race-bar').classList.remove('on');
-    this.gen++; this.game = game; this.el = $('#s-' + game); this.time = GAMES[game].time || 60000;
+    this.gen++; this.game = game; this.el = $('#s-' + game);
+    const D = DIFF[this.diff] || DIFF.normal; const endless = !!E.GAMES[game].noTimer;
+    this.target = endless ? Infinity : Math.max(3, Math.round(D.n * (Q_FACTOR[game] || 1)));
+    this.time = endless ? 1e12 : Math.ceil(this.target * (UNIT_TIME[game] || 12) * D.f) * 1000;
     this.score = 0; this.combo = 0; this.count = 0; this.correct = 0; this.left = this.time; this.busy = false; this.over = false;
     this.rng = E.makeRng(); this.avoid = new Set();
     show('s-' + game);
@@ -2025,12 +2098,13 @@ const Solo = {
     this.iv = setInterval(() => this.tick(), 100);
   },
   startRace(game) {
-    this.gen++; clearInterval(this.iv); this.racing = true; this.game = game; this.el = $('#s-' + game); this.time = 1e12;
+    if (this.el) this.el.classList.remove('racing');
+    this.gen++; clearInterval(this.iv); this.racing = true; this.game = game; this.el = $('#s-' + game); this.time = 1e12; this.target = Infinity;
     this.score = 0; this.combo = 0; this.count = 0; this.correct = 0; this.left = 1e12; this.busy = true; this.over = false;
     show('s-' + game); this.el.classList.add('racing'); this.upd(); this.mean('');
   },
   raceRound(seed) {
-    this.gen++; this.rng = E.makeRng(seed); this.avoid = new Set(); this.busy = false; this.over = false; this.combo = 0; this.count = 0;
+    this.gen++; this.rng = E.makeRng(seed); this.avoid = this.avoid || new Set(); this.busy = false; this.over = false; this.combo = 0; this.count = 0;
     this.mean(''); GAMES[this.game].init(); this.upd();
   },
   stopRace() { this.gen++; this.racing = false; this.over = true; if (this.el) this.el.classList.remove('racing'); const b = $('#race-bar'); if (b) b.classList.remove('on'); const n = $('#race-banner'); if (n) n.classList.remove('on'); },
@@ -2038,12 +2112,15 @@ const Solo = {
     if ($('#modal').classList.contains('on')) { this.last = Date.now(); return; }
     const now = Date.now(); this.left -= now - this.last; this.last = now;
     $('[data-bar]', this.el).style.transform = `scaleX(${Math.max(0, this.left / this.time)})`;
-    if (this.left <= 0) this.end();
+    const t = $('[data-timeleft]', this.el); if (t && this.time < 1e11) t.textContent = `⏱ ${Math.max(0, Math.ceil(this.left / 1000))}`;
+    if (this.left <= 0) this.end('時間到！', false);
   },
   upd() {
     $$('[data-score]', this.el).forEach((x) => x.textContent = this.racing ? Race.myScore() : this.score);
     const c = $('[data-combo]', this.el);
     c.textContent = this.combo >= 2 ? `連對 ×${this.combo}` : ''; c.classList.toggle('on', this.combo >= 2);
+    const pg = $('[data-prog]', this.el);
+    if (pg) { pg.style.display = this.racing || this.target === Infinity ? 'none' : ''; pg.innerHTML = `${DIFF[this.diff].label}・<b>${Math.min(this.correct, this.target)}</b> / ${this.target} 題　<span data-timeleft></span>`; }
   },
   label(txt) { const l = $('[data-count]', this.el); if (l) l.textContent = txt; },
   mean(html) { const m = $('[data-mean]', this.el); if (!m) return; m.innerHTML = html; m.style.opacity = html ? 1 : 0; },
@@ -2051,39 +2128,81 @@ const Solo = {
     this.combo++; this.correct++;
     const pts = base + Math.min(50, (this.combo - 1) * 10);
     this.score += pts; this.upd(); SFX.ok(); floatText(anchor, '+' + pts, '#ffd23c');
+    if (!this.racing && this.correct >= this.target) { this.busy = true; setTimeout(() => this.end('過關！', true), 700); }
   },
   bad(anchor, penalty = 2000) {
     this.combo = 0; this.left -= penalty; this.upd(); SFX.bad();
     if (anchor) { anchor.classList.remove('shake'); void anchor.offsetWidth; anchor.classList.add('shake'); }
     if (penalty) floatText(anchor, `-${penalty / 1000} 秒`, '#ff5f57');
   },
-  async end(reason) {
+  key(game) { return `${game}:${this.diff}`; },
+  async upload(key, score) {
+    if (ST.guest || !ST.token) {
+      const best = Math.max(score, ST.localBests[key] || 0); ST.localBests[key] = best; store.set('bests', JSON.stringify(ST.localBests));
+      return { best, note: '訪客成績只存在這台裝置，不列入金榜' };
+    }
+    try {
+      const r = await api('/api/score', { token: ST.token, game: key, score }); ST.bests[key] = r.best;
+      return { best: r.best, note: score >= r.best && score > 0 ? '🎉 刷新個人最佳，已登上金榜！' : '成績已記錄到金榜' };
+    } catch (e) { return { best: Math.max(score, ST.bests[key] || 0), note: '上傳失敗：' + e.message }; }
+  },
+  async end(reason, passed) {
     if (this.racing) return;
     if (this.over) return; this.over = true; clearInterval(this.iv);
-    SFX.win();
     const key = this.game; const g = E.GAMES[key];
-    let best = Math.max(this.score, (ST.guest ? ST.localBests : ST.bests)[key] || 0), note = '';
-    if (ST.guest || !ST.token) {
-      ST.localBests[key] = best; store.set('bests', JSON.stringify(ST.localBests)); note = '訪客成績只存在這台裝置，不列入金榜';
-    } else {
-      note = '上傳金榜中…';
-    }
-    modal(`<h2>${reason || '時間到！'}</h2><div class="kai" style="font-size:20px;color:#5a6b7d">${g.name}</div>
-      <div style="font-size:64px;font-weight:900;color:#d62828;line-height:1.1;margin:8px 0">${this.score}</div>
-      <div class="muted">答對 ${this.correct} 題　・　最佳成績 <b id="res-best">${best}</b></div>
-      <div class="muted" id="res-note" style="margin:8px 0 14px">${note}</div>
+    let bonus = 0;
+    if (passed) { bonus = Math.max(0, Math.round(this.left / 1000)) * 5; this.score += bonus; this.upd(); SFX.win(); } else SFX.bad();
+    const head = `<h2>${reason || (passed ? '過關！' : '時間到！')}</h2><div class="kai" style="font-size:20px;color:#5a6b7d">${g.name}・${DIFF[this.diff].label}</div>
+      <div style="font-size:60px;font-weight:900;color:#d62828;line-height:1.1;margin:8px 0">${this.score}</div>
+      <div class="muted">答對 ${Math.min(this.correct, this.target === Infinity ? this.correct : this.target)} / ${this.target === Infinity ? '—' : this.target} 題${bonus ? `　・　剩餘時間加分 +${bonus}` : ''}</div>`;
+    if (this.mix) return this.mixNext(head, passed);
+    modal(`${head}<div class="muted" id="res-note" style="margin:8px 0 14px">成績記錄中…</div>
       <div class="row"><button class="btn sm white" id="res-back">回選單</button><button class="btn sm green" id="res-again">再挑戰</button></div>`);
     $('#res-back').onclick = () => { closeModal(); renderSoloList(); show('s-solo'); };
-    $('#res-again').onclick = () => { closeModal(); this.start(key); };
-    if (!ST.guest && ST.token) {
-      try {
-        const r = await api('/api/score', { token: ST.token, game: key, score: this.score });
-        ST.bests[key] = r.best; $('#res-best') && ($('#res-best').textContent = r.best);
-        $('#res-note') && ($('#res-note').textContent = this.score >= r.best && this.score > 0 ? '🎉 刷新個人最佳，已登上金榜！' : '成績已記錄');
-      } catch (e) { $('#res-note') && ($('#res-note').textContent = '上傳失敗：' + e.message); }
-    }
+    $('#res-again').onclick = () => { closeModal(); this.start(key, true); };
+    const r = await this.upload(this.key(key), this.score);
+    if ($('#res-note')) $('#res-note').innerHTML = `最佳成績 <b>${r.best}</b>　${r.note}`;
   },
-  quit() { if (this.racing) return Race.askQuit(); const g = GAMES[this.game]; this.gen++; clearInterval(this.iv); this.over = true; if (g && g.onQuit) g.onQuit(); renderSoloList(); show('s-solo'); },
+  /* 綜合挑戰：依序玩全部遊戲 */
+  startMix() {
+    const list = [1, 2, 3].flatMap((cat) => Object.entries(E.GAMES).filter(([k, g]) => (g.cat || 1) === cat && !g.noTimer).map(([k]) => k));
+    this.mix = { list, idx: 0, total: 0, passed: 0 };
+    modal(`<h2>🏆 綜合挑戰</h2><p class="howto" style="display:block;text-align:center">依序挑戰全部 ${list.length} 關，每關 ${DIFF[this.diff].label}難度。<br>每過完一關都會先詢問是否繼續；中途結束也會記錄目前的累計分數。</p>
+      <div class="row" style="margin-top:14px"><button class="btn sm white" id="mx-no">取消</button><button class="btn sm green" id="mx-go">開始挑戰</button></div>`);
+    $('#mx-no').onclick = () => { closeModal(); this.mix = null; };
+    $('#mx-go').onclick = () => { closeModal(); this.start(list[0]); };
+  },
+  mixNext(head, passed) {
+    const m = this.mix; m.total += this.score; if (passed) m.passed++;
+    const last = m.idx >= m.list.length - 1;
+    const nextName = last ? '' : E.GAMES[m.list[m.idx + 1]].name;
+    modal(`${head}<div class="mix-sum">綜合挑戰　第 ${m.idx + 1} / ${m.list.length} 關　累計 <b>${m.total}</b> 分</div>
+      ${last ? '<p class="muted" style="margin:10px 0">全部關卡都挑戰完了！</p>' : `<p style="margin:12px 0 4px;font-weight:900;color:#284058">是否繼續下一關「${nextName}」？</p>`}
+      <div class="row" style="margin-top:10px">${last ? '<button class="btn sm green" id="mx-end">看總成績</button>' : '<button class="btn sm white" id="mx-end">結束挑戰</button><button class="btn sm green" id="mx-next">繼續下一關</button>'}</div>`);
+    $('#mx-end').onclick = () => this.mixFinish();
+    const nx = $('#mx-next'); if (nx) nx.onclick = () => { closeModal(); m.idx++; this.start(m.list[m.idx]); };
+  },
+  async mixFinish() {
+    const m = this.mix; this.mix = null;
+    modal(`<h2>🏆 綜合挑戰結束</h2><div class="kai" style="color:#5a6b7d">${DIFF[this.diff].label}難度・完成 ${m.idx + 1} / ${m.list.length} 關・過關 ${m.passed} 關</div>
+      <div style="font-size:60px;font-weight:900;color:#d62828;line-height:1.1;margin:8px 0">${m.total}</div>
+      <div class="muted" id="mx-note" style="margin:8px 0 14px">成績記錄中…</div><div class="row"><button class="btn sm green" id="mx-back">回選單</button></div>`);
+    $('#mx-back').onclick = () => { closeModal(); renderSoloList(); show('s-solo'); };
+    const r = await this.upload(this.key('mix'), m.total);
+    if ($('#mx-note')) $('#mx-note').innerHTML = `綜合挑戰最佳 <b>${r.best}</b>　${r.note}`;
+  },
+  quit() {
+    if (this.racing) return Race.askQuit();
+    const g = GAMES[this.game];
+    if (this.mix && !this.over) {
+      modal(`<h2>離開綜合挑戰？</h2><p class="muted">這一關會以目前分數結算，並結束綜合挑戰。</p>
+        <div class="row" style="margin-top:14px"><button class="btn sm white" id="q-no">繼續玩</button><button class="btn sm red" id="q-yes">結束挑戰</button></div>`);
+      $('#q-no').onclick = closeModal;
+      $('#q-yes').onclick = () => { this.gen++; clearInterval(this.iv); this.over = true; this.mix.total += this.score; this.mixFinish(); };
+      return;
+    }
+    this.gen++; clearInterval(this.iv); this.over = true; if (g && g.onQuit) g.onQuit(); renderSoloList(); show('s-solo');
+  },
 };
 $$('[data-quit]').forEach((b) => b.onclick = () => Solo.quit());
 
@@ -2841,7 +2960,7 @@ Object.assign(GAMES, {
     feed() {
       let it = E.pick(Solo.rng, E.IDIOMS);
       for (let t = 0; t < 30 && (!uniqChars(it.w) || Solo.avoid.has(it.w)); t++) it = E.pick(Solo.rng, E.IDIOMS);
-      Solo.avoid.add(it.w); this.targets.push(it); if (Solo.racing) Solo.label(`消除 2 句成語就完成（${this.cleared || 0} / 2）`); if (this.targets.length > 3) this.targets.shift();
+      Solo.avoid.add(it.w); this.targets.push(it); if (Solo.racing) Solo.label(`已拼出 ${this.cleared || 0} 句`); if (this.targets.length > 3) this.targets.shift();
       this.queue.push(...it.w);
       if (Solo.rng() < 0.35) this.queue.splice(1 + Math.floor(Solo.rng() * 4), 0, E.pick(Solo.rng, E.CHAR_POOL));
     },
@@ -2863,30 +2982,34 @@ Object.assign(GAMES, {
       this.land();
     },
     drop() { if (!this.cur || Solo.over) return; while (this.free(this.cur.r + 1, this.cur.col)) this.cur.r++; this.land(); },
-    land() {
+    async land() {
       this.grid[this.cur.r * this.W + this.cur.col] = this.cur.c; this.cur = null; SFX.tap();
-      let chain = 0;
+      let chain = 0; const gen = Solo.gen;
       for (;;) {
         const hit = this.scan(); if (!hit.cells.size) break;
         chain++;
+        this.flash = hit.cells; this.render();
         hit.words.forEach((w) => { Solo.good($('#tet-board'), 100 + chain * 20); Solo.mean(`<b>${w.w}</b>：${w.m}`); this.cleared++; });
-        hit.cells.forEach((i) => { this.grid[i] = null; });
+        if (Solo.racing) { Race.progress(this.cleared); Solo.label(`已拼出 ${this.cleared} 句`); }
+        await new Promise((r) => setTimeout(r, 420));
+        if (gen !== Solo.gen || Solo.over) return;
+        this.flash = null; hit.cells.forEach((i) => { this.grid[i] = null; });
         this.gravity();
       }
-      if (Solo.racing && this.cleared >= 2) { Solo.busy = true; this.cur = null; this.render(); return Solo.unit(0, () => {}); }
       if (this.cleared && this.cleared % 3 === 0) this.speed = Math.max(380, 850 - this.cleared * 25);
       if (this.spawn()) this.render();
     },
     scan() {
+      // 橫的（左到右、右到左）與直的（上到下、下到上）都算；疊起來的字是由下往上讀
       const W = this.W, H = this.H, g = this.grid; const cells = new Set(); const words = [];
-      for (let r = 0; r < H; r++) for (let c = 0; c + 3 < W; c++) {
-        const idx = [0, 1, 2, 3].map((k) => r * W + c + k); const w = idx.map((i) => g[i]);
-        if (w.every(Boolean) && E.BY_WORD.has(w.join(''))) { idx.forEach((i) => cells.add(i)); words.push(E.BY_WORD.get(w.join(''))); }
-      }
-      for (let c = 0; c < W; c++) for (let r = 0; r + 3 < H; r++) {
-        const idx = [0, 1, 2, 3].map((k) => (r + k) * W + c); const w = idx.map((i) => g[i]);
-        if (w.every(Boolean) && E.BY_WORD.has(w.join(''))) { idx.forEach((i) => cells.add(i)); words.push(E.BY_WORD.get(w.join(''))); }
-      }
+      const test = (idx) => {
+        const w = idx.map((i) => g[i]); if (!w.every(Boolean)) return;
+        const a = w.join(''), b = w.slice().reverse().join('');
+        const hit = E.BY_WORD.get(a) || E.BY_WORD.get(b);
+        if (hit && !words.includes(hit)) { idx.forEach((i) => cells.add(i)); words.push(hit); }
+      };
+      for (let r = 0; r < H; r++) for (let c = 0; c + 3 < W; c++) test([0, 1, 2, 3].map((k) => r * W + c + k));
+      for (let c = 0; c < W; c++) for (let r = 0; r + 3 < H; r++) test([0, 1, 2, 3].map((k) => (r + k) * W + c));
       return { cells, words };
     },
     gravity() {
@@ -2901,7 +3024,7 @@ Object.assign(GAMES, {
       $('#tet-board').innerHTML = this.grid.map((c, i) => {
         const r = Math.floor(i / W), col = i % W; const act = this.cur && this.cur.r === r && this.cur.col === col;
         const ch = act ? this.cur.c : c;
-        return `<div class="tcell ${ch ? 'on' : ''} ${act ? 'act' : ''}" style="${ch ? `--h:${(ch.charCodeAt(0) * 37) % 360}` : ''}">${ch || ''}</div>`;
+        return `<div class="tcell ${ch ? 'on' : ''} ${act ? 'act' : ''} ${this.flash && this.flash.has(i) ? 'boom' : ''}" style="${ch ? `--h:${(ch.charCodeAt(0) * 37) % 360}` : ''}">${ch || ''}</div>`;
       }).join('');
       $('#tet-next').innerHTML = this.queue.slice(0, 3).map((c) => `<span>${c}</span>`).join('');
       $('#tet-targets').innerHTML = this.targets.map((t) => `<span>${t.w}</span>`).join('');
@@ -2990,8 +3113,9 @@ Object.assign(GAMES, {
     init() { this.next(); },
     next() {
       if (Solo.over) return;
-      let w = E.pick(Solo.rng, E.COMIC_LIST);
-      for (let t = 0; t < 30 && Solo.avoid.has(w); t++) w = E.pick(Solo.rng, E.COMIC_LIST);
+      let left = E.COMIC_LIST.filter((x) => !Solo.avoid.has(x));
+      if (!left.length) { E.COMIC_LIST.forEach((x) => Solo.avoid.delete(x)); left = E.COMIC_LIST.slice(); }
+      const w = E.pick(Solo.rng, left);
       Solo.avoid.add(w);
       const wrongs = E.shuffle(Solo.rng, E.IDIOMS.filter((x) => x.w !== w)).slice(0, 3).map((x) => x.w);
       this.q = { idiom: w, options: E.shuffle(Solo.rng, [w, ...wrongs]) };
@@ -3240,25 +3364,19 @@ Object.assign(GAMES, {
       let it = E.pick(Solo.rng, E.IDIOMS); for (let t = 0; t < 30 && Solo.avoid.has(it.w); t++) it = E.pick(Solo.rng, E.IDIOMS);
       Solo.avoid.add(it.w); this.it = it;
       this.rims = [...it.w].map((c) => { const d = decoyChars(5, [c]); const rim = E.shuffle(Solo.rng, [c, ...d]); return { rim, goal: rim.indexOf(c) }; });
-      this.off = this.rims.map((r) => r.goal);
-      for (let k = 0; k < 5 || this.solved(); k++) this.turn(Math.floor(Solo.rng() * 4), Solo.rng() < 0.5 ? 1 : -1, true);
+      // 每個齒輪各自打亂，而且一開始不會剛好對齊
+      this.off = this.rims.map((r) => (r.goal + 1 + Math.floor(Solo.rng() * 5)) % 6);
+      this.turns = this.off.map(() => 0); this.start = this.off.slice();
       Solo.count++; Solo.label(`第 ${Solo.count} 組機關`); Solo.busy = false; Solo.mean(`提示：${it.m}`);
       this.render();
     },
     solved() { return this.off.every((o, i) => o === this.rims[i].goal); },
-    turn(i, d, silent) {
-      this.off[i] = (this.off[i] + d + 6) % 6;
-      if (i > 0) this.off[i - 1] = (this.off[i - 1] - d + 6) % 6;
-      if (i < 3) this.off[i + 1] = (this.off[i + 1] - d + 6) % 6;
-      if (!silent) { this.spin = this.spin || [0, 0, 0, 0]; this.spin[i] += d; if (i > 0) this.spin[i - 1] -= d; if (i < 3) this.spin[i + 1] -= d; }
-    },
     gearSVG(i) {
       const teeth = Array.from({ length: 12 }, (_, k) => `<rect x="-7" y="-50" width="14" height="12" rx="2" transform="rotate(${k * 30})"/>`).join('');
       const chars = this.rims[i].rim.map((c, k) => `<text transform="rotate(${k * 60}) translate(0,-26)" text-anchor="middle" dominant-baseline="central">${c}</text>`).join('');
       return `<svg viewBox="-54 -54 108 108"><g class="gear-rot" data-g="${i}"><g fill="#b87333" stroke="#6b3f1a" stroke-width="2">${teeth}<circle r="40"/></g><circle r="13" fill="#6b3f1a"/><circle r="6" fill="#e0b060"/><g class="gtxt">${chars}</g></g></svg>`;
     },
     render() {
-      this.spin = this.spin || this.off.map(() => 0);
       $('#gear-row').innerHTML = this.rims.map((_, i) => `<div class="gear" data-i="${i}">${this.gearSVG(i)}<div class="gbtns"><button data-t="${i}" data-d="-1">⟲</button><button data-t="${i}" data-d="1">⟳</button></div></div>`).join('');
       this.pose(true);
       $('#gear-row').onclick = (e) => { const b = e.target.closest('[data-t]'); if (b) this.act(+b.dataset.t, +b.dataset.d); };
@@ -3266,13 +3384,19 @@ Object.assign(GAMES, {
     pose(instant) {
       $$('#gear-row .gear-rot').forEach((g, i) => {
         g.style.transition = instant ? 'none' : 'transform .35s cubic-bezier(.3,1.4,.5,1)';
-        g.style.transform = `rotate(${-this.off[i] * 60 + (this.spin ? 0 : 0)}deg)`;
+        g.style.transform = `rotate(${-(this.start[i] + this.turns[i]) * 60}deg)`;
       });
       $('#gear-window').innerHTML = this.rims.map((r, i) => `<b class="${this.off[i] === r.goal ? 'ok' : ''}">${r.rim[this.off[i]]}</b>`).join('');
+      $$('#gear-row .gear').forEach((g, i) => g.classList.toggle('lock', this.off[i] === this.rims[i].goal));
     },
     async act(i, d) {
-      if (Solo.busy) return; this.turn(i, d); SFX.tap(); this.pose();
-      if (this.solved()) { Solo.busy = true; Solo.good($('#gear-window'), 150); Solo.mean(`<b>${this.it.w}</b>：${this.it.m}`); return Solo.unit(1200, () => this.next()); }
+      if (Solo.busy) return;
+      this.off[i] = (this.off[i] + d + 6) % 6; this.turns[i] += d; SFX.tap(); this.pose();
+      if (this.solved()) {
+        Solo.busy = true; $$('#gear-row .gear').forEach((g) => g.classList.add('spin'));
+        Solo.good($('#gear-window'), 150); Solo.mean(`<b>${this.it.w}</b>：${this.it.m}`);
+        return Solo.unit(1600, () => this.next());
+      }
     },
   },
 
@@ -3311,21 +3435,28 @@ Object.assign(GAMES, {
     init() { this.next(); },
     next() {
       if (Solo.over) return;
-      const q = E.makeQuestion('overlap', Solo.rng, 4, Solo.avoid); this.q = q; this.k = 0;
+      const q = E.makeQuestion('overlap', Solo.rng, 4, Solo.avoid); this.q = q; this.k = 0; this.t0 = Date.now();
       Solo.count++; Solo.label(`第 ${Solo.count} 筒`); Solo.busy = false; Solo.mean('');
       $('#kal-opts').innerHTML = q.options.map((o, i) => `<button class="prism" data-i="${i}">${o}</button>`).join('');
       $('#kal-opts').onclick = (e) => this.pick(e.target.closest('[data-i]'));
       this.show(); clearInterval(this.iv); const gen = Solo.gen;
-      this.iv = setInterval(() => { if (gen !== Solo.gen || Solo.over) return clearInterval(this.iv); this.k = (this.k + 1) % 4; this.show(); }, 1600);
+      this.iv = setInterval(() => { if (gen !== Solo.gen || Solo.over) return clearInterval(this.iv); this.k = (this.k + 1) % 4; this.show(); }, 2400);
+      clearInterval(this.fv); this.fv = setInterval(() => { if (gen !== Solo.gen || Solo.over) return clearInterval(this.fv); this.fade(); }, 200);
     },
     show() {
       const c = this.q.idiom[this.k];
-      $('#kal-scope').innerHTML = Array.from({ length: 12 }, (_, i) => `<div class="wedge" style="transform:rotate(${i * 30}deg)${i % 2 ? ' scaleX(-1)' : ''}"><span>${c}</span></div>`).join('');
+      $('#kal-scope').innerHTML = Array.from({ length: 6 }, (_, i) => `<div class="wedge" style="transform:rotate(${i * 60}deg)${i % 2 ? ' scaleX(-1)' : ''}"><span>${c}</span></div>`).join('') + `<div class="kal-core" id="kal-core">${c}</div>`;
       $('#kal-dots').innerHTML = [0, 1, 2, 3].map((i) => `<i class="${i === this.k ? 'on' : ''}"></i>`).join('');
+      this.fade();
+    },
+    fade() {
+      // 中央的字會隨時間越來越清楚：約 6 秒後幾乎看得清
+      const t = Math.min(1, (Date.now() - this.t0) / 6000); const el = $('#kal-core'); if (!el) return;
+      el.style.opacity = (0.15 + t * 0.8).toFixed(2); el.style.filter = `blur(${((1 - t) * 6).toFixed(1)}px)`;
     },
     async pick(b) {
       if (!b || Solo.busy || b.classList.contains('wrong')) return;
-      if (+b.dataset.i === this.q.answer) { Solo.busy = true; clearInterval(this.iv); b.classList.add('good'); Solo.good(b, 120); Solo.mean(`<b>${this.q.idiom}</b>：${this.q.meaning}`); return Solo.unit(1200, () => this.next()); }
+      if (+b.dataset.i === this.q.answer) { Solo.busy = true; clearInterval(this.iv); clearInterval(this.fv); b.classList.add('good'); Solo.good(b, 120); Solo.mean(`<b>${this.q.idiom}</b>：${this.q.meaning}`); return Solo.unit(1200, () => this.next()); }
       else { b.classList.add('wrong'); Solo.bad(b); }
     },
   },
@@ -3439,15 +3570,15 @@ $('#tone-play').onclick = () => { if (GAMES.tone.q) playTones(GAMES.tone.q.tones
 
 /* ═══════════════════════ 遊戲說明 ═══════════════════════ */
 const HOWTO = {
-  fill: ['四字成語缺了一個字（橘色問號）。', '從下方十六個字中，點出正確的字。', '答錯會扣 2 秒，連續答對有額外加分。', '限時 60 秒，看你能答對幾題。'],
-  meaning: ['木框紙條上是一段成語的解釋。', '從八塊木牌中選出符合解釋的成語。', '答錯扣 2 秒，連續答對加分更多。', '限時 60 秒。'],
-  error: ['格子裡的成語有一個錯別字。', '第一步：點出寫錯的那個字。', '第二步：從下方選出正確的字把它改正。', '選錯扣 2 秒，限時 60 秒。'],
-  chain: ['看上方成語的「最後一個字」（紅色）。', '從下方八句中，選出以這個字開頭的成語，接成一條龍。', '有三顆愛心，答錯扣一顆，愛心用完就結束。', '限時 60 秒，接得越長分數越高。'],
-  link: ['盤面上是成語拆成的「前兩字」和「後兩字」。', '依序點兩塊，能湊成一句成語就會消除。', '配錯扣 1 秒；整盤清光加分又加時間。', '限時 60 秒。'],
+  fill: ['四字成語缺了一個字（橘色問號）。', '從下方十六個字中，點出正確的字。', '答錯會扣 2 秒，連續答對有額外加分。', '依難易度答對指定題數就過關。'],
+  meaning: ['木框紙條上是一段成語的解釋。', '從八塊木牌中選出符合解釋的成語。', '答錯扣 2 秒，連續答對加分更多。'],
+  error: ['格子裡的成語有一個錯別字。', '第一步：點出寫錯的那個字。', '第二步：從下方選出正確的字把它改正。', '選錯扣 2 秒。'],
+  chain: ['看上方成語的「最後一個字」（紅色）。', '從下方八句中，選出以這個字開頭的成語，接成一條龍。', '有三顆愛心，答錯扣一顆，愛心用完就結束。', '接得越長分數越高。'],
+  link: ['盤面上是成語拆成的「前兩字」和「後兩字」。', '依序點兩塊，能湊成一句成語就會消除。', '配錯扣 1 秒；整盤清光加分又加時間。'],
   search: ['字盤裡藏著六句成語，可以橫、直、斜、正反方向排列。', '用手指從第一個字「劃」到最後一個字；也可以先點起點、再點終點。', '下方清單只露出兩個字作提示。', '找光整盤加分加時間；💡提示會扣 3 秒。'],
   crush: ['依照順序點四個字，湊成一句成語就會消除。', '消除後上方的字會往下掉，並補上新的字。', '點最後選的那個字可以取消。', '點錯扣 1 秒；💡提示會亮出一句可以消的成語開頭。'],
   tower: ['積木塔只能拿「最上層」的字（亮起來的那塊）。', '依序點四塊最上層的字，湊成成語就拿掉。', '整座塔拆光加分加時間；卡住時會自動重疊一座。', '💡提示會亮出可以拿的第一塊。'],
-  antonym: ['左邊白色區是題目成語和它的意思。', '從下方六顆棋子中，找出「意思相反」的成語。', '答錯扣 2 秒，限時 60 秒。'],
+  antonym: ['左邊白色區是題目成語和它的意思。', '從下方六顆棋子中，找出「意思相反」的成語。', '答錯扣 2 秒。'],
   flower: ['花心是一個字，每片花瓣都是含有這個字的成語，但缺了一個字（□）。', '先點一片花瓣（可跳著選），再點下方綠色花苞補字。', '五片花瓣都補好，花就開了，加分加時間。', '選錯扣 2 秒。'],
   code: ['上方紙帶是座標密碼，例如「丙四」＝丙那一列、四那一欄。', '依照紙帶順序，在密碼表中點出對應的字。', '四個字都解出來就是一句成語。', '點錯扣 1.5 秒。'],
   history: ['四張卡片是四個成語故事，下方寫著故事人物。', '依照故事發生的年代，由最早到最晚依序點卡片。', '點下方已排好的格子可以取消重排。', '排完會公布每個故事的年代；排錯扣 2 秒。'],
@@ -3455,7 +3586,7 @@ const HOWTO = {
   cross: ['橫直交錯的格子裡，每一條都是一句成語。', '點一個虛線空格（會以橘框標示），再從下方竹簡選字填入。', '上方會顯示這一格所在成語的解釋當提示。', '整幅填完加分加時間；選錯扣 2 秒。'],
   pic: ['看畫面猜出這是哪一句成語。', '從下方字卡依序點出四個字。', '點上方已選的格子可以退回重選。', '答錯扣 2 秒。'],
   emoji: ['朋友會傳來表情符號（有時夾雜文字），用諧音或意思來聯想。', '從下方四個回覆中選出正確的成語。', '答錯扣 2 秒，那個選項會變灰。'],
-  tetris: ['字塊會一個一個落下，用 ◀ ▶ 移動、▼ 下降一格、⤓ 直接落到底。', '電腦上可用方向鍵，手機上可左右滑動、往下滑直接落底。', '把字「橫的由左到右」或「直的由上到下」排成成語，就會消除。', '上方「目標成語」是正在送出的字；堆到頂就結束。'],
+  tetris: ['字塊會一個一個落下，用 ◀ ▶ 移動、▼ 下降一格、⤓ 直接落到底；電腦上可用方向鍵，手機可左右滑動。', '橫排或直排連成一句成語就會自動閃光消除；正著讀、反著讀都算（疊起來的字是由下往上讀）。', '上方「目標成語」是正在送出的字，照順序擺就能拼出來。', '堆到頂就結束；競速對戰時是比 2 分鐘內誰拼出最多句。'],
   radical: ['依序替成語的每個字找出部首（黃色那一格）。', '從下方拼圖塊中選出正確的部首。', '部首依照教育部與康熙字典的 214 部首。', '選錯扣 2 秒。'],
   sudoku: ['四乘四的格子，第一列依序就是這盤的成語。', '每一列、每一欄、每個粗框小宮裡，四個字都要各出現一次。', '點空格，再點下方棋子填字；每盤都只有唯一解。', '填錯扣 2 秒。'],
   comic: ['從第 1 格看到第 4 格，讀完這則小故事。', '從下方四句中選出漫畫在說的成語。', '答錯扣 2 秒。'],
@@ -3465,22 +3596,25 @@ const HOWTO = {
   maze: ['你（🧑）從左下角出發，只能走到上下左右相鄰、發著光的格子。', '依照上方提示的解釋，一格一格踩出成語的字。', '連續走完三句成語，就會到達🚪出口。', '踩錯扣 2 秒。'],
   color: ['成語裡的顏色字被換成了色塊。', '看色塊顏色並想想成語的習慣用字，從下方顏料管選出正確的字。', '注意：紅／赤、黑／皂、青／綠等顏色很像，要靠對成語的記憶。', '選錯扣 2 秒。'],
   overlap: ['一句成語的四個字，全部半透明地疊在同一格裡。', '仔細辨認筆劃，從六個選項中選出正確的成語。', '🔍拆開一層會把其中一個字移出來（扣 3 秒）。', '選錯扣 2 秒。'],
-  gears: ['四個齒輪互相咬合，上方窗口顯示每個齒輪最上面的字。', '按 ⟲ ⟳ 轉動齒輪，「旁邊咬合的齒輪會反方向轉一格」。', '讓窗口由左到右拼出成語（變成綠色）即過關。', '下方有這句成語的解釋可以當提示。'],
+  gears: ['上方窗口顯示每個齒輪最上面的字。', '按每個齒輪下方的 ⟲ ⟳ 各自轉動，齒輪之間互不影響。', '轉對的齒輪會發出綠光；四個都對、拼出成語後，齒輪會一起轉起來。', '下方有這句成語的解釋可以當提示。'],
   eco: ['成語裡的動物或植物被挖空了。', '從六個選項中選出正確的動植物。', '答對的動植物會住進生態瓶；第一次收集到的會記入圖鑑。', '選錯扣 2 秒。'],
-  kaleido: ['萬花筒會輪流轉出一句成語的四個字（下方小圓點表示第幾個字）。', '從旋轉、鏡射的圖案中認出字。', '從四個選項中選出正確的成語。', '選錯扣 2 秒。'],
+  kaleido: ['萬花筒會輪流轉出一句成語的四個字（下方小圓點表示第幾個字）。', '外圈是字的鏡射碎片，中央的字會從模糊慢慢變清楚，大約 6 秒後就看得出來。', '越早認出、越早作答越好；從四個選項中選出正確的成語。', '選錯扣 2 秒。'],
   shadow: ['布幕上是四個字的影子，角度不對時會又扁又歪。', '拖動「轉動燈光」的滑桿，找到影子最清楚的角度。', '認出後，從四個選項中選出正確的成語。', '選錯扣 2 秒。'],
   tone: ['會播放一段四個音的旋律，旋律的高低起伏就是四個字的聲調。', '一聲平（ˉ）、二聲往上揚（ˊ）、三聲先降再升（ˇ）、四聲往下降（ˋ）。', '畫面上也畫出了旋律的形狀，關掉聲音也能玩。', '選出聲調相符的成語；選錯會顯示那句的聲調。'],
   fossil: ['岩塊下面是一塊刻著成語的石碑。', '點岩塊把它敲掉，露出更多字。', '看出來就從下方選出答案；敲得越少，分數越高。', '選錯扣 3 秒。'],
-  rush: ['所有參賽者同時看到同一題，最先答對的人得分（越快分數越高）。', '答錯會扣 20 分，而且這一題不能再搶。', '每位玩家的卡片上會顯示分數與「搶到幾題」。', '題型可選綜合，或只考某一種玩法。'],
-  race: ['所有參賽者玩「同一關」同一個謎題，最先完成的人拿下這一關（越快分數越高）。', '有人完成後，會公布是誰搶到，接著大家一起進入下一關。', '每位玩家的卡片上會顯示分數與「搶到幾關」。', '每一關有時間限制，時間到都沒人完成就直接下一關。'],
+  slide: ['四乘四的木盤裡有 15 塊字塊和 1 個空格。', '點和空格在同一橫列或同一直行的木塊，就能把它推向空格（可以一次推好幾塊）。', '上方是這盤的目標：把兩句成語各排成一橫列（由左到右），排好的那列會變綠色。', '兩句都排出來就過關；難度越高，打亂得越多、提示越少。'],
+  rush: ['所有參賽者同時看到同一題，最先答對的人得分（越快分數越高）。', '答錯會扣 20 分，而且這一題不能再搶。', '每位玩家的卡片上會顯示分數與「搶到幾題」。', '每題的思考時間依題型不同（15～25 秒）；題數可選 5～30 題。'],
+  race: ['所有參賽者玩「同一關」同一個謎題，最先完成的人拿下這一關（越快分數越高）。', '有人完成後，會公布是誰搶到，接著大家一起進入下一關。', '每位玩家的卡片上會顯示分數與「搶到幾關」。', '每一關有時間限制，時間到都沒人完成就直接下一關；遊戲可選「綜合」，每關隨機換一種玩法。'],
 };
 function showHelp(key, onClose) {
   const g = E.GAMES[key]; const title = key === 'rush' ? '搶答對戰' : key === 'race' ? '競速對戰' : g ? g.name : '遊戲說明';
   const lines = HOWTO[key] || [];
   modal(`<h2>📖 ${title}</h2><div class="howto">${lines.map((l, i) => `<p><b>${i + 1}</b>${l}</p>`).join('')}</div>
+    ${E.GAMES[key] && !E.GAMES[key].noTimer ? `<div class="help-rule">闖關規則：依難易度答對 <b>5／10／20</b> 題（或完成相同數量的成語）就過關；時間用完就結束，剩餘時間會換成加分。</div>` : ''}
     <div style="margin-top:14px"><button class="btn green" id="help-ok">${onClose ? '開始遊戲' : '我知道了'}</button></div>`);
   $('#help-ok').onclick = () => { closeModal(); if (onClose) onClose(); };
 }
+function addProgress() { $$('.screen').forEach((sc) => { const k = sc.id.slice(2); if (!E.GAMES[k] || $('[data-prog]', sc)) return; const d = document.createElement('div'); d.className = 'qprog'; d.dataset.prog = ''; sc.append(d); }); }
 function addHelpButtons() {
   $$('.screen').forEach((sc) => {
     const hud = $('.hud', sc); if (!hud) return;
@@ -3514,25 +3648,33 @@ const Race = {
     if (evt === 'race_start') {
       if (!(this.mode === 'local' && this.match)) { this.mode = 'online'; this.myId = ST.name; }
       closeModal();
-      this.active = true; this.game = d.game; this.limit = d.limit; this.total = d.rounds;
-      this.players = d.players.map((p) => ({ ...p, score: 0, correct: 0 }));
-      Solo.startRace(d.game); this.mountBar(); this.renderPlayers();
+      this.active = true; this.game = d.game; this.total = d.rounds; this.scoreMode = false; Solo.avoid = new Set();
+      this.players = d.players.map((p) => ({ ...p, score: 0, correct: 0, n: 0 }));
+      if (d.game !== 'mix') Solo.startRace(d.game); this.mountBar(); this.renderPlayers();
       $('#rb-round').textContent = `共 ${d.rounds} 關`; $('#rb-time').textContent = '';
       if (!d.noCountdown) this.countdown();
     } else if (evt === 'race_round') {
       this.k = d.k; this.t0 = Date.now() - (d.limit - (d.remain != null ? d.remain : d.limit)); this.limit = d.limit; this.doneSent = false;
+      this.scoreMode = !!d.scoreMode; this.cur = d.game || this.game;
+      if (!Solo.racing || Solo.game !== this.cur || current !== 's-' + this.cur) Solo.startRace(this.cur);
+      this.players.forEach((p) => { p.n = 0; }); this.renderPlayers();
       $('#race-banner').classList.remove('on');
       $$('#rb-players .rp').forEach((c) => c.classList.remove('win'));
-      $('#rb-round').textContent = `第 ${d.k} / ${d.total} 關`;
+      $('#rb-round').textContent = `第 ${d.k} / ${d.total} 關${this.game === 'mix' ? '・' + E.GAMES[this.cur].name : ''}`;
       Solo.raceRound(d.seed);
+      if (this.scoreMode) toast('限時 2 分鐘，看誰拼出的成語最多！', 2600);
       clearInterval(this.tiv); this.tiv = setInterval(() => this.tick(), 400); this.tick();
+    } else if (evt === 'race_progress') {
+      const p = this.players.find((x) => x.id === d.id); if (p) { p.n = d.n; this.renderPlayers(); }
     } else if (evt === 'race_reveal') {
       clearInterval(this.tiv); Solo.busy = true; this.applyScores(d.scores);
+      if (d.counts) d.counts.forEach((c) => { const p = this.players.find((x) => x.id === c.id); if (p) p.n = c.n; });
+      this.renderPlayers();
       const p = this.players.find((x) => x.id === d.winner);
       const sc = p && d.scores.find((x) => x.id === p.id);
       $('#race-banner').innerHTML = p
-        ? `<div class="rbw">${esc(p.avatar)} ${esc(p.name)} 最先完成！<span>+${d.pts}</span></div><div class="rbs">已搶到 ${sc ? sc.correct : 1} 關</div>`
-        : '<div class="rbw">時間到，沒有人完成</div>';
+        ? `<div class="rbw">${esc(p.avatar)} ${esc(p.name)} ${d.scoreMode ? `拼出 ${d.count} 句，拿下這關！` : '最先完成！'}<span>+${d.pts}</span></div><div class="rbs">已搶到 ${sc ? sc.correct : 1} 關</div>`
+        : `<div class="rbw">${d.scoreMode ? '時間到，沒有人拼出成語' : '時間到，沒有人完成'}</div>`;
       $('#race-banner').classList.add('on');
       if (p) { const c = $(`#rb-players .rp[data-id="${CSS.escape(p.id)}"]`); if (c) c.classList.add('win'); }
       if (p && p.id === this.myId) SFX.win(); else SFX.tap();
@@ -3557,7 +3699,7 @@ const Race = {
     bar.classList.add('on');
   },
   renderPlayers() {
-    $('#rb-players').innerHTML = this.players.map((p) => `<div class="rp ${p.id === this.myId ? 'me' : ''}" data-id="${esc(p.id)}"><span class="av">${esc(p.avatar)}</span><span class="nm">${esc(p.name)}</span><b class="sc">${p.score}</b><small class="ct">搶到 ${p.correct} 關</small></div>`).join('');
+    $('#rb-players').innerHTML = this.players.map((p) => `<div class="rp ${p.id === this.myId ? 'me' : ''}" data-id="${esc(p.id)}"><span class="av">${esc(p.avatar)}</span><span class="nm">${esc(p.name)}</span><b class="sc">${p.score}</b><small class="ct">${this.scoreMode ? `本關 ${p.n || 0} 句・` : ''}搶到 ${p.correct} 關</small></div>`).join('');
   },
   applyScores(scores) {
     scores.forEach((s) => { const p = this.players.find((x) => x.id === s.id); if (p) { p.score = s.score; p.correct = s.correct; } });
@@ -3568,6 +3710,10 @@ const Race = {
     cd.classList.add('on');
     ['3', '2', '1', '開始！'].forEach((t, i) => setTimeout(() => { cd.innerHTML = `<span style="${i === 3 ? 'font-size:80px' : ''}">${t}</span>`; i < 3 ? SFX.tick() : SFX.win(); }, i * 800));
     setTimeout(() => cd.classList.remove('on'), 3200);
+  },
+  progress(n) {
+    if (!this.active || !this.scoreMode) return;
+    if (this.mode === 'local') this.match.progress(this.myId, this.k, n); else if (sock) sock.emit('race_progress', { k: this.k, n });
   },
   iDone() {
     if (this.doneSent || !this.active) return; this.doneSent = true; Solo.busy = true;
@@ -3587,9 +3733,9 @@ const Race = {
   },
   resume(s) {
     this.mode = 'online'; this.myId = ST.name;
-    this.handle('race_start', { game: s.game, rounds: s.total, limit: s.limit, players: s.players, noCountdown: true });
+    this.handle('race_start', { game: s.game, rounds: s.total, players: s.players, noCountdown: true });
     this.applyScores(s.scores);
-    if (s.phase === 'play') this.handle('race_round', { k: s.k, total: s.total, seed: s.seed, limit: s.limit, remain: s.remain });
+    if (s.phase === 'play') { this.handle('race_round', { k: s.k, total: s.total, seed: s.seed, limit: s.limit, remain: s.remain, game: s.cur, scoreMode: s.scoreMode }); (s.counts || []).forEach((c) => this.handle('race_progress', c)); }
   },
   showEnd(ranking) {
     SFX.win();
@@ -3600,7 +3746,7 @@ const Race = {
       <div class="blk" style="height:${hts[k]}px;background:${cols[k]}">${lbl[k]}</div></div>` : '<div class="col"></div>')).join('');
     const rest = ranking.slice(3).map((r) => `<div><span>${r.rank}. ${esc(r.avatar)} ${esc(r.name)}</span><span>${r.score} 分・搶 ${r.correct} 關</span></div>`).join('');
     const title = mine && mine.rank === 1 ? '🎉 競速冠軍！' : mine ? `第 ${mine.rank} 名` : '比賽結束';
-    modal(`<h2>${title}</h2><div class="muted">${E.GAMES[this.game].name}・競速對戰</div><div class="podium">${pod}</div><div class="rank-rest">${rest}</div>
+    modal(`<h2>${title}</h2><div class="muted">${this.game === 'mix' ? '綜合' : E.GAMES[this.game].name}・競速對戰</div><div class="podium">${pod}</div><div class="rank-rest">${rest}</div>
       <p class="muted" style="margin-top:8px">${this.mode === 'online' ? (ST.guest ? '' : '對戰成績已記錄到金榜') : '與電腦對戰不列入金榜'}</p>
       <div class="row" style="margin-top:12px"><button class="btn sm white" id="rend-out">離開</button><button class="btn sm red" id="rend-again">${this.mode === 'online' ? '回到房間' : '再來一局'}</button></div>`);
     $('#rend-out').onclick = () => { closeModal(); if (this.mode === 'online') Room.leave(); else { this.match = null; show('s-battle'); } };
@@ -3608,23 +3754,77 @@ const Race = {
   },
 };
 
+
+/* ───── 成語推盤 ───── */
+GAMES.slide = {
+  MOVES: { easy: 28, normal: 50, hard: 90 },
+  init() { this.round = 0; this.deal(); },
+  deal() {
+    if (Solo.over) return;
+    const pick = () => { let it; for (let t = 0; t < 40; t++) { it = E.pick(Solo.rng, E.IDIOMS); if (!Solo.avoid.has(it.w)) break; } Solo.avoid.add(it.w); return it; };
+    const a = pick(); let b = pick(); if (b.w === a.w) b = pick();
+    this.targets = [a, b];
+    const deco = decoyChars(7, [...a.w, ...b.w]);
+    this.board = [...a.w, ...b.w, ...deco, null];
+    const diff = Solo.racing ? 'normal' : Solo.diff || 'normal';
+    let hole = 15, prev = -1, n = this.MOVES[diff];
+    for (let k = 0; k < n || this.count() >= 2; k++) {
+      const r = Math.floor(hole / 4), c = hole % 4;
+      const nb = [[r - 1, c], [r + 1, c], [r, c - 1], [r, c + 1]].filter(([x, y]) => x >= 0 && y >= 0 && x < 4 && y < 4).map(([x, y]) => x * 4 + y).filter((i) => i !== prev);
+      const i = E.pick(Solo.rng, nb); this.board[hole] = this.board[i]; this.board[i] = null; prev = hole; hole = i;
+      if (k > 400) break;
+    }
+    this.done = new Set(this.formed().map((w) => w.w));
+    this.round++; Solo.label(`第 ${this.round} 盤`); Solo.busy = false; Solo.mean('');
+    const show = (w) => (diff === 'easy' ? w.w : diff === 'normal' ? [...w.w].map((ch, k) => (k === 1 || k === 2 ? '□' : ch)).join('') : '□□□□');
+    $('#slide-goal').innerHTML = `目標：${this.targets.map((w) => `<b>${show(w)}</b>`).join('、')}${diff === 'hard' ? `<br><small>${this.targets.map((w) => w.m).join('／')}</small>` : ''}`;
+    this.render();
+  },
+  formed() { const out = []; for (let r = 0; r < 4; r++) { const row = this.board.slice(r * 4, r * 4 + 4); if (row.every(Boolean)) { const w = E.BY_WORD.get(row.join('')); if (w) out.push(w); } } return out; },
+  count() { return this.formed().length; },
+  render() {
+    const okRows = new Set(); for (let r = 0; r < 4; r++) { const row = this.board.slice(r * 4, r * 4 + 4); if (row.every(Boolean) && E.BY_WORD.has(row.join(''))) okRows.add(r); }
+    $('#slide-grid').innerHTML = this.board.map((c, i) => (c ? `<button class="stile ${okRows.has(Math.floor(i / 4)) ? 'ok' : ''}" data-i="${i}">${c}</button>` : '<div class="stile hole"></div>')).join('');
+    $('#slide-grid').onclick = (e) => { const b = e.target.closest('[data-i]'); if (b) this.push(+b.dataset.i); };
+  },
+  push(i) {
+    if (Solo.busy) return;
+    const hole = this.board.indexOf(null); const hr = Math.floor(hole / 4), hc = hole % 4, r = Math.floor(i / 4), c = i % 4;
+    if (hr !== r && hc !== c) return;
+    let h = hole; const step = hr === r ? (c > hc ? 1 : -1) : (r > hr ? 4 : -4);
+    while (h !== i) { this.board[h] = this.board[h + step]; this.board[h + step] = null; h += step; }
+    SFX.tap(); this.render(); this.check();
+  },
+  check() {
+    const now = this.formed();
+    now.forEach((w) => { if (!this.done.has(w.w)) { this.done.add(w.w); Solo.good($('#slide-grid'), 150); Solo.mean(`<b>${w.w}</b>：${w.m}`); } });
+    if (now.length >= 2) { Solo.busy = true; clearBonus($('#slide-grid'), '推盤完成', '#ffd66b', 200, 10); return Solo.unit(1300, () => this.deal()); }
+  },
+};
+
 /* ───────── 金榜 ───────── */
-const BOARD_TABS = [['rush', '搶答對戰'], ...Object.entries(E.GAMES).map(([k, g]) => [k, g.name])];
-let boardTab = 'rush';
+const BOARD_TABS = [['rush', '對戰勝場'], ['mix', '綜合挑戰'], ...Object.entries(E.GAMES).map(([k, g]) => [k, g.name])];
+let boardTab = 'rush', boardDiff = Solo.diff;
 function renderBoardTabs() {
   $('#bang-tabs').innerHTML = BOARD_TABS.map(([k, n]) => `<button data-b="${k}" class="${k === boardTab ? 'on' : ''}">${n}</button>`).join('');
+  const needDiff = boardTab !== 'rush' && boardTab !== 'rank';
+  $('#bang-diff').classList.toggle('hidden', !needDiff);
+  $('#bang-diff').innerHTML = `難易度：${Object.entries(DIFF).map(([k, d]) => `<button data-d="${k}" class="${k === boardDiff ? 'on' : ''}">${d.label}（${d.n} 題）</button>`).join('')}`;
 }
 $('#bang-tabs').onclick = (e) => { const b = e.target.closest('[data-b]'); if (!b) return; boardTab = b.dataset.b; renderBoardTabs(); loadBoard(); };
+$('#bang-diff').onclick = (e) => { const b = e.target.closest('[data-d]'); if (!b) return; boardDiff = b.dataset.d; renderBoardTabs(); loadBoard(); };
 async function loadBoard() {
   const list = $('#bang-list');
   list.innerHTML = `<div class="muted" style="text-align:center;padding:30px">載入中…</div>`;
+  const key = boardTab === 'rush' || boardTab === 'rank' ? boardTab : `${boardTab}:${boardDiff}`;
   try {
-    const r = await api('/api/leaderboard?game=' + boardTab);
+    const r = await api('/api/leaderboard?game=' + encodeURIComponent(key));
     if (!r.rows.length) { list.innerHTML = `<div class="muted" style="text-align:center;padding:30px">目前還沒有人上榜，快來搶頭香！</div>`; return; }
     const medal = ['🥇', '🥈', '🥉'];
+    const unit = boardTab === 'rush' ? null : boardTab === 'rank' ? '功名' : `分・${DIFF[boardDiff].label}`;
     list.innerHTML = r.rows.map((x, i) => `<div class="brow ${x.name === ST.name && !ST.guest ? 'me' : ''}">
       <span class="rk">${medal[i] || i + 1}</span><span class="av">${esc(x.avatar || '🙂')}</span><span class="nm">${esc(x.name)}</span>
-      <span class="val">${x.value}<small>${boardTab === 'rush' ? `勝／${x.games} 場` : boardTab === 'rank' ? '功名' : '分'}</small></span></div>`).join('');
+      <span class="val">${x.value}<small>${unit || `勝／${x.games} 場`}</small></span></div>`).join('');
   } catch (e) { list.innerHTML = `<div class="muted" style="text-align:center;padding:30px">${esc(e.message)}</div>`; }
 }
 
@@ -3673,7 +3873,7 @@ const Room = {
     $('#online-hint').textContent = '連線中…';
     try {
       const s = await ensureSocket();
-      s.emit('create_room', { humanMax: segVal('onHuman'), aiCount: segVal('onAi'), aiLevel: segVal('onLv'), rounds: segVal('onRounds'), qtype: segVal('onType'), mode: segVal('onMode'), game: $('#on-game').value, raceRounds: segVal('onRaceRounds') }, (r) => {
+      s.emit('create_room', { humanMax: 4, aiCount: 0, aiLevel: 'normal', rounds: 10, qtype: 'mix', mode: 'rush', game: 'mix', raceRounds: 10 }, (r) => {
         if (r.error) return toast(r.error);
         $('#online-hint').textContent = ''; this.onRoom(r.room); show('s-room');
       });
@@ -3714,7 +3914,7 @@ const Room = {
     $('#host-only').textContent = isHost ? '' : '（只有房主可調整）';
     const race = v.mode === 'race';
     $$('#room-settings .r-race').forEach((x) => x.classList.toggle('hidden', !race)); $$('#room-settings .r-rush').forEach((x) => x.classList.toggle('hidden', race));
-    $('#room-game').value = v.game || 'search'; $('#room-game').disabled = !isHost;
+    $('#room-game').value = v.game || 'mix'; $('#room-game').disabled = !isHost;
     $('#btn-start').classList.toggle('hidden', !isHost);
     $('#room-wait').textContent = isHost ? `共 ${v.members.length + v.aiCount} 位參賽者，準備好就開擂！` : '等待房主開始比賽…';
   },
@@ -3890,12 +4090,12 @@ const Rush = {
 };
 $('#btn-local').onclick = () => (segVal('soloMode') === 'race' ? Race.startLocal() : Rush.startLocal());
 (function () {
-  const opts = Object.entries(E.GAMES).filter(([k]) => k !== 'rank').map(([k, g]) => `<option value="${k}">${g.name}</option>`).join('');
-  ['#solo-game', '#on-game', '#room-game'].forEach((id) => { $(id).innerHTML = opts; });
+  const opts = '<option value="mix">🎲 綜合（每關隨機）</option>' + Object.entries(E.GAMES).filter(([k]) => k !== 'rank').map(([k, g]) => `<option value="${k}">${g.name}</option>`).join('');
+  ['#solo-game', '#room-game'].forEach((id) => { $(id).innerHTML = opts; });
   const sync = (seg) => { const card = $(`[data-seg="${seg}"]`).closest('.menu-card'); const race = segVal(seg) === 'race';
     $$('.m-race', card).forEach((x) => x.classList.toggle('hidden', !race)); $$('.m-rush', card).forEach((x) => x.classList.toggle('hidden', race));
     const btn = $('#btn-local', card); if (btn) btn.textContent = race ? '開始競速賽' : '開始擂台賽'; };
-  ['soloMode', 'onMode'].forEach((seg) => $(`[data-seg="${seg}"]`).addEventListener('click', () => setTimeout(() => sync(seg), 0)));
+  ['soloMode'].forEach((seg) => $(`[data-seg="${seg}"]`).addEventListener('click', () => setTimeout(() => sync(seg), 0)));
   $('#room-game').onchange = () => { if (sock) sock.emit('room_settings', { game: $('#room-game').value }); };
   $$('.game-sel').forEach((sel) => sel.addEventListener('change', () => { if (sel.id !== 'room-game') { const k = sel.value; if (!localGet('seen_' + k, false)) { localSet('seen_' + k, true); showHelp(k); } } }));
 })();
@@ -3922,6 +4122,7 @@ $('#btn-music').onclick = () => BGM.set(!BGM.on);
 /* ───────── 啟動 ───────── */
 decorate();
 addHelpButtons();
+addProgress();
 BGM.init();
 setupLogin();
 (async () => {
