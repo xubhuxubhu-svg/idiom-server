@@ -135,6 +135,9 @@ input{font:inherit}
 .diff-seg button small{font-size:10px;opacity:.8}
 .qprog{position:absolute;top:88px;left:14px;z-index:6;font-size:12px;font-weight:900;padding:2px 10px;border-radius:99px;background:rgba(0,0,0,.35);color:#fff}
 .qprog b{font-size:14px;color:#ffe066}
+.quit-opts{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.quit-opts .btn{flex-direction:column;line-height:1.2;padding:.55em 1em}
+.quit-opts .btn small{font-size:12px;font-weight:700;letter-spacing:0;opacity:.9;margin-top:2px}
 .mix-sum{margin-top:10px;padding:8px;border-radius:12px;background:#fff3d6;color:#8a4a12;font-weight:900}
 .mix-sum b{font-size:22px;color:#d62828}
 .cat-h{font-size:20px;font-weight:900;color:#8a4a1a;letter-spacing:.15em;margin:6px 4px -4px}
@@ -811,7 +814,7 @@ input{font:inherit}
 .rank-title{font-size:14px}.rank-title b{font-size:30px;color:#b3202c;margin-left:6px;letter-spacing:.1em}
 .rank-prog{height:12px;border-radius:99px;background:rgba(0,0,0,.12);overflow:hidden}.rank-prog i{display:block;height:100%;background:linear-gradient(90deg,#e0b04a,#b3202c);transition:width .5s}
 .rank-next{font-size:13px}
-.rank-items{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;font-size:22px;text-align:center}
+.rank-items{display:grid;grid-template-columns:repeat(8,1fr);gap:2px;font-size:17px;text-align:center}
 .rank-items span{opacity:.35}.rank-items span.on{opacity:1}
 #s-rank .gq-card{background:#fffaf0;border:3px solid #b8862a}
 #s-rank .meaning-strip{background:rgba(255,244,208,.9);color:#5a1a0a}
@@ -1091,6 +1094,59 @@ input{font:inherit}
 
 @media (min-height:760px){.jade{width:68px;height:68px;font-size:38px}.scroll-frame{margin-top:28px}.wood-frame{margin-top:40px}}
 @media (max-height:640px){.hero{width:26%}.logo{font-size:44px}.jade{width:54px;height:54px;font-size:28px}.opt-grid{padding-top:14px;gap:9px}}
+/* ═══ 科舉功名名牌 ═══ */
+.gm{display:inline-flex;align-items:center;justify-content:center;position:relative;vertical-align:middle;font-family:"Kaiti TC","BiauKai","STKaiti","KaiTi",serif;font-weight:900;font-size:12px;line-height:1;letter-spacing:.12em;padding:4px 7px 4px 8px;border-radius:4px;white-space:nowrap;flex:none;color:#fff;background:linear-gradient(#8a7a66,#5e5040);border:1.5px solid #3a2e22;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.28),0 2px 0 rgba(0,0,0,.28);text-shadow:0 1px 0 rgba(0,0,0,.35)}
+.gm::before,.gm::after{content:"";position:absolute;top:50%;width:3px;height:3px;margin-top:-1.5px;border-radius:50%;background:currentColor;opacity:.75}
+.gm::before{left:2px}.gm::after{right:2px}
+.gm.g1{background:linear-gradient(#5b8fd6,#2f5f9e);border-color:#1b3a66}
+.gm.g2{background:linear-gradient(#3fb28a,#1d7a58);border-color:#0e4a34;box-shadow:inset 0 0 0 1.5px #f2d27a,0 2px 0 rgba(0,0,0,.28)}
+.gm.g3{background:linear-gradient(#e0413f,#a3161c);border-color:#5a0a0e;color:#ffe08a;box-shadow:inset 0 0 0 1.5px #f2c14e,0 2px 0 rgba(0,0,0,.3)}
+.gm.g4{background:linear-gradient(115deg,#fff1b0 0%,#f5c542 35%,#c8901a 60%,#ffe27a 100%);border-color:#7a4a00;color:#9a1414;text-shadow:0 1px 0 rgba(255,255,255,.6);box-shadow:inset 0 0 0 1.5px #b3202c,0 2px 0 rgba(0,0,0,.3);overflow:hidden}
+.gm.g5{background:linear-gradient(#8a4ad0,#4e1f8a);border-color:#2a0a52;color:#ffe08a;box-shadow:inset 0 0 0 1.5px #f2c14e,0 0 6px rgba(160,100,255,.6),0 2px 0 rgba(0,0,0,.3)}
+.gm.g6{background:linear-gradient(#2a2a2a,#0e0e0e);border-color:#c8901a;color:#ffd65a;box-shadow:inset 0 0 0 1.5px #f5c542,0 0 8px rgba(255,200,60,.75),0 2px 0 rgba(0,0,0,.35);overflow:hidden}
+.gm.g4 i,.gm.g6 i{position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.75) 45%,transparent 60%);background-size:250% 100%;animation:gmShine 3s linear infinite;pointer-events:none}
+.gm .cr{font-style:normal;margin-right:2px;letter-spacing:0;text-shadow:none}
+@keyframes gmShine{from{background-position:150% 0}to{background-position:-100% 0}}
+.gm.big{font-size:28px;padding:12px 20px 12px 22px;border-radius:8px;border-width:3px}
+.gm.big::before,.gm.big::after{width:6px;height:6px;margin-top:-3px}.gm.big::before{left:6px}.gm.big::after{right:6px}
+.gm.mid{font-size:17px;padding:6px 11px 6px 12px}
+.pill .gm{margin-left:2px}
+#me-pill{cursor:pointer;height:auto;min-height:38px;padding-top:3px;padding-bottom:3px;border-radius:22px}
+.me-xpbar{display:block;width:100%;height:4px;border-radius:9px;background:#e6dcc4;overflow:hidden;margin-top:3px}.me-xpbar i{display:block;height:100%;background:linear-gradient(90deg,#f2c14e,#d62828)}
+.me-col{display:flex;flex-direction:column;align-items:stretch;line-height:1.15}
+.me-top{display:flex;align-items:center;gap:5px}
+.rp .gm{margin:0 3px 0 0!important}
+.pcard .gm,.rp .gm{font-size:9px;padding:2px 4px 2px 5px;margin:1px 0;letter-spacing:.05em}
+.pcard .gm::before,.pcard .gm::after,.rp .gm::before,.rp .gm::after,.rank-rest .gm::before,.rank-rest .gm::after{display:none}
+.seat .gm{font-size:10px;padding:3px 6px;letter-spacing:.05em}.seat .gm::before,.seat .gm::after,.podium .gm::before,.podium .gm::after{display:none}
+.pill .gm{font-size:13px}
+.podium .gm{font-size:10px;padding:3px 6px;margin:2px 0}
+.brow .nm{display:flex;align-items:center;gap:6px;min-width:0}.brow .nm span{overflow:hidden;text-overflow:ellipsis}
+.rank-rest .gm{font-size:9px;padding:2px 4px;margin-left:4px}
+.gm-table{display:flex;flex-direction:column;gap:5px;max-height:38vh;overflow:auto;margin:10px 0;padding:3px 4px}
+.gm-row{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:10px;background:rgba(0,0,0,.035);text-align:left;font-size:12.5px;color:#5a3a1a}
+.gm-row .gm{min-width:84px}
+.gm-row .th{margin-left:auto;font-weight:900;color:#b3202c;white-space:nowrap}
+.gm-row .ds{flex:1;min-width:0}
+.gm-row.now{background:#fff1c2;outline:2.5px solid #d62828}
+.gm-row.lock{opacity:.5}
+.gm-prog{height:10px;border-radius:9px;background:#eee;overflow:hidden;margin:6px 0}.gm-prog i{display:block;height:100%;background:linear-gradient(90deg,#f2c14e,#d62828)}
+.gm-how{font-size:12.5px;color:#6a4a2a;text-align:left;background:#fff8e2;border-radius:10px;padding:8px 10px;line-height:1.6}
+#promo{position:absolute;inset:0;z-index:95;display:none;align-items:center;justify-content:center;background:radial-gradient(rgba(90,10,10,.55),rgba(20,0,0,.85));cursor:pointer;overflow:hidden}
+#promo.on{display:flex;animation:gmFade .3s}
+#promo .pbox{position:relative;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;color:#ffe7a0;animation:promoIn .7s cubic-bezier(.2,1.6,.4,1)}
+#promo .p1{font-size:20px;letter-spacing:.3em;font-weight:900}
+#promo .p2{font-size:14px;opacity:.9}
+#promo .rays{position:absolute;width:520px;height:520px;background:repeating-conic-gradient(rgba(255,214,107,.18) 0 8deg,transparent 8deg 20deg);border-radius:50%;animation:gmSpin 12s linear infinite;pointer-events:none}
+@keyframes promoIn{from{transform:scale(.3) rotate(-8deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes gmFade{from{opacity:0}to{opacity:1}}
+@keyframes gmSpin{to{transform:rotate(360deg)}}
+.grade{display:inline-block;margin:6px auto 2px;padding:4px 14px;border:3px solid currentColor;border-radius:8px;font-family:"Kaiti TC","BiauKai","KaiTi",serif;font-size:22px;font-weight:900;letter-spacing:.2em;transform:rotate(-6deg);animation:stampIn .5s cubic-bezier(.2,1.8,.4,1)}
+.grade small{display:block;font-size:11px;letter-spacing:.05em;font-weight:700}
+.grade.a{color:#c8252c}.grade.b{color:#c96a12}.grade.c{color:#2e7a4a}.grade.f{color:#7a7a7a}
+@keyframes stampIn{from{transform:scale(2.4) rotate(-6deg);opacity:0}to{transform:scale(1) rotate(-6deg);opacity:1}}
+.xp-gain{font-size:13px;font-weight:900;color:#8a5a12;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:6px}
+.xp-gain b{color:#d62828}
 </style>
 </head>
 <body data-theme="sky">
@@ -1119,7 +1175,7 @@ input{font:inherit}
 <section class="screen" id="s-lobby" data-theme="sky">
   <div class="sky-bg"><div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div><div class="courtyard-slot"></div></div>
   <div class="topbar">
-    <div class="pill"><span class="ico" id="me-av">🐯</span><span id="me-name">玩家</span></div>
+    <div class="pill" id="me-pill" title="查看功名"><span class="ico" id="me-av">🐯</span><span class="me-col"><span class="me-top"><span id="me-name">玩家</span><span id="me-plate"></span></span><span class="me-xpbar"><i id="me-xpbar"></i></span></span></div>
     <div class="grow"></div>
     <button class="round-btn" id="btn-music" aria-label="音樂" style="margin-right:8px">🎵</button>
     <button class="round-btn" id="btn-settings" aria-label="設定">⚙</button>
@@ -1132,6 +1188,7 @@ input{font:inherit}
     </div>
   </div>
   <div class="side-icons">
+    <button class="side-ico" data-go="rankgame"><b>🏯</b>古風升官記</button>
     <button class="side-ico" data-go="board"><b>🏆</b>金榜題名</button>
     <button class="side-ico" data-go="credits"><b>🎐</b>製作名單</button>
   </div>
@@ -1741,6 +1798,7 @@ input{font:inherit}
 <!-- 彈窗 -->
 <div class="modal" id="modal"><div class="card" id="modal-card"></div></div>
 </div>
+<div id="promo"></div>
 <div id="toast"></div>
 
 <script>
@@ -1925,19 +1983,27 @@ function decorate() {
 }
 
 /* ───────── 伺服器 ───────── */
+/** 把任何英文或技術性的錯誤，換成看得懂的中文 */
+function zhError(e, fallback = '連線發生問題，請稍後再試') {
+  const m = (e && e.message) || '';
+  return /[一-鿿]/.test(m) ? m : fallback;
+}
 async function api(path, body) {
   const base = serverBase();
   if (!base) throw new Error('尚未設定伺服器位址');
-  const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 75000);
+  // 不使用中斷訊號物件（某些瀏覽器外框無法傳遞），改用計時器判斷逾時
+  let timer;
+  const timeout = new Promise((_, rej) => { timer = setTimeout(() => rej(new Error('連不上伺服器，請稍後再試（伺服器可能正在喚醒，約需 30～60 秒）')), 75000); });
   try {
-    const r = await fetch(base + path, body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: ctl.signal } : { signal: ctl.signal });
-    const j = await r.json().catch(() => ({ error: '伺服器回應異常' }));
-    if (!r.ok) throw new Error(j.error || '發生錯誤');
+    const req = fetch(base + path, body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {});
+    const r = await Promise.race([req, timeout]);
+    const j = await r.json().catch(() => ({ error: '伺服器回應異常，請稍後再試' }));
+    if (!r.ok) throw new Error(j.error || '發生錯誤，請稍後再試');
     return j;
   } catch (e) {
-    if (e.name === 'AbortError' || e instanceof TypeError) throw new Error('連不上伺服器，請稍後再試');
-    throw e;
-  } finally { clearTimeout(t); }
+    if (e instanceof TypeError) throw new Error('連不上伺服器，請確認網路後再試');
+    throw new Error(zhError(e));
+  } finally { clearTimeout(timer); }
 }
 let serverOk = false;
 async function pingServer() {
@@ -1968,7 +2034,7 @@ function setupLogin() {
     try {
       const r = await api(loginTab === 'reg' ? '/api/register' : '/api/login', { name, password, avatar: pickAv });
       loginOk(r);
-    } catch (e) { $('#login-err').textContent = e.message; }
+    } catch (e) { $('#login-err').textContent = zhError(e); }
     $('#btn-login').disabled = false;
   };
   $('#in-pw').onkeydown = (e) => { if (e.key === 'Enter') $('#btn-login').click(); };
@@ -1978,15 +2044,17 @@ function setupLogin() {
 function loginOk(r) {
   ST.guest = false; ST.token = r.token || ST.token; ST.name = r.name; ST.avatar = r.avatar || ST.avatar; ST.bests = r.bests || {};
   store.set('token', ST.token); store.set('name', ST.name); store.set('avatar', ST.avatar);
-  enterLobby(); toast(`歡迎回來，${ST.name}！`);
+  const had = Cloud.merge(r.save);
+  XP.login(r.xp);
+  enterLobby(); toast(had ? `歡迎回來，${ST.name}！☁ 已讀取雲端存檔` : `歡迎，${ST.name}！之後的進度會自動存到雲端`);
 }
 function enterLobby() {
   $('#me-av').textContent = ST.avatar;
-  $('#me-name').textContent = ST.guest ? '訪客（成績不上榜）' : ST.name;
-  show('s-lobby');
+  $('#me-name').textContent = ST.guest ? '訪客' : ST.name;
+  show('s-lobby'); if (ST.guest) XP.migrate(); XP.refresh();
 }
 function logout() {
-  ST.token = null; store.set('token', null); ST.guest = false; disconnectSocket(); closeModal(); show('s-login');
+  XP.flush(); ST.token = null; ST.xp = 0; store.set('token', null); ST.guest = false; disconnectSocket(); closeModal(); show('s-login');
 }
 function serverDialog() {
   modal(`<h2>伺服器設定</h2><p class="muted">一般不需要更改。<br>若畫面放在 Netlify，請填入 Render 伺服器網址。</p>
@@ -2013,7 +2081,12 @@ function settingsDialog() {
   };
   $('#st-full').onclick = () => { try { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); } catch (e) {} };
   $('#st-srv').onclick = serverDialog;
-  $('#st-out').onclick = logout;
+  $('#st-out').onclick = () => {
+    if (ST.guest) return logout();
+    modal(`<h2>確定要登出嗎？</h2><p class="muted">你的進度已自動存到雲端，下次登入會自動讀取。</p>
+      <div class="row" style="margin-top:14px"><button class="btn sm white" id="lo-no">取消</button><button class="btn sm red" id="lo-yes">登出</button></div>`);
+    $('#lo-no').onclick = closeModal; $('#lo-yes').onclick = () => { Cloud.flush(); logout(); };
+  };
   $('#st-close').onclick = closeModal;
 }
 
@@ -2062,10 +2135,10 @@ const CAT_NAME = { 1: '📜 經典玩法', 2: '🎲 趣味變化', 3: '💡 創�
 function renderSoloList() {
   renderDiffSeg();
   $('#game-list').innerHTML = [1, 2, 3].map((cat) => `<div class="cat-h kai">${CAT_NAME[cat]}</div>` + Object.entries(E.GAMES).filter(([, g]) => (g.cat || 1) === cat).map(([k, g]) => {
-    const t = THUMBS[k]; const best = k === 'rank' ? localGet('rank_pts', 0) : (ST.guest ? ST.localBests : ST.bests)[`${k}:${Solo.diff}`] || 0;
+    const t = THUMBS[k]; const best = k === 'rank' ? E.titleOf(XP.get()).name : (ST.guest ? ST.localBests : ST.bests)[`${k}:${Solo.diff}`] || 0;
     return `<button class="gcard" data-game="${k}"><div class="gthumb kai" style="background:${t[1]};color:${t[2]}">${t[0]}</div>
       <div><h3 class="kai">${g.name}</h3><p>${g.desc}</p><span class="chip">${t[3]}</span></div>
-      <div class="best">${best}<small>${k === 'rank' ? '功名' : '最佳成績'}</small></div></button>`;
+      <div class="best">${best}<small>${k === 'rank' ? '目前功名' : '最佳成績'}</small></div></button>`;
   }).join('')).join('');
 }
 $('#game-list').onclick = (e) => { const b = e.target.closest('[data-game]'); if (b) Solo.start(b.dataset.game); };
@@ -2098,6 +2171,7 @@ const Solo = {
     show('s-' + game);
     this.upd(); this.mean('');
     GAMES[game].init();
+    if (this.mix) this.saveMix(this.mix.idx);
     clearInterval(this.iv); this.last = Date.now();
     this.iv = setInterval(() => this.tick(), 100);
   },
@@ -2159,65 +2233,105 @@ const Solo = {
     try {
       const r = await api('/api/score', { token: ST.token, game: key, score }); ST.bests[key] = r.best;
       return { best: r.best, note: score >= r.best && score > 0 ? '🎉 刷新個人最佳，已登上金榜！' : '成績已記錄到金榜' };
-    } catch (e) { return { best: Math.max(score, ST.bests[key] || 0), note: '上傳失敗：' + e.message }; }
+    } catch (e) { return { best: Math.max(score, ST.bests[key] || 0), note: '上傳失敗：' + zhError(e) }; }
   },
   async end(reason, passed) {
     if (this.racing) return;
     if (this.over) return; this.over = true; clearInterval(this.iv);
     const key = this.game; const g = E.GAMES[key];
     let bonus = 0;
+    const leftFrac = Math.max(0, this.left) / this.time;
     if (passed) { bonus = Math.max(0, Math.round(this.left / 1000)) * 5; this.score += bonus; this.upd(); SFX.win(); } else SFX.bad();
-    const head = `<h2>${reason || (passed ? '過關！' : '時間到！')}</h2><div class="kai" style="font-size:20px;color:#5a6b7d">${g.name}・${DIFF[this.diff].label}</div>
+    const gr = levelGrade(passed, leftFrac);
+    const gain = XP.add(Math.min(20000, this.score), { delay: 1200 });
+    const head = `<div class="grade ${gr.cls}">${gr.t}<small>${gr.s}</small></div><h2>${reason || (passed ? '過關！' : '時間到！')}</h2><div class="kai" style="font-size:20px;color:#5a6b7d">${g.name}・${DIFF[this.diff].label}</div>
       <div style="font-size:60px;font-weight:900;color:#d62828;line-height:1.1;margin:8px 0">${this.score}</div>
-      <div class="muted">答對 ${Math.min(this.correct, this.target === Infinity ? this.correct : this.target)} / ${this.target === Infinity ? '—' : this.target} 題${bonus ? `　・　剩餘時間加分 +${bonus}` : ''}</div>`;
+      <div class="muted">答對 ${Math.min(this.correct, this.target === Infinity ? this.correct : this.target)} / ${this.target === Infinity ? '—' : this.target} 題${bonus ? `　・　剩餘時間加分 +${bonus}` : ''}</div>
+      <div class="xp-gain">功名積分 <b>+${gain}</b>${plate(XP.get())}</div>`;
     if (this.mix) return this.mixNext(head, passed);
     modal(`${head}<div class="muted" id="res-note" style="margin:8px 0 14px">成績記錄中…</div>
       <div class="row"><button class="btn sm white" id="res-back">回選單</button><button class="btn sm green" id="res-again">再挑戰</button></div>`);
-    $('#res-back').onclick = () => { closeModal(); renderSoloList(); show('s-solo'); };
+    $('#res-back').onclick = () => { closeModal(); this.goHome(); };
     $('#res-again').onclick = () => { closeModal(); this.start(key, true); };
     const r = await this.upload(this.key(key), this.score);
     if ($('#res-note')) $('#res-note').innerHTML = `最佳成績 <b>${r.best}</b>　${r.note}`;
   },
-  /* 綜合挑戰：依序玩全部遊戲 */
+  /* 綜合挑戰：依序玩全部遊戲，每過一關自動存檔 */
+  mixList() { return [1, 2, 3].flatMap((cat) => Object.entries(E.GAMES).filter(([k, g]) => (g.cat || 1) === cat && !g.noTimer).map(([k]) => k)); },
+  saveMix(idx) { const m = this.mix; if (!m) return; localSet('mix_prog', { diff: this.diff, list: m.list, idx, total: m.total, passed: m.passed, t: Date.now() }); },
+  clearMix() { localSet('mix_prog', { done: true, t: Date.now() }); },
   startMix() {
-    const list = [1, 2, 3].flatMap((cat) => Object.entries(E.GAMES).filter(([k, g]) => (g.cat || 1) === cat && !g.noTimer).map(([k]) => k));
-    this.mix = { list, idx: 0, total: 0, passed: 0 };
-    modal(`<h2>🏆 綜合挑戰</h2><p class="howto" style="display:block;text-align:center">依序挑戰全部 ${list.length} 關，每關 ${DIFF[this.diff].label}難度。<br>每過完一關都會先詢問是否繼續；中途結束也會記錄目前的累計分數。</p>
-      <div class="row" style="margin-top:14px"><button class="btn sm white" id="mx-no">取消</button><button class="btn sm green" id="mx-go">開始挑戰</button></div>`);
-    $('#mx-no').onclick = () => { closeModal(); this.mix = null; };
-    $('#mx-go').onclick = () => { closeModal(); this.start(list[0]); };
+    const list = this.mixList();
+    const prog = localGet('mix_prog', null);
+    const intro = () => {
+      modal(`<h2>🏆 綜合挑戰</h2><p class="howto" style="display:block;text-align:center">依序挑戰全部 ${list.length} 關，每關 ${DIFF[this.diff].label}難度。<br>每過一關都會自動存檔，也可以暫停、下次再繼續。</p>
+        <div class="row" style="margin-top:14px"><button class="btn sm white" id="mx-no">取消</button><button class="btn sm green" id="mx-go">開始挑戰</button></div>`);
+      $('#mx-no').onclick = () => { closeModal(); this.mix = null; };
+      $('#mx-go').onclick = () => { closeModal(); this.mix = { list, idx: 0, total: 0, passed: 0 }; this.start(list[0]); };
+    };
+    if (prog && !prog.done && Array.isArray(prog.list) && prog.idx < prog.list.length && DIFF[prog.diff]) {
+      const plist = prog.list.filter((k) => E.GAMES[k]);
+      const nextName = E.GAMES[plist[prog.idx]] ? E.GAMES[plist[prog.idx]].name : '';
+      modal(`<h2>🏆 綜合挑戰</h2><div class="mix-sum">上次的進度：${DIFF[prog.diff].label}難度・已完成 ${prog.idx} / ${plist.length} 關<br>累計 <b>${prog.total}</b> 分</div>
+        <p style="margin:12px 0 4px;font-weight:900;color:#284058">要從第 ${prog.idx + 1} 關「${nextName}」繼續嗎？</p>
+        <div class="row" style="margin-top:12px"><button class="btn sm white" id="mx-cancel">取消</button><button class="btn sm orange" id="mx-new">重新開始</button><button class="btn sm green" id="mx-cont">繼續上次進度</button></div>`);
+      $('#mx-cancel').onclick = closeModal;
+      $('#mx-new').onclick = () => { closeModal(); intro(); };
+      $('#mx-cont').onclick = () => {
+        closeModal(); this.diff = prog.diff; store.set('diff', this.diff);
+        this.mix = { list: plist, idx: prog.idx, total: prog.total, passed: prog.passed || 0 }; this.start(plist[prog.idx]);
+      };
+      return;
+    }
+    intro();
   },
   mixNext(head, passed) {
     const m = this.mix; m.total += this.score; if (passed) m.passed++;
     const last = m.idx >= m.list.length - 1;
+    if (!last) this.saveMix(m.idx + 1);
     const nextName = last ? '' : E.GAMES[m.list[m.idx + 1]].name;
-    modal(`${head}<div class="mix-sum">綜合挑戰　第 ${m.idx + 1} / ${m.list.length} 關　累計 <b>${m.total}</b> 分</div>
+    modal(`${head}<div class="mix-sum">綜合挑戰　第 ${m.idx + 1} / ${m.list.length} 關　累計 <b>${m.total}</b> 分${last ? '' : '<br><small>☁ 已自動存檔</small>'}</div>
       ${last ? '<p class="muted" style="margin:10px 0">全部關卡都挑戰完了！</p>' : `<p style="margin:12px 0 4px;font-weight:900;color:#284058">是否繼續下一關「${nextName}」？</p>`}
-      <div class="row" style="margin-top:10px">${last ? '<button class="btn sm green" id="mx-end">看總成績</button>' : '<button class="btn sm white" id="mx-end">結束挑戰</button><button class="btn sm green" id="mx-next">繼續下一關</button>'}</div>`);
+      <div class="row" style="margin-top:10px">${last ? '<button class="btn sm green" id="mx-end">看總成績</button>'
+        : '<button class="btn sm white" id="mx-end">結束挑戰</button><button class="btn sm orange" id="mx-pause">暫停，下次繼續</button><button class="btn sm green" id="mx-next">繼續下一關</button>'}</div>`);
     $('#mx-end').onclick = () => this.mixFinish();
+    const pz = $('#mx-pause'); if (pz) pz.onclick = () => { closeModal(); this.mix = null; renderSoloList(); show('s-solo'); toast(`進度已存檔，下次可從第 ${m.idx + 2} 關繼續`, 3000); };
     const nx = $('#mx-next'); if (nx) nx.onclick = () => { closeModal(); m.idx++; this.start(m.list[m.idx]); };
   },
   async mixFinish() {
-    const m = this.mix; this.mix = null;
-    modal(`<h2>🏆 綜合挑戰結束</h2><div class="kai" style="color:#5a6b7d">${DIFF[this.diff].label}難度・完成 ${m.idx + 1} / ${m.list.length} 關・過關 ${m.passed} 關</div>
+    const m = this.mix; this.mix = null; this.clearMix();
+    modal(`<h2>🏆 綜合挑戰結束</h2><div class="kai" style="color:#5a6b7d">${DIFF[this.diff].label}難度・挑戰到第 ${m.idx + 1} / ${m.list.length} 關・過關 ${m.passed} 關</div>
       <div style="font-size:60px;font-weight:900;color:#d62828;line-height:1.1;margin:8px 0">${m.total}</div>
       <div class="muted" id="mx-note" style="margin:8px 0 14px">成績記錄中…</div><div class="row"><button class="btn sm green" id="mx-back">回選單</button></div>`);
     $('#mx-back').onclick = () => { closeModal(); renderSoloList(); show('s-solo'); };
     const r = await this.upload(this.key('mix'), m.total);
     if ($('#mx-note')) $('#mx-note').innerHTML = `綜合挑戰最佳 <b>${r.best}</b>　${r.note}`;
   },
+  /** 中途離開：先詢問 */
   quit() {
     if (this.racing) return Race.askQuit();
+    if (this.over) return this.leave();
     const g = GAMES[this.game];
-    if (this.mix && !this.over) {
-      modal(`<h2>離開綜合挑戰？</h2><p class="muted">這一關會以目前分數結算，並結束綜合挑戰。</p>
-        <div class="row" style="margin-top:14px"><button class="btn sm white" id="q-no">繼續玩</button><button class="btn sm red" id="q-yes">結束挑戰</button></div>`);
-      $('#q-no').onclick = closeModal;
-      $('#q-yes').onclick = () => { this.gen++; clearInterval(this.iv); this.over = true; this.mix.total += this.score; this.mixFinish(); };
+    if (this.mix) {
+      modal(`<h2>離開綜合挑戰？</h2><p class="muted">目前在第 ${this.mix.idx + 1} / ${this.mix.list.length} 關「${E.GAMES[this.game].name}」</p>
+        <div class="quit-opts">
+          <button class="btn green" id="q-stay">繼續玩</button>
+          <button class="btn orange" id="q-pause">暫停，下次繼續<small>這一關下次重玩，前面的成績都保留</small></button>
+          <button class="btn red" id="q-end">結束挑戰<small>以目前累計分數結算並登上金榜</small></button>
+        </div>`);
+      $('#q-stay').onclick = closeModal;
+      $('#q-pause').onclick = () => { this.saveMix(this.mix.idx); const n = this.mix.idx + 1; this.mix = null; closeModal(); this.leave(); toast(`進度已存檔，下次可從第 ${n} 關繼續`, 3000); };
+      $('#q-end').onclick = () => { this.gen++; clearInterval(this.iv); this.over = true; this.mix.total += this.score; this.mixFinish(); };
       return;
     }
-    this.gen++; clearInterval(this.iv); this.over = true; if (g && g.onQuit) g.onQuit(); renderSoloList(); show('s-solo');
+    const isRank = this.game === 'rank';
+    modal(`<h2>${isRank ? '回府休息？' : '離開這一關？'}</h2><p class="muted">${isRank ? '你的功名積分都已自動存檔。' : `「${E.GAMES[this.game].name}」這一關的分數不會記錄。`}</p>
+      <div class="row" style="margin-top:14px"><button class="btn sm green" id="q-stay">${isRank ? '繼續答題' : '繼續玩'}</button><button class="btn sm red" id="q-leave">${isRank ? '回府' : '離開關卡'}</button></div>`);
+    $('#q-stay').onclick = closeModal;
+    $('#q-leave').onclick = () => { closeModal(); this.leave(); };
   },
+  leave() { const g = GAMES[this.game]; this.gen++; clearInterval(this.iv); this.over = true; if (g && g.onQuit) g.onQuit(); this.goHome(); },
+  goHome() { if (this.home === 's-lobby' && this.game === 'rank') { XP.refresh(); show('s-lobby'); } else { renderSoloList(); show('s-solo'); } },
 };
 $$('[data-quit]').forEach((b) => b.onclick = () => Solo.quit());
 
@@ -2816,8 +2930,138 @@ function decoyChars(n, avoid) {
   while (out.length < n && g++ < 500) { const c = E.pick(Solo.rng, E.CHAR_POOL); if (!avoid.includes(c) && !out.includes(c)) out.push(c); }
   return out;
 }
-function localGet(k, d) { try { const v = JSON.parse(store.get(k)); return v == null ? d : v; } catch (e) { return d; } }
-function localSet(k, v) { store.set(k, JSON.stringify(v)); }
+
+/* ═══════════════════════ 科舉功名（累積積分） ═══════════════════════ */
+function tierGroup(t) { return t <= 0 ? 0 : t <= 2 ? 1 : t <= 5 ? 2 : t <= 7 ? 3 : t <= 10 ? 4 : t <= 12 ? 5 : 6; }
+/** 功名名牌：依官位等級換顏色與樣式 */
+function plate(xp, size) {
+  const T = E.titleOf(xp || 0); const g = tierGroup(T.tier);
+  const crown = T.tier === 10 || T.tier === 11 ? '<em class="cr">👑</em>' : T.tier === 15 ? '<em class="cr">🐉</em>' : '';
+  return `<span class="gm g${g} ${size || ''}" title="${T.name}：${T.desc}">${g === 4 || g === 6 ? '<i></i>' : ''}${crown}${T.name}</span>`;
+}
+const XP = {
+  pend: 0, timer: null,
+  key() { return `u_${ST.name}_xp_pend`; },
+  isGuest() { return ST.guest || !ST.token; },
+  get() { return this.isGuest() ? +(store.get('guest_xp') || 0) : (ST.xp || 0); },
+  /** 加積分；online=true 表示伺服器已經加過，只更新畫面 */
+  add(n, opt = {}) {
+    n = Math.max(0, Math.round(n || 0)); if (!n) return 0;
+    const before = E.titleOf(this.get()).tier;
+    if (this.isGuest()) store.set('guest_xp', String(this.get() + n));
+    else {
+      ST.xp = (ST.xp || 0) + n;
+      if (!opt.online) { this.pend += n; store.set(this.key(), String(this.pend)); clearTimeout(this.timer); this.timer = setTimeout(() => this.push(), 800); }
+    }
+    this.refresh();
+    const after = E.titleOf(this.get()).tier;
+    if (after > before) setTimeout(() => this.promote(after), opt.delay != null ? opt.delay : 900);
+    return n;
+  },
+  async push() {
+    if (this.isGuest() || !this.pend) return;
+    const n = Math.min(20000, this.pend);
+    try {
+      const r = await api('/api/xp', { token: ST.token, add: n });
+      this.pend -= n; store.set(this.key(), this.pend ? String(this.pend) : null);
+      ST.xp = r.xp + this.pend; this.refresh();
+      if (this.pend) this.push();
+    } catch (e) { clearTimeout(this.timer); this.timer = setTimeout(() => this.push(), 15000); }
+  },
+  /** 關掉網頁時，把還沒送出的積分立刻送出 */
+  flush() {
+    if (this.isGuest() || !this.pend || !serverBase()) return;
+    try { navigator.sendBeacon(serverBase() + '/api/xp', new Blob([JSON.stringify({ token: ST.token, add: Math.min(20000, this.pend) })], { type: 'text/plain' })); this.pend = 0; store.set(this.key(), null); } catch (e) {}
+  },
+  /** 登入後：讀取伺服器積分、補送上次沒送出的、把舊版升官記的功名換算過來 */
+  login(serverXp) {
+    ST.xp = serverXp || 0;
+    this.pend = +(store.get(this.key()) || 0); ST.xp += this.pend;
+    this.migrate();
+    if (this.pend) this.push();
+    this.refresh();
+  },
+  migrate() {
+    if (localGet('xp_mig', 0)) return;
+    const old = localGet('rank_pts', 0);
+    localSet('xp_mig', 1);
+    if (old > 0) this.add(old * 5, { delay: 1500 });
+  },
+  refresh() {
+    const xp = this.get(); const T = E.titleOf(xp);
+    const el = $('#me-plate'); if (el) el.innerHTML = plate(xp);
+    const bar = $('#me-xpbar'); if (bar) bar.style.width = T.next ? `${((xp - T.from) / (T.to - T.from)) * 100}%` : '100%';
+  },
+  promote(tier) {
+    const T = E.TITLES[tier]; SFX.win();
+    const box = $('#promo');
+    box.innerHTML = `<div class="rays"></div><div class="pbox kai"><div class="p1">金榜題名・恭喜晉升</div>${plate(T[1], 'big')}<div class="p2">${T[2]}</div><div class="p2" style="opacity:.6">（點一下繼續）</div></div>`;
+    box.classList.add('on'); box.onclick = () => box.classList.remove('on');
+    toast(`🎉 恭喜晉升「${T[0]}」！`, 3000);
+  },
+};
+/** 功名表：所有等級、門檻與目前進度 */
+function titleDialog() {
+  const xp = XP.get(); const T = E.titleOf(xp);
+  const rows = E.TITLES.map((t, i) => `<div class="gm-row ${i === T.tier ? 'now' : i > T.tier ? 'lock' : ''}">${plate(t[1])}<span class="ds">${t[2]}</span><span class="th">${t[1].toLocaleString()}</span></div>`).join('');
+  modal(`<h2>📜 科舉功名</h2>
+    <div style="margin:6px 0">${plate(xp, 'mid')}</div>
+    <div class="muted">累積積分 <b style="color:#d62828">${xp.toLocaleString()}</b>${T.next ? `　距離「${T.next}」還差 ${T.need.toLocaleString()}` : '　已位極人臣！'}</div>
+    <div class="gm-prog"><i style="width:${T.next ? ((xp - T.from) / (T.to - T.from)) * 100 : 100}%"></i></div>
+    <div class="gm-table" id="gm-table">${rows}</div>
+    <div class="gm-how">🔸 單人闖關：每一關的得分都會累積成積分<br>🔸 與電腦或真人對戰：比賽得分也會累積<br>🔸 古風升官記：不限時答題，連續答對得更多<br>🔸 名牌會顯示在大廳、對戰座位與金榜上${XP.isGuest() ? '<br>⚠ 訪客的積分只存在這台裝置，登入帳號才會登上功名榜' : ''}</div>
+    <div class="row" style="margin-top:12px"><button class="btn sm white" id="gm-close">關閉</button><button class="btn sm red" id="gm-rank">🏯 去升官記</button></div>`);
+  $('#gm-close').onclick = closeModal;
+  $('#gm-rank').onclick = () => { closeModal(); Solo.home = current === 's-lobby' ? 's-lobby' : null; Solo.start('rank'); };
+  const now = $('#gm-table .now'); if (now) now.scrollIntoView({ block: 'center' });
+}
+/** 單人關卡評等（仿殿試分三甲） */
+function levelGrade(passed, leftFrac) {
+  if (!passed) return { cls: 'f', t: '名落孫山', s: '這次沒考上，再接再厲' };
+  if (leftFrac >= 0.45) return { cls: 'a', t: '一甲', s: '進士及第・名列前茅' };
+  if (leftFrac >= 0.2) return { cls: 'b', t: '二甲', s: '賜進士出身' };
+  return { cls: 'c', t: '三甲', s: '賜同進士出身' };
+}
+/* ───────── 存檔：每個帳號各自一份，登入後同步到雲端 ───────── */
+const CLOUD_KEYS = ['rank_pts', 'eco_col', 'fossil_count', 'mix_prog', 'xp_mig'];
+function acctKey(k) { return CLOUD_KEYS.includes(k) ? `${ST.guest || !ST.token ? 'guest' : 'u_' + ST.name}_${k}` : k; }
+function localGet(k, d) {
+  try { let raw = store.get(acctKey(k)); if (raw == null && CLOUD_KEYS.includes(k)) raw = store.get(k); const v = JSON.parse(raw); return v == null ? d : v; } catch (e) { return d; }
+}
+function localSet(k, v) { store.set(acctKey(k), JSON.stringify(v)); if (CLOUD_KEYS.includes(k)) Cloud.queue(); }
+const Cloud = {
+  timer: null, pending: false,
+  online() { return !ST.guest && !!ST.token && !!serverBase(); },
+  data() { const o = {}; CLOUD_KEYS.forEach((k) => { o[k] = localGet(k, null); }); o.t = Date.now(); return o; },
+  queue() { if (!this.online()) return; this.pending = true; clearTimeout(this.timer); this.timer = setTimeout(() => this.push(), 1200); },
+  async push() {
+    if (!this.online()) return; clearTimeout(this.timer);
+    try { await api('/api/save', { token: ST.token, data: JSON.stringify(this.data()) }); this.pending = false; }
+    catch (e) { this.timer = setTimeout(() => this.push(), 15000); }
+  },
+  /** 關掉網頁或切到背景時，立刻把還沒上傳的存檔送出 */
+  flush() {
+    if (!this.pending || !this.online()) return;
+    try { navigator.sendBeacon(serverBase() + '/api/save', new Blob([JSON.stringify({ token: ST.token, data: JSON.stringify(this.data()) })], { type: 'text/plain' })); this.pending = false; } catch (e) {}
+  },
+  /** 登入時把雲端存檔和這台裝置的存檔合併（取進度較多的那一份） */
+  merge(raw) {
+    let r = {}; try { r = raw ? JSON.parse(raw) : {}; } catch (e) {}
+    const L = {}; CLOUD_KEYS.forEach((k) => { L[k] = localGet(k, null); });
+    const out = {
+      rank_pts: Math.max(r.rank_pts || 0, L.rank_pts || 0),
+      fossil_count: Math.max(r.fossil_count || 0, L.fossil_count || 0),
+      xp_mig: Math.max(r.xp_mig || 0, L.xp_mig || 0) || null,
+      eco_col: [...new Set([...(r.eco_col || []), ...(L.eco_col || [])])],
+      mix_prog: [r.mix_prog, L.mix_prog].filter(Boolean).sort((a, b) => (b.t || 0) - (a.t || 0))[0] || null,
+    };
+    CLOUD_KEYS.forEach((k) => store.set(acctKey(k), JSON.stringify(out[k])));
+    const changed = CLOUD_KEYS.some((k) => JSON.stringify(out[k]) !== JSON.stringify(r[k] == null ? null : r[k]));
+    if (changed) this.queue();
+    return !!raw;
+  },
+};
+document.addEventListener('visibilitychange', () => { if (document.hidden) { Cloud.flush(); XP.flush(); } });
 
 Object.assign(GAMES, {
   /* ───── 縱橫填字 ───── */
@@ -3148,41 +3392,31 @@ Object.assign(GAMES, {
     },
   },
 
-  /* ───── 古風升官記（不限時） ───── */
+  /* ───── 古風升官記（不限時，與科舉功名共用積分） ───── */
   rank: {
-    RANKS: [['童生', 0, '#8a9aa8', '🚪'], ['秀才', 100, '#4a7fc0', '🪴'], ['舉人', 300, '#3a9a6a', '🏮'], ['貢士', 600, '#2e8b8b', '📚'], ['進士', 1000, '#c8252c', '🦁'],
-      ['探花', 1500, '#c8252c', '🌸'], ['榜眼', 2100, '#c8252c', '🌲'], ['狀元', 2800, '#c8252c', '🏆'], ['翰林', 3600, '#6a3ab0', '🖌️'], ['侍郎', 4500, '#6a3ab0', '🐎'],
-      ['尚書', 5500, '#6a3ab0', '🐟'], ['宰相', 7000, '#b8860b', '🏯']],
+    ITEMS: ['🚪', '🪴', '🏮', '📜', '📚', '🖋️', '🎋', '🦁', '🌸', '🌲', '🏆', '🎖️', '🖌️', '🐎', '🐟', '🏯'],
+    COLORS: ['#8a7a66', '#2f5f9e', '#1d7a58', '#b3202c', '#c8901a', '#4e1f8a', '#1a1a1a'],
     TYPES: ['fill', 'meaning', 'chain', 'antonym', 'compass', 'color', 'emoji'],
     time: 999999999,
-    init() {
-      this.pts = localGet('rank_pts', 0); this.lv = this.level(this.pts); this.synced = this.pts;
-      Solo.score = this.pts; Solo.upd(); this.drawHouse(); this.next();
-    },
-    level(p) { let k = 0; this.RANKS.forEach((r, i) => { if (p >= r[1]) k = i; }); return k; },
+    init() { Solo.score = 0; Solo.upd(); this.drawHouse(); this.next(); },
     drawHouse() {
-      const k = this.lv; const R = this.RANKS[k]; const nx = this.RANKS[k + 1];
-      $('#rank-name').textContent = R[0];
-      $('#rank-bar').style.width = nx ? `${Math.min(100, ((this.pts - R[1]) / (nx[1] - R[1])) * 100)}%` : '100%';
-      $('#rank-next').textContent = nx ? `距離「${nx[0]}」還差 ${nx[1] - this.pts} 功名` : '已位極人臣！';
-      $('#rank-hero').innerHTML = characterSVG('zy').replace(/#c8252c/g, R[2]).replace(/#8e1419/g, R[2]);
-      $('#rank-items').innerHTML = this.RANKS.map((r, i) => `<span class="${i <= k ? 'on' : ''}" title="${r[0]}">${i <= k ? r[3] : '🔒'}</span>`).join('');
+      const xp = XP.get(); const T = E.titleOf(xp); const col = this.COLORS[tierGroup(T.tier)];
+      $('#rank-name').innerHTML = plate(xp, 'mid');
+      $('#rank-bar').style.width = T.next ? `${Math.min(100, ((xp - T.from) / (T.to - T.from)) * 100)}%` : '100%';
+      $('#rank-next').textContent = T.next ? `積分 ${xp.toLocaleString()}・距離「${T.next}」還差 ${T.need.toLocaleString()}` : `積分 ${xp.toLocaleString()}・已位極人臣！`;
+      $('#rank-hero').innerHTML = characterSVG('zy').replace(/#c8252c/g, col).replace(/#8e1419/g, col);
+      $('#rank-items').innerHTML = E.TITLES.map((r, i) => `<span class="${i <= T.tier ? 'on' : ''}" title="${r[0]}">${i <= T.tier ? this.ITEMS[i] : '🔒'}</span>`).join('');
     },
     next() {
       const t = E.pick(Solo.rng, this.TYPES);
       const q = E.makeQuestion(t, Solo.rng, 4, Solo.avoid); this.q = q; Solo.busy = false;
       soloQ($('#rank-q'), q, async (b) => {
-        Solo.busy = true; const gain = 10 + Math.min(20, Solo.combo * 2);
-        Solo.combo++; Solo.correct++; this.pts += gain; Solo.score = this.pts; Solo.upd(); SFX.ok(); floatText(b, `功名 +${gain}`, '#ffd23c');
-        localSet('rank_pts', this.pts); Solo.mean(`<b>${q.idiom}</b>：${q.meaning}`);
-        const lv = this.level(this.pts);
-        if (lv > this.lv) { this.lv = lv; this.drawHouse(); SFX.win(); toast(`🎉 升官了！現在是「${this.RANKS[lv][0]}」，府邸添了新擺設`, 3000); }
-        else this.drawHouse();
+        Solo.busy = true; const gain = Math.min(150, 50 + Solo.combo * 10);
+        Solo.combo++; Solo.correct++; Solo.score += gain; Solo.upd(); SFX.ok(); floatText(b, `積分 +${gain}`, '#ffd23c');
+        Solo.mean(`<b>${q.idiom}</b>：${q.meaning}`);
+        XP.add(gain, { delay: 300 }); this.drawHouse();
         return Solo.unit(900, () => this.next());
       }, { penalty: 0, onWrong: () => { Solo.combo = 0; Solo.upd(); } });
-    },
-    async onQuit() {
-      if (!ST.guest && ST.token && this.pts > this.synced) { this.synced = this.pts; try { await api('/api/score', { token: ST.token, game: 'rank', score: this.pts }); ST.bests.rank = this.pts; } catch (e) {} }
     },
   },
 
@@ -3605,7 +3839,7 @@ const HOWTO = {
   radical: ['依序替成語的每個字找出部首（黃色那一格）。', '從下方拼圖塊中選出正確的部首。', '部首依照教育部與康熙字典的 214 部首。', '選錯扣 2 秒。'],
   sudoku: ['四乘四的格子，第一列依序就是這盤的成語。', '每一列、每一欄、每個粗框小宮裡，四個字都要各出現一次。', '點空格，再點下方棋子填字；每盤都只有唯一解。', '填錯扣 2 秒。'],
   comic: ['從第 1 格看到第 4 格，讀完這則小故事。', '從下方四句中選出漫畫在說的成語。', '答錯扣 2 秒。'],
-  rank: ['不限時間，慢慢答題累積「功名」。', '每答對一題得到功名，連續答對得到更多。', '功名夠了就會升官：童生、秀才、舉人……一路做到宰相，府邸也會多出擺設。', '按「回府」離開，進度會自動保存；登入時會登上金榜。'],
+  rank: ['不限時間，慢慢答題累積「功名積分」（和全遊戲共用）。', '每答對一題得 50 分，連續答對最多一題 150 分；答錯不扣分。', '積分夠了就會升官：童生、秀才、舉人、解元……狀元、翰林……一路做到宰相，府邸也會多出擺設。', '按「回府」離開，積分自動保存；登入帳號會登上「功名榜」。'],
   fog: ['迷霧後面藏著一句成語。', '答對下方的小題，就會撥開兩塊迷霧。', '覺得看出來了，就按「我猜到了！」作答；迷霧越多時猜中，分數越高。', '猜錯扣 3 秒。'],
   balance: ['每個字下方的小數字是它的筆劃，也就是它的重量。', '右邊秤盤放著砝碼（總筆劃數）。', '依序選四個字排成成語，而且總筆劃要剛好相等。', '點左邊秤盤可以退回最後一個字。'],
   maze: ['你（🧑）從左下角出發，只能走到上下左右相鄰、發著光的格子。', '依照上方提示的解釋，一格一格踩出成語的字。', '連續走完三句成語，就會到達🚪出口。', '踩錯扣 2 秒。'],
@@ -3652,7 +3886,7 @@ const Race = {
   startLocal() {
     const game = $('#solo-game').value; const n = segVal('soloAi'), lv = segVal('soloLv'), rounds = segVal('soloRaceRounds');
     const names = E.shuffle(null, E.AI_NAMES).slice(0, n); const avs = E.shuffle(null, E.AVATARS.filter((a) => a !== ST.avatar));
-    const players = [{ id: 'me', name: ST.guest ? '我' : ST.name, avatar: ST.avatar }, ...names.map((nm, i) => ({ id: 'ai' + i, name: nm, ai: true, avatar: avs[i] }))];
+    const players = [{ id: 'me', name: ST.guest ? '我' : ST.name, avatar: ST.avatar, xp: XP.get() }, ...names.map((nm, i) => ({ id: 'ai' + i, name: nm, ai: true, avatar: avs[i] }))];
     if (this.match) this.match.stop();
     this.mode = 'local'; this.myId = 'me';
     this.match = new E.RaceMatch({ game, rounds, aiLevel: lv, players, emit: (e, d) => setTimeout(() => this.handle(e, d), 0) });
@@ -3714,7 +3948,7 @@ const Race = {
     bar.classList.add('on');
   },
   renderPlayers() {
-    $('#rb-players').innerHTML = this.players.map((p) => `<div class="rp ${p.id === this.myId ? 'me' : ''}" data-id="${esc(p.id)}"><span class="av">${esc(p.avatar)}</span><span class="nm">${esc(p.name)}</span><b class="sc">${p.score}</b><small class="ct">${this.scoreMode ? `本關 ${p.n || 0} 句・` : ''}搶到 ${p.correct} 關</small></div>`).join('');
+    $('#rb-players').innerHTML = this.players.map((p) => `<div class="rp ${p.id === this.myId ? 'me' : ''}" data-id="${esc(p.id)}"><span class="av">${esc(p.avatar)}</span><span class="nm">${esc(p.name)}</span><b class="sc">${p.score}</b><small class="ct">${plate(p.xp)} ${this.scoreMode ? `本關 ${p.n || 0} 句・` : ''}搶到 ${p.correct} 關</small></div>`).join('');
   },
   applyScores(scores) {
     scores.forEach((s) => { const p = this.players.find((x) => x.id === s.id); if (p) { p.score = s.score; p.correct = s.correct; } });
@@ -3757,12 +3991,14 @@ const Race = {
     const top = ranking.slice(0, 3); const order = [top[1], top[0], top[2]];
     const hts = [70, 100, 50], cols = ['#b8c4d0', '#f2c14e', '#d9905a'], lbl = ['2', '1', '3'];
     const mine = ranking.find((r) => r.id === this.myId);
-    const pod = order.map((r, k) => (r ? `<div class="col"><div class="av">${esc(r.avatar)}</div><div class="nm">${esc(r.name)}</div><div class="sc">${r.score} 分・搶 ${r.correct} 關</div>
+    const pod = order.map((r, k) => (r ? `<div class="col"><div class="av">${esc(r.avatar)}</div><div class="nm">${esc(r.name)}</div>${plate(r.xp)}<div class="sc">${r.score} 分・搶 ${r.correct} 關</div>
       <div class="blk" style="height:${hts[k]}px;background:${cols[k]}">${lbl[k]}</div></div>` : '<div class="col"></div>')).join('');
-    const rest = ranking.slice(3).map((r) => `<div><span>${r.rank}. ${esc(r.avatar)} ${esc(r.name)}</span><span>${r.score} 分・搶 ${r.correct} 關</span></div>`).join('');
+    const rest = ranking.slice(3).map((r) => `<div><span>${r.rank}. ${esc(r.avatar)} ${esc(r.name)}${plate(r.xp)}</span><span>${r.score} 分・搶 ${r.correct} 關</span></div>`).join('');
     const title = mine && mine.rank === 1 ? '🎉 競速冠軍！' : mine ? `第 ${mine.rank} 名` : '比賽結束';
+    const gain = mine ? XP.add(mine.score, { online: this.mode === 'online', delay: 1200 }) : 0;
     modal(`<h2>${title}</h2><div class="muted">${this.game === 'mix' ? '綜合' : E.GAMES[this.game].name}・競速對戰</div><div class="podium">${pod}</div><div class="rank-rest">${rest}</div>
-      <p class="muted" style="margin-top:8px">${this.mode === 'online' ? (ST.guest ? '' : '對戰成績已記錄到金榜') : '與電腦對戰不列入金榜'}</p>
+      ${gain ? `<div class="xp-gain">功名積分 <b>+${gain}</b>${plate(XP.get())}</div>` : ''}
+      <p class="muted" style="margin-top:8px">${this.mode === 'online' ? (ST.guest ? '' : '對戰成績已記錄到金榜') : '與電腦對戰不列入對戰勝場榜，但得分會累積功名'}</p>
       <div class="row" style="margin-top:12px"><button class="btn sm white" id="rend-out">離開</button><button class="btn sm red" id="rend-again">${this.mode === 'online' ? '回到房間' : '再來一局'}</button></div>`);
     $('#rend-out').onclick = () => { closeModal(); if (this.mode === 'online') Room.leave(); else { this.match = null; show('s-battle'); } };
     $('#rend-again').onclick = () => { closeModal(); if (this.mode === 'online') show('s-room'); else this.startLocal(); };
@@ -3818,11 +4054,11 @@ GAMES.slide = {
 };
 
 /* ───────── 金榜 ───────── */
-const BOARD_TABS = [['rush', '對戰勝場'], ['mix', '綜合挑戰'], ...Object.entries(E.GAMES).map(([k, g]) => [k, g.name])];
-let boardTab = 'rush', boardDiff = Solo.diff;
+const BOARD_TABS = [['xp', '📜 功名榜'], ['rush', '對戰勝場'], ['mix', '綜合挑戰'], ...Object.entries(E.GAMES).filter(([k]) => k !== 'rank').map(([k, g]) => [k, g.name])];
+let boardTab = 'xp', boardDiff = Solo.diff;
 function renderBoardTabs() {
   $('#bang-tabs').innerHTML = BOARD_TABS.map(([k, n]) => `<button data-b="${k}" class="${k === boardTab ? 'on' : ''}">${n}</button>`).join('');
-  const needDiff = boardTab !== 'rush' && boardTab !== 'rank';
+  const needDiff = boardTab !== 'rush' && boardTab !== 'xp';
   $('#bang-diff').classList.toggle('hidden', !needDiff);
   $('#bang-diff').innerHTML = `難易度：${Object.entries(DIFF).map(([k, d]) => `<button data-d="${k}" class="${k === boardDiff ? 'on' : ''}">${d.label}（${d.n} 題）</button>`).join('')}`;
 }
@@ -3831,16 +4067,16 @@ $('#bang-diff').onclick = (e) => { const b = e.target.closest('[data-d]'); if (!
 async function loadBoard() {
   const list = $('#bang-list');
   list.innerHTML = `<div class="muted" style="text-align:center;padding:30px">載入中…</div>`;
-  const key = boardTab === 'rush' || boardTab === 'rank' ? boardTab : `${boardTab}:${boardDiff}`;
+  const key = boardTab === 'rush' || boardTab === 'xp' ? boardTab : `${boardTab}:${boardDiff}`;
   try {
     const r = await api('/api/leaderboard?game=' + encodeURIComponent(key));
     if (!r.rows.length) { list.innerHTML = `<div class="muted" style="text-align:center;padding:30px">目前還沒有人上榜，快來搶頭香！</div>`; return; }
     const medal = ['🥇', '🥈', '🥉'];
-    const unit = boardTab === 'rush' ? null : boardTab === 'rank' ? '功名' : `分・${DIFF[boardDiff].label}`;
+    const unit = boardTab === 'rush' ? null : boardTab === 'xp' ? '積分' : `分・${DIFF[boardDiff].label}`;
     list.innerHTML = r.rows.map((x, i) => `<div class="brow ${x.name === ST.name && !ST.guest ? 'me' : ''}">
-      <span class="rk">${medal[i] || i + 1}</span><span class="av">${esc(x.avatar || '🙂')}</span><span class="nm">${esc(x.name)}</span>
-      <span class="val">${x.value}<small>${unit || `勝／${x.games} 場`}</small></span></div>`).join('');
-  } catch (e) { list.innerHTML = `<div class="muted" style="text-align:center;padding:30px">${esc(e.message)}</div>`; }
+      <span class="rk">${medal[i] || i + 1}</span><span class="av">${esc(x.avatar || '🙂')}</span><span class="nm"><span>${esc(x.name)}</span>${plate(x.xp || 0)}</span>
+      <span class="val">${Number(x.value).toLocaleString()}<small>${unit || `勝／${x.games} 場`}</small></span></div>`).join('');
+  } catch (e) { list.innerHTML = `<div class="muted" style="text-align:center;padding:30px">${esc(zhError(e))}</div>`; }
 }
 
 /* ───────── 分段選擇元件 ───────── */
@@ -3892,7 +4128,7 @@ const Room = {
         if (r.error) return toast(r.error);
         $('#online-hint').textContent = ''; this.onRoom(r.room); show('s-room');
       });
-    } catch (e) { $('#online-hint').textContent = e.message; }
+    } catch (e) { $('#online-hint').textContent = zhError(e); }
   },
   async join(code) {
     if (needAccount()) return;
@@ -3906,7 +4142,7 @@ const Room = {
         $('#online-hint').textContent = ''; this.onRoom(r.room);
         if (r.snapshot) (r.snapshot.race ? Race.resume(r.snapshot) : Rush.resume(r.snapshot)); else show('s-room');
       });
-    } catch (e) { $('#online-hint').textContent = e.message; }
+    } catch (e) { $('#online-hint').textContent = zhError(e); }
   },
   rejoin() {
     if (!this.view) return;
@@ -3918,7 +4154,7 @@ const Room = {
     const isHost = v.host === ST.name;
     $('#room-code').textContent = v.code;
     const seats = [];
-    v.members.forEach((m) => seats.push(`<div class="seat filled"><span class="av">${esc(m.avatar || '🙂')}</span>${esc(m.name)}${m.host ? '<span class="tag">房主</span>' : ''}${m.online ? '' : '<span class="muted">離線</span>'}</div>`));
+    v.members.forEach((m) => seats.push(`<div class="seat filled"><span class="av">${esc(m.avatar || '🙂')}</span>${esc(m.name)}${plate(m.xp)}${m.host ? '<span class="tag">房主</span>' : ''}${m.online ? '' : '<span class="muted">離線</span>'}</div>`));
     for (let i = v.members.length; i < v.humanMax; i++) seats.push(`<div class="seat">等待加入…</div>`);
     for (let i = 0; i < v.aiCount; i++) seats.push(`<div class="seat filled" style="background:#fff8e6"><span class="av">🤖</span>電腦<span class="muted">${E.AI_LEVELS[v.aiLevel].label}</span></div>`);
     $('#seat-list').innerHTML = seats.join('');
@@ -3940,7 +4176,11 @@ $$('[data-rs]').forEach((seg) => seg.onclick = (e) => {
 });
 $('#btn-create').onclick = () => Room.create();
 $('#btn-join').onclick = () => Room.join($('#in-code').value.trim().toUpperCase());
-$('#btn-leave-room').onclick = () => Room.leave();
+$('#btn-leave-room').onclick = () => {
+  modal(`<h2>離開房間？</h2><p class="muted">${Room.view && Room.view.host === ST.name ? '你是房主，離開後房主會交給下一位玩家。' : '離開後可以再用房號加入。'}</p>
+    <div class="row" style="margin-top:14px"><button class="btn sm green" id="rl-no">留在房間</button><button class="btn sm red" id="rl-yes">離開房間</button></div>`);
+  $('#rl-no').onclick = closeModal; $('#rl-yes').onclick = () => { closeModal(); Room.leave(); };
+};
 $('#btn-copy').onclick = () => { try { navigator.clipboard.writeText(Room.view.code); toast('已複製房號'); } catch (e) { toast('房號：' + Room.view.code); } };
 $('#btn-start').onclick = () => sock && sock.emit('start_match', {}, (r) => { if (r && r.error) toast(r.error); });
 
@@ -3952,7 +4192,7 @@ const Rush = {
     this.mode = 'local'; this.myId = 'me';
     const n = segVal('soloAi'), lv = segVal('soloLv'), rounds = segVal('soloRounds'), qt = segVal('soloType');
     const names = E.shuffle(null, E.AI_NAMES).slice(0, n); const avs = E.shuffle(null, E.AVATARS.filter((a) => a !== ST.avatar));
-    const players = [{ id: 'me', name: ST.guest ? '我' : ST.name, avatar: ST.avatar }, ...names.map((nm, i) => ({ id: 'ai' + i, name: nm, ai: true, avatar: avs[i] }))];
+    const players = [{ id: 'me', name: ST.guest ? '我' : ST.name, avatar: ST.avatar, xp: XP.get() }, ...names.map((nm, i) => ({ id: 'ai' + i, name: nm, ai: true, avatar: avs[i] }))];
     this.lastLocal = { n, lv, rounds };
     if (this.match) this.match.stop();
     this.match = new E.RushMatch({ players, rounds, aiLevel: lv, types: qt === 'mix' ? null : [qt], emit: (e, d) => setTimeout(() => this.handle(e, d), 0) });
@@ -4022,7 +4262,7 @@ const Rush = {
   renderPlayers() {
     const n = this.players.length;
     const el = $('#rush-players'); el.style.gridTemplateColumns = `repeat(${n <= 4 ? n : Math.ceil(n / 2)},1fr)`;
-    el.innerHTML = this.players.map((p) => `<div class="pcard ${p.id === this.myId ? 'me' : ''}" data-id="${esc(p.id)}"><span class="av">${esc(p.avatar)}</span><span class="nm">${esc(p.name)}</span><span class="sc">0</span><span class="ct">搶到 0 題</span></div>`).join('');
+    el.innerHTML = this.players.map((p) => `<div class="pcard ${p.id === this.myId ? 'me' : ''}" data-id="${esc(p.id)}"><span class="av">${esc(p.avatar)}</span><span class="nm">${esc(p.name)}</span>${plate(p.xp)}<span class="sc">0</span><span class="ct">搶到 0 題</span></div>`).join('');
   },
   applyScores(scores) {
     scores.forEach((s) => { const c = $(`.pcard[data-id="${CSS.escape(s.id)}"] .sc`); if (c) c.textContent = s.score; const t = $(`.pcard[data-id="${CSS.escape(s.id)}"] .ct`); if (t) t.textContent = `搶到 ${s.correct} 題`; const p = this.players.find((x) => x.id === s.id); if (p) p.score = s.score; });
@@ -4092,12 +4332,14 @@ const Rush = {
     const top = ranking.slice(0, 3); const order = [top[1], top[0], top[2]];
     const hts = [70, 100, 50], cols = ['#b8c4d0', '#f2c14e', '#d9905a'], lbl = ['2', '1', '3'];
     const mine = ranking.find((r) => r.id === this.myId);
-    const pod = order.map((r, k) => r ? `<div class="col"><div class="av">${esc(r.avatar)}</div><div class="nm">${esc(r.name)}</div><div class="sc">${r.score} 分・搶 ${r.correct} 題</div>
+    const pod = order.map((r, k) => r ? `<div class="col"><div class="av">${esc(r.avatar)}</div><div class="nm">${esc(r.name)}</div>${plate(r.xp)}<div class="sc">${r.score} 分・搶 ${r.correct} 題</div>
       <div class="blk" style="height:${hts[k]}px;background:${cols[k]}">${lbl[k]}</div></div>` : '<div class="col"></div>').join('');
-    const rest = ranking.slice(3).map((r) => `<div><span>${r.rank}. ${esc(r.avatar)} ${esc(r.name)}</span><span>${r.score} 分・搶 ${r.correct} 題</span></div>`).join('');
+    const rest = ranking.slice(3).map((r) => `<div><span>${r.rank}. ${esc(r.avatar)} ${esc(r.name)}${plate(r.xp)}</span><span>${r.score} 分・搶 ${r.correct} 題</span></div>`).join('');
     const title = mine && mine.rank === 1 ? '🎉 恭喜奪得狀元！' : mine ? `第 ${mine.rank} 名` : '比賽結束';
+    const gain = mine ? XP.add(mine.score, { online: this.mode === 'online', delay: 1200 }) : 0;
     modal(`<h2>${title}</h2><div class="podium">${pod}</div><div class="rank-rest">${rest}</div>
-      ${this.mode === 'online' ? `<p class="muted" style="margin-top:8px">${ST.guest ? '' : '對戰成績已記錄到金榜'}</p>` : `<p class="muted" style="margin-top:8px">與電腦對戰不列入金榜</p>`}
+      ${gain ? `<div class="xp-gain">功名積分 <b>+${gain}</b>${plate(XP.get())}</div>` : ''}
+      ${this.mode === 'online' ? `<p class="muted" style="margin-top:8px">${ST.guest ? '' : '對戰成績已記錄到金榜'}</p>` : `<p class="muted" style="margin-top:8px">與電腦對戰不列入對戰勝場榜，但得分會累積功名</p>`}
       <div class="row" style="margin-top:12px"><button class="btn sm white" id="end-out">離開</button><button class="btn sm red" id="end-again">${this.mode === 'online' ? '回到房間' : '再來一局'}</button></div>`);
     $('#end-out').onclick = () => { closeModal(); if (this.mode === 'online') Room.leave(); else { this.match = null; show('s-battle'); } };
     $('#end-again').onclick = () => { closeModal(); if (this.mode === 'online') show('s-room'); else this.startLocal(); };
@@ -4125,16 +4367,36 @@ $('#btn-rush-quit').onclick = () => {
 document.addEventListener('click', (e) => {
   const g = e.target.closest('[data-go]'); if (!g) return;
   const to = g.dataset.go; SFX.tap();
-  if (to === 'solo') { renderSoloList(); show('s-solo'); }
+  if (to === 'solo') { Solo.home = null; renderSoloList(); show('s-solo'); }
   else if (to === 'battle') { $('#online-hint').textContent = ST.guest ? '訪客只能與電腦對戰；連線對戰請先登入帳號' : ''; show('s-battle'); }
   else if (to === 'board') { renderBoardTabs(); show('s-board'); loadBoard(); }
   else if (to === 'credits') show('s-credits');
+  else if (to === 'rankgame') { Solo.home = 's-lobby'; Solo.start('rank'); }
   else if (to === 'lobby') show('s-lobby');
 });
 $('#btn-settings').onclick = settingsDialog;
+$('#me-pill').onclick = () => { SFX.tap(); titleDialog(); };
 $('#btn-music').onclick = () => BGM.set(!BGM.on);
 
 /* ───────── 啟動 ───────── */
+/* ───────── 手機返回鍵、關閉網頁的確認 ───────── */
+function inPlay() { return (Solo.game && !Solo.over && current === 's-' + Solo.game) || Race.active || (current === 's-rush' && (Rush.match || Rush.mode === 'online')); }
+window.addEventListener('beforeunload', (e) => { Cloud.flush(); XP.flush(); if (inPlay()) { e.preventDefault(); e.returnValue = ''; } });
+try { history.pushState({ app: 1 }, ''); } catch (e) {}
+window.addEventListener('popstate', () => {
+  try { history.pushState({ app: 1 }, ''); } catch (e) {}
+  if ($('#modal').classList.contains('on')) return;          // 已經有詢問視窗時，先不動作
+  if (current === 's-lobby' || current === 's-login') {
+    modal(`<h2>要離開成語擂台嗎？</h2><p class="muted">${ST.guest || !ST.token ? '' : '你的進度已自動存到雲端。'}</p>
+      <div class="row" style="margin-top:14px"><button class="btn sm green" id="ex-no">留下來</button><button class="btn sm red" id="ex-yes">離開</button></div>`);
+    $('#ex-no').onclick = closeModal;
+    $('#ex-yes').onclick = () => { closeModal(); Cloud.flush(); try { history.go(-2); } catch (e) {} setTimeout(() => { try { window.close(); } catch (e) {} }, 300); };
+    return;
+  }
+  const back = $(`#${current} .hud .back`) || $(`#${current} .back`) || $(`#${current} [data-quit]`);
+  if (back) back.click(); else show('s-lobby');
+});
+
 decorate();
 addHelpButtons();
 addProgress();

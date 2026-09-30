@@ -37,6 +37,8 @@ function makeDb() {
         await q(`CREATE TABLE IF NOT EXISTS idiom_scores (name TEXT NOT NULL, game TEXT NOT NULL, best INTEGER NOT NULL DEFAULT 0, plays INTEGER NOT NULL DEFAULT 0, updated_at TIMESTAMPTZ DEFAULT NOW(), PRIMARY KEY (name, game))`);
         await q(`CREATE TABLE IF NOT EXISTS idiom_rush (name TEXT PRIMARY KEY, games INTEGER NOT NULL DEFAULT 0, wins INTEGER NOT NULL DEFAULT 0, points INTEGER NOT NULL DEFAULT 0, updated_at TIMESTAMPTZ DEFAULT NOW())`);
         await q(`CREATE TABLE IF NOT EXISTS idiom_meta (k TEXT PRIMARY KEY, v TEXT NOT NULL)`);
+        await q(`CREATE TABLE IF NOT EXISTS idiom_xp (name TEXT PRIMARY KEY, xp BIGINT NOT NULL DEFAULT 0, updated_at TIMESTAMPTZ DEFAULT NOW())`);
+        await q(`CREATE TABLE IF NOT EXISTS idiom_saves (name TEXT PRIMARY KEY, data TEXT NOT NULL, updated_at TIMESTAMPTZ DEFAULT NOW())`);
       },
       async getUser(name) { const r = await q(`SELECT name, hash, avatar FROM idiom_users WHERE name = $1`, [name]); return r.rows[0] || null; },
       async createUser(name, hash, avatar) { await q(`INSERT INTO idiom_users (name, hash, avatar) VALUES ($1, $2, $3)`, [name, hash, avatar]); },
@@ -56,8 +58,8 @@ function makeDb() {
         const out = {}; r.rows.forEach((x) => { out[x.game] = x.best; }); return out;
       },
       async topScores(game, limit) {
-        const r = await q(`SELECT s.name, s.best, u.avatar FROM idiom_scores s LEFT JOIN idiom_users u ON u.name = s.name WHERE s.game = $1 ORDER BY s.best DESC, s.updated_at ASC LIMIT $2`, [game, limit]);
-        return r.rows.map((x) => ({ name: x.name, value: x.best, avatar: x.avatar }));
+        const r = await q(`SELECT s.name, s.best, u.avatar, x.xp FROM idiom_scores s LEFT JOIN idiom_users u ON u.name = s.name LEFT JOIN idiom_xp x ON x.name = s.name WHERE s.game = $1 ORDER BY s.best DESC, s.updated_at ASC LIMIT $2`, [game, limit]);
+        return r.rows.map((x) => ({ name: x.name, value: x.best, avatar: x.avatar, xp: Number(x.xp) || 0 }));
       },
       async recordRush(name, win, points) {
         const r0 = await q(`SELECT games, wins, points FROM idiom_rush WHERE name = $1`, [name]);
@@ -69,16 +71,32 @@ function makeDb() {
         }
       },
       async topRush(limit) {
-        const r = await q(`SELECT r.name, r.games, r.wins, r.points, u.avatar FROM idiom_rush r LEFT JOIN idiom_users u ON u.name = r.name ORDER BY r.wins DESC, r.points DESC LIMIT $1`, [limit]);
-        return r.rows.map((x) => ({ name: x.name, value: x.wins, games: x.games, points: x.points, avatar: x.avatar }));
+        const r = await q(`SELECT r.name, r.games, r.wins, r.points, u.avatar, x.xp FROM idiom_rush r LEFT JOIN idiom_users u ON u.name = r.name LEFT JOIN idiom_xp x ON x.name = r.name ORDER BY r.wins DESC, r.points DESC LIMIT $1`, [limit]);
+        return r.rows.map((x) => ({ name: x.name, value: x.wins, games: x.games, points: x.points, avatar: x.avatar, xp: Number(x.xp) || 0 }));
+      },
+      async getXp(name) { const r = await q(`SELECT xp FROM idiom_xp WHERE name = $1`, [name]); return r.rows[0] ? Number(r.rows[0].xp) : 0; },
+      async addXp(name, n) {
+        const cur = await this.getXp(name); const nx = cur + n;
+        const r = await q(`UPDATE idiom_xp SET xp = $2, updated_at = NOW() WHERE name = $1`, [name, nx]);
+        if (!r.rowCount) await q(`INSERT INTO idiom_xp (name, xp) VALUES ($1, $2)`, [name, nx]);
+        return nx;
+      },
+      async topXp(limit) {
+        const r = await q(`SELECT x.name, x.xp, u.avatar FROM idiom_xp x LEFT JOIN idiom_users u ON u.name = x.name WHERE x.xp > 0 ORDER BY x.xp DESC LIMIT $1`, [limit]);
+        return r.rows.map((x) => ({ name: x.name, value: Number(x.xp), avatar: x.avatar, xp: Number(x.xp) }));
       },
       async getMeta(k) { const r = await q(`SELECT v FROM idiom_meta WHERE k = $1`, [k]); return r.rows[0] ? r.rows[0].v : null; },
       async setMeta(k, v) { await q(`INSERT INTO idiom_meta (k, v) VALUES ($1, $2)`, [k, v]); },
+      async getSave(name) { const r = await q(`SELECT data FROM idiom_saves WHERE name = $1`, [name]); return r.rows[0] ? r.rows[0].data : null; },
+      async putSave(name, data) {
+        const r = await q(`UPDATE idiom_saves SET data = $2, updated_at = NOW() WHERE name = $1`, [name, data]);
+        if (!r.rowCount) await q(`INSERT INTO idiom_saves (name, data) VALUES ($1, $2)`, [name, data]);
+      },
     };
   }
   // ── 沒有資料庫時：存成本機檔案 ──
   const file = path.join(__dirname, 'local-data.json');
-  let d = { users: {}, scores: {}, rush: {}, meta: {} };
+  let d = { users: {}, scores: {}, rush: {}, meta: {}, saves: {}, xp: {} };
   try { d = Object.assign(d, JSON.parse(fs.readFileSync(file, 'utf8'))); } catch (e) { /* 第一次啟動 */ }
   const save = () => { try { fs.writeFileSync(file, JSON.stringify(d)); } catch (e) { /* 忽略 */ } };
   return {
@@ -95,18 +113,23 @@ function makeDb() {
     async myBests(name) { const out = {}; Object.values(d.scores).filter((s) => s.name === name).forEach((s) => { out[s.game] = s.best; }); return out; },
     async topScores(game, limit) {
       return Object.values(d.scores).filter((s) => s.game === game).sort((a, b) => b.best - a.best || a.t - b.t)
-        .slice(0, limit).map((s) => ({ name: s.name, value: s.best, avatar: d.users[s.name] && d.users[s.name].avatar }));
+        .slice(0, limit).map((s) => ({ name: s.name, value: s.best, avatar: d.users[s.name] && d.users[s.name].avatar, xp: d.xp[s.name] || 0 }));
     },
     async recordRush(name, win, points) {
       const o = d.rush[name] || { games: 0, wins: 0, points: 0 };
       o.games++; if (win) o.wins++; o.points += points; d.rush[name] = o; save();
     },
     async topRush(limit) {
-      return Object.entries(d.rush).map(([name, o]) => ({ name, value: o.wins, games: o.games, points: o.points, avatar: d.users[name] && d.users[name].avatar }))
+      return Object.entries(d.rush).map(([name, o]) => ({ name, value: o.wins, games: o.games, points: o.points, avatar: d.users[name] && d.users[name].avatar, xp: d.xp[name] || 0 }))
         .sort((a, b) => b.value - a.value || b.points - a.points).slice(0, limit);
     },
+    async getXp(name) { return d.xp[name] || 0; },
+    async addXp(name, n) { d.xp[name] = (d.xp[name] || 0) + n; save(); return d.xp[name]; },
+    async topXp(limit) { return Object.entries(d.xp).filter(([, v]) => v > 0).sort((a, b) => b[1] - a[1]).slice(0, limit).map(([name, v]) => ({ name, value: v, xp: v, avatar: d.users[name] && d.users[name].avatar })); },
     async getMeta(k) { return d.meta[k] || null; },
     async setMeta(k, v) { d.meta[k] = v; save(); },
+    async getSave(name) { return d.saves[name] || null; },
+    async putSave(name, data) { d.saves[name] = data; save(); },
   };
 }
 const db = makeDb();
@@ -114,7 +137,7 @@ const db = makeDb();
 // ═════════════════════════ 登入憑證 ═════════════════════════
 let SECRET = process.env.SESSION_SECRET || '';
 function sign(name) {
-  const exp = Date.now() + 1000 * 60 * 60 * 24 * 60; // 60 天
+  const exp = Date.now() + 1000 * 60 * 60 * 24 * 180; // 180 天；每次開遊戲自動續期
   const body = Buffer.from(JSON.stringify({ n: name, e: exp })).toString('base64url');
   const mac = crypto.createHmac('sha256', SECRET).update(body).digest('base64url');
   return body + '.' + mac;
@@ -161,7 +184,7 @@ async function api(req, res, url) {
       const b = await readBody(req); const name = cleanName(b.name); const pw = String(b.password || '');
       const u = await db.getUser(name);
       if (!u || !(await bcrypt.compare(pw, u.hash))) return sendJson(res, 401, { error: '名稱或密碼不正確' });
-      return sendJson(res, 200, { token: sign(name), name, avatar: u.avatar, bests: await db.myBests(name) });
+      return sendJson(res, 200, { token: sign(name), name, avatar: u.avatar, bests: await db.myBests(name), save: await db.getSave(name), xp: await db.getXp(name) });
     }
     if (p === '/api/me' && req.method === 'POST') {
       const b = await readBody(req); const name = verify(b.token);
@@ -169,7 +192,29 @@ async function api(req, res, url) {
       const u = await db.getUser(name);
       if (!u) return sendJson(res, 401, { error: '找不到這個帳號' });
       if (b.avatar && E.AVATARS.includes(b.avatar)) { await db.setAvatar(name, b.avatar); u.avatar = b.avatar; }
-      return sendJson(res, 200, { name, avatar: u.avatar, bests: await db.myBests(name) });
+      return sendJson(res, 200, { token: sign(name), name, avatar: u.avatar, bests: await db.myBests(name), save: await db.getSave(name), xp: await db.getXp(name) });
+    }
+    if (p === '/api/xp' && req.method === 'POST') {
+      // 累積積分（科舉功名）：單人闖關、與電腦對戰、升官記的得分
+      const b = await readBody(req); const name = verify(b.token);
+      if (!name) return sendJson(res, 401, { error: '登入已過期，請重新登入' });
+      const add = Math.floor(Number(b.add));
+      if (!(add > 0) || add > 20000) return sendJson(res, 400, { error: '積分格式不正確' });
+      const xp = await db.addXp(name, add);
+      // 已經在房間裡的話，同步更新座位上的名牌
+      for (const room of rooms.values()) { const m = room.members.find((x) => x.name === name); if (m) { m.xp = xp; pushRoom(room); } }
+      liveXp.set(name, xp);
+      return sendJson(res, 200, { xp });
+    }
+    if (p === '/api/save' && req.method === 'POST') {
+      // 雲端存檔：升官記、生態瓶圖鑑、化石收藏、綜合挑戰進度
+      const b = await readBody(req); const name = verify(b.token);
+      if (!name) return sendJson(res, 401, { error: '登入已過期，請重新登入' });
+      const data = typeof b.data === 'string' ? b.data : JSON.stringify(b.data || {});
+      if (data.length > 60000) return sendJson(res, 400, { error: '存檔太大' });
+      try { JSON.parse(data); } catch (e) { return sendJson(res, 400, { error: '存檔格式不正確' }); }
+      await db.putSave(name, data);
+      return sendJson(res, 200, { ok: true });
     }
     if (p === '/api/score' && req.method === 'POST') {
       const b = await readBody(req); const name = verify(b.token);
@@ -182,6 +227,7 @@ async function api(req, res, url) {
     if (p === '/api/leaderboard') {
       const game = url.searchParams.get('game') || 'rush';
       if (game === 'rush') return sendJson(res, 200, { game, rows: await db.topRush(50) });
+      if (game === 'xp') return sendJson(res, 200, { game, rows: await db.topXp(50) });
       if (!validGame(game)) return sendJson(res, 400, { error: '沒有這個遊戲' });
       return sendJson(res, 200, { game, rows: await db.topScores(game, 50) });
     }
@@ -221,6 +267,7 @@ const server = http.createServer((req, res) => {
 // ═════════════════════════ 房間與對戰 ═════════════════════════
 const io = new Server(server, { cors: { origin: '*' } });
 const rooms = new Map();
+const liveXp = new Map(); // 玩家最新的功名積分（顯示名牌用）
 
 function makeCode() {
   const ch = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -231,7 +278,7 @@ function roomView(room) {
   return {
     code: room.code, host: room.host, humanMax: room.humanMax, aiCount: room.aiCount, aiLevel: room.aiLevel,
     rounds: room.rounds, qtype: room.qtype, mode: room.mode, game: room.game, raceRounds: room.raceRounds, state: room.state,
-    members: room.members.map((m) => ({ name: m.name, avatar: m.avatar, online: !!m.socketId, host: m.name === room.host })),
+    members: room.members.map((m) => ({ name: m.name, avatar: m.avatar, xp: m.xp || 0, online: !!m.socketId, host: m.name === room.host })),
   };
 }
 function pushRoom(room) { io.to(room.code).emit('room', roomView(room)); }
@@ -251,7 +298,7 @@ io.on('connection', (socket) => {
     if (!name) return cb({ error: '登入已過期，請重新登入' });
     const u = await db.getUser(name).catch(() => null);
     if (!u) return cb({ error: '找不到這個帳號' });
-    me = { name, avatar: u.avatar || '🙂' };
+    me = { name, avatar: u.avatar || '🙂' }; liveXp.set(name, await db.getXp(name).catch(() => 0));
     cb({ ok: true, name });
   });
 
@@ -281,7 +328,7 @@ io.on('connection', (socket) => {
       mode: opt.mode === 'race' ? 'race' : 'rush',
       game: E.RACE_TIME[opt.game] || opt.game === 'mix' ? opt.game : 'mix',
       raceRounds: ROUNDS.includes(opt.raceRounds) ? opt.raceRounds : 10,
-      state: 'waiting', members: [{ name: me.name, avatar: me.avatar, socketId: socket.id }], match: null,
+      state: 'waiting', members: [{ name: me.name, avatar: me.avatar, xp: liveXp.get(me.name) || 0, socketId: socket.id }], match: null,
     };
     rooms.set(room.code, room);
     myRoom = room; socket.join(room.code);
@@ -299,8 +346,8 @@ io.on('connection', (socket) => {
       if (room.members.length >= room.humanMax) return cb({ error: '房間真人座位已滿' });
     }
     if (myRoom && myRoom !== room) leave();
-    if (existing) existing.socketId = socket.id;
-    else room.members.push({ name: me.name, avatar: me.avatar, socketId: socket.id });
+    if (existing) { existing.socketId = socket.id; existing.xp = liveXp.get(me.name) || existing.xp || 0; }
+    else room.members.push({ name: me.name, avatar: me.avatar, xp: liveXp.get(me.name) || 0, socketId: socket.id });
     myRoom = room; socket.join(room.code);
     cb({ ok: true, room: roomView(room), snapshot: room.match && room.state === 'playing' ? room.match.snapshot() : null });
     pushRoom(room);
@@ -328,7 +375,7 @@ io.on('connection', (socket) => {
     const names = E.shuffle(null, E.AI_NAMES).slice(0, room.aiCount);
     const aiAv = E.shuffle(null, E.AVATARS);
     const players = [
-      ...room.members.map((m) => ({ id: m.name, name: m.name, avatar: m.avatar })),
+      ...room.members.map((m) => ({ id: m.name, name: m.name, avatar: m.avatar, xp: m.xp || 0 })),
       ...names.map((n, i) => ({ id: 'ai' + i, name: n + '（電腦）', ai: true, avatar: aiAv[i] })),
     ];
     room.state = 'playing';
@@ -376,6 +423,7 @@ async function finishRoom(room, ranking) {
   const humans = ranking.filter((r) => !r.ai);
   for (const r of humans) {
     try { await db.recordRush(r.name, r.rank === 1, r.score); } catch (e) { console.error('記錄對戰失敗', e); }
+    try { if (r.score > 0) { const nx = await db.addXp(r.name, Math.min(20000, r.score)); const m = room.members.find((x) => x.name === r.name); if (m) m.xp = nx; liveXp.set(r.name, nx); } } catch (e) { console.error('記錄積分失敗', e); }
   }
   // 比賽中離線的人，比賽結束後移出房間
   room.members = room.members.filter((m) => m.socketId);

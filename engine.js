@@ -891,6 +891,36 @@
   const AI_NAMES = ['小書僮', '老夫子', '秀才阿明', '才女小蓮', '探花郎', '私塾先生', '墨香姑娘', '書呆阿呆'];
   const AVATARS = ['🐯', '🐼', '🦊', '🐰', '🐸', '🐵', '🐱', '🐶', '🐻', '🐨', '🐷', '🐔'];
 
+
+  // ───────────────────────── 科舉功名：依累積積分晉升 ─────────────────────────
+  /** [功名, 需要的累積積分, 說明] 由低到高；前段是科舉考試的功名，考中狀元後進入官場 */
+  const TITLES = [
+    ['童生', 0, '尚未考取功名的讀書人'],
+    ['秀才', 1500, '通過院試，成為生員'],
+    ['舉人', 5000, '鄉試中舉'],
+    ['解元', 9000, '鄉試第一名'],
+    ['貢士', 14000, '會試上榜'],
+    ['會元', 20000, '會試第一名'],
+    ['同進士', 28000, '殿試三甲，賜同進士出身'],
+    ['進士', 38000, '殿試二甲，賜進士出身'],
+    ['探花', 52000, '殿試一甲第三名'],
+    ['榜眼', 70000, '殿試一甲第二名'],
+    ['狀元', 95000, '殿試一甲第一名'],
+    ['連中三元', 125000, '解元、會元、狀元一人包辦'],
+    ['翰林學士', 165000, '入翰林院，掌制誥文書'],
+    ['侍郎', 220000, '六部副首長'],
+    ['尚書', 300000, '六部首長'],
+    ['宰相', 420000, '百官之首，位極人臣'],
+  ];
+  function titleOf(xp) {
+    xp = Math.max(0, xp | 0); let i = 0;
+    TITLES.forEach((t, k) => { if (xp >= t[1]) i = k; });
+    const next = TITLES[i + 1];
+    return { tier: i, name: TITLES[i][0], desc: TITLES[i][2], xp, next: next ? next[0] : null, need: next ? next[1] - xp : 0, from: TITLES[i][1], to: next ? next[1] : TITLES[i][1] };
+  }
+  /** 電腦對手的功名（依程度） */
+  const AI_XP = { easy: 2000, normal: 14500, hard: 56000 };
+
   // ───────────────────────── 搶答比賽流程 ─────────────────────────
   /**
    * 一場搶答比賽。伺服器與單機都用這個類別。
@@ -906,7 +936,7 @@
       this.rng = makeRng(opts.seed);
       this.emit = opts.emit || function () {};
       this.players = opts.players.map((p) => ({
-        id: p.id, name: p.name, ai: !!p.ai, avatar: p.avatar || '🙂', score: 0, correct: 0,
+        id: p.id, name: p.name, ai: !!p.ai, avatar: p.avatar || '🙂', xp: p.ai ? AI_XP[opts.aiLevel] || AI_XP.normal : p.xp || 0, score: 0, correct: 0,
       }));
       this.qi = 0;
       this.phase = 'idle';
@@ -926,7 +956,7 @@
       this.phase = 'countdown';
       this.emit('match_start', {
         rounds: this.rounds, timeLimit: this.timeLimit,
-        players: this.players.map(({ id, name, ai, avatar }) => ({ id, name, ai, avatar })),
+        players: this.players.map(({ id, name, ai, avatar, xp }) => ({ id, name, ai, avatar, xp })),
       });
       this.later(() => this.next(), 3200);
     }
@@ -989,7 +1019,7 @@
       this.phase = 'ended';
       this.clearTimers();
       const ranking = this.players.slice().sort((a, b) => b.score - a.score || b.correct - a.correct)
-        .map((p, i) => ({ rank: i + 1, id: p.id, name: p.name, ai: p.ai, avatar: p.avatar, score: p.score, correct: p.correct }));
+        .map((p, i) => ({ rank: i + 1, id: p.id, name: p.name, ai: p.ai, avatar: p.avatar, xp: p.xp, score: p.score, correct: p.correct }));
       this.ranking = ranking;
       this.emit('match_end', { ranking });
     }
@@ -1001,7 +1031,7 @@
         remain: this.phase === 'question' ? Math.max(0, this.qLimit - (Date.now() - this.qStart)) : 0, timeLimit: this.qLimit,
         q: this.phase === 'question' && this.q ? publicQuestion(this.q) : null,
         locked: [...this.locked],
-        players: this.players.map(({ id, name, ai, avatar }) => ({ id, name, ai, avatar })),
+        players: this.players.map(({ id, name, ai, avatar, xp }) => ({ id, name, ai, avatar, xp })),
         scores: this.scores(),
       };
     }
@@ -1026,7 +1056,7 @@
       this.aiLevel = RACE_AI[opts.aiLevel] ? opts.aiLevel : 'normal';
       this.rng = makeRng(opts.seed);
       this.emit = opts.emit || function () {};
-      this.players = opts.players.map((p) => ({ id: p.id, name: p.name, ai: !!p.ai, avatar: p.avatar || '🙂', score: 0, correct: 0, cur: 0, curT: 0 }));
+      this.players = opts.players.map((p) => ({ id: p.id, name: p.name, ai: !!p.ai, avatar: p.avatar || '🙂', xp: p.ai ? AI_XP[opts.aiLevel] || AI_XP.normal : p.xp || 0, score: 0, correct: 0, cur: 0, curT: 0 }));
       this.k = 0; this.phase = 'idle'; this.timers = new Set(); this.lastMix = [];
     }
     later(fn, ms) { const h = setTimeout(() => { this.timers.delete(h); fn(); }, ms); this.timers.add(h); return h; }
@@ -1034,7 +1064,7 @@
     scores() { return this.players.map((p) => ({ id: p.id, score: p.score, correct: p.correct })); }
     start() {
       this.phase = 'countdown';
-      this.emit('race_start', { game: this.game, rounds: this.rounds, players: this.players.map(({ id, name, ai, avatar }) => ({ id, name, ai, avatar })) });
+      this.emit('race_start', { game: this.game, rounds: this.rounds, players: this.players.map(({ id, name, ai, avatar, xp }) => ({ id, name, ai, avatar, xp })) });
       this.later(() => this.next(), 3200);
     }
     pickGame() {
@@ -1093,7 +1123,7 @@
     finish() {
       this.phase = 'ended'; this.clearTimers();
       const ranking = this.players.slice().sort((a, b) => b.score - a.score || b.correct - a.correct)
-        .map((p, i) => ({ rank: i + 1, id: p.id, name: p.name, ai: p.ai, avatar: p.avatar, score: p.score, correct: p.correct }));
+        .map((p, i) => ({ rank: i + 1, id: p.id, name: p.name, ai: p.ai, avatar: p.avatar, xp: p.xp, score: p.score, correct: p.correct }));
       this.ranking = ranking;
       this.emit('match_end', { ranking, race: true, game: this.game });
     }
@@ -1102,7 +1132,7 @@
       return {
         race: true, game: this.game, cur: this.cur, scoreMode: this.scoreMode, phase: this.phase, k: this.k, total: this.rounds, seed: this.seed, limit: this.limit,
         remain: this.phase === 'play' ? Math.max(0, this.limit - (Date.now() - this.t0)) : 0,
-        players: this.players.map(({ id, name, ai, avatar }) => ({ id, name, ai, avatar })), scores: this.scores(), counts: this.players.map((p) => ({ id: p.id, n: p.cur })),
+        players: this.players.map(({ id, name, ai, avatar, xp }) => ({ id, name, ai, avatar, xp })), scores: this.scores(), counts: this.players.map((p) => ({ id: p.id, n: p.cur })),
       };
     }
   }
@@ -1148,6 +1178,7 @@
     ANTONYMS, HISTORY, DIRS, COMPASS, CHAR_IDIOMS, FLOWER_CENTERS, ROWS, COLS,
     COLORS, COLOR_IDIOMS, colorChoices, ECO, ECO_IDIOMS, EMOJIS, PICS, PIC_LIST, COMICS, COMIC_LIST, TONES, TONE_IDIOMS, STROKES, strokesOf, radicalOf, RADS, RADCHARS, RAD_VARIANT, RAD_IDIOMS,
     makeRng, shuffle, pick, makeQuestion, publicQuestion, makeLinkBoard, linkPair,
+    TITLES, titleOf, AI_XP,
     AI_LEVELS, AI_NAMES, AVATARS, RushMatch, RaceMatch, RACE_TIME, RACE_MIX, SCORE_GAMES,
   };
 });
