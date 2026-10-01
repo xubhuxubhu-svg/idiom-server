@@ -1173,12 +1173,529 @@
     slide:   { name: '成語推盤', desc: '推動木塊，排出兩句成語就過關', cat: 2 },
   };
 
+  // ═════════════════════════ 挑戰賽：依學歷分級的考試 ═════════════════════════
+  /** 學歷關卡：n＝題數、t＝每題秒數、mult＝功名積分倍數；及格與星等依「分數佔滿分的比例」 */
+  const EDU_LEVELS = [
+    { key: 'e1', name: '小學', icon: '🎒', n: 10, t: 20, mult: 1, desc: '最常見的成語：看字補字、看解釋選成語、猜表情' },
+    { key: 'e2', name: '國中', icon: '📘', n: 10, t: 18, mult: 1.3, desc: '課本常見成語：找錯字、反義成語、成語接龍' },
+    { key: 'e3', name: '高中', icon: '📗', n: 12, t: 20, mult: 1.6, desc: '在句子中選出最適合的成語、一次補兩個字' },
+    { key: 'e4', name: '專科', icon: '🛠️', n: 12, t: 20, mult: 2, desc: '較難的語境題、近義成語、看成語選解釋' },
+    { key: 'e5', name: '大學', icon: '🎓', n: 15, t: 20, mult: 2.5, desc: '最常被誤用的成語：望文生義的陷阱題' },
+    { key: 'e6', name: '碩士', icon: '📜', n: 15, t: 22, mult: 3.2, desc: '典故題：看故事猜成語、成語故事的主角是誰' },
+    { key: 'e7', name: '博士', icon: '🏛️', n: 15, t: 22, mult: 4, desc: '冷僻成語、古文原句猜成語，非常燒腦' },
+  ];
+  /** 及格、兩星、三星的門檻；每題滿分 150（答對 100＋速度加分 50），總分再換算成百分制 */
+  const EDU_STAR = [60, 75, 90];   // 換算成百分制後：60 分一星（及格）、75 分兩星、90 分三星
+  const eduMax = (lv) => EDU_LEVELS[lv].n * 150;
+  const eduPct = (lv, score) => Math.floor((score / eduMax(lv)) * 100);
+  const eduStars = (lv, score) => EDU_STAR.filter((f) => eduPct(lv, score) >= f).length;
+  const eduNeed = (lv) => EDU_STAR.map((f) => Math.ceil((eduMax(lv) * f) / 100));
+
+  // 小學用的常見成語
+  const EASY_WORDS = '守株待兔 畫蛇添足 亡羊補牢 井底之蛙 對牛彈琴 狐假虎威 掩耳盜鈴 刻舟求劍 揠苗助長 自相矛盾 半途而廢 一舉兩得 愚公移山 一目了然 心花怒放 手舞足蹈 目不轉睛 津津有味 興高采烈 垂頭喪氣 一心一意 三心二意 七上八下 九牛一毛 十全十美 萬紫千紅 五光十色 百花齊放 春暖花開 風和日麗 鳥語花香 如魚得水 虎頭蛇尾 馬到成功 雞飛狗跳 狼吞虎嚥 盲人摸象 自言自語 異口同聲 人山人海 天涯海角 一帆風順 手忙腳亂 亂七八糟 家喻戶曉 水落石出 一路順風 風調雨順 畫龍點睛 雪中送炭 望梅止渴 東張西望 七嘴八舌 大驚小怪 小心翼翼 愁眉苦臉 粗心大意 喜出望外 鴉雀無聲 老馬識途 面紅耳赤 青山綠水 黑白分明 一鳴驚人 胸有成竹 對答如流 名列前茅 百發百中 井井有條 爭先恐後 分秒必爭 全力以赴 有始有終 左顧右盼 東奔西走 白髮蒼蒼 一刀兩斷 人來人往 自私自利 天長地久 海闊天空'.split(' ');
+  const EASY = EASY_WORDS.map((w) => BY_WORD.get(w)).filter(Boolean);
+  const EASY_EMOJI = EMOJIS.filter((x) => EASY_WORDS.includes(x.w));
+
+  // 高中：句子填空（句子｜答案｜三個干擾選項）
+  const SENT_A_RAW = `
+他做事總是＿＿＿＿，開頭轟轟烈烈，結尾卻草草了事。|虎頭蛇尾|有始有終,一鼓作氣,按部就班
+這篇文章最後一句話＿＿＿＿，讓全文生色不少。|畫龍點睛|畫蛇添足,弄巧成拙,多此一舉
+這次比賽拿下冠軍，希望大家＿＿＿＿，明年再創佳績。|再接再厲|半途而廢,得意忘形,功虧一簣
+他明明不懂，卻在專家面前高談闊論，真是＿＿＿＿。|班門弄斧|胸有成竹,老馬識途,對症下藥
+新聞一播出，這件事立刻＿＿＿＿，全國都知道了。|家喻戶曉|鮮為人知,默默無聞,寥寥無幾
+他講話總是＿＿＿＿，答應的事從來不算數。|信口開河|言而有信,一言九鼎,實事求是
+這次報告她早已準備充分，上臺時＿＿＿＿，表現得非常從容。|胸有成竹|手忙腳亂,七上八下,驚慌失措
+這家餐廳開幕後生意興隆，門口天天＿＿＿＿。|門庭若市|門可羅雀,寥寥無幾,冷冷清清
+景氣不好，那家店生意冷清，簡直＿＿＿＿。|門可羅雀|門庭若市,車水馬龍,人山人海
+他只看了一小部分資料就下結論，真是＿＿＿＿。|盲人摸象|一目了然,明察秋毫,鞭辟入裡
+引用別人的話要看完整的上下文，不可以＿＿＿＿。|斷章取義|舉一反三,博古通今,一目十行
+經過警方仔細調查，案情終於＿＿＿＿。|水落石出|撲朔迷離,石沉大海,不了了之
+這件事的真相＿＿＿＿，到現在還沒有人說得清楚。|撲朔迷離|水落石出,一目了然,昭然若揭
+看到成績單，他＿＿＿＿，原來自己考了滿分。|喜出望外|大失所望,垂頭喪氣,心灰意冷
+遇到困難要自己想辦法，不要總是＿＿＿＿，把錯都推給別人。|怨天尤人|反躬自省,自強不息,捨己為人
+這座城市＿＿＿＿，交通非常繁忙。|車水馬龍|門可羅雀,荒無人煙,鴉雀無聲
+他根本沒有真本事，只是混在隊伍裡＿＿＿＿罷了。|濫竽充數|出類拔萃,鶴立雞群,獨當一面
+我們要學會＿＿＿＿，從一件事推想到其他相關的事。|舉一反三|一知半解,不求甚解,生吞活剝
+讀書不能＿＿＿＿，要細細體會其中的意思。|囫圇吞棗|溫故知新,舉一反三,學以致用
+他一聽到批評就＿＿＿＿，馬上放棄了。|心灰意冷|再接再厲,百折不撓,意氣風發
+小明＿＿＿＿，一口氣就把作業全部寫完了。|一鼓作氣|拖泥帶水,半途而廢,斷斷續續
+這兩個國家關係密切，＿＿＿＿，一方受損，另一方也會受害。|唇亡齒寒|互不相干,勢不兩立,各自為政
+天不會塌下來的，你別＿＿＿＿了。|杞人憂天|未雨綢繆,居安思危,防患未然
+這位新人才進公司一年就表現亮眼，真是＿＿＿＿。|後生可畏|老氣橫秋,倚老賣老,少不更事
+面對強大的對手，他毫不退縮，＿＿＿＿地衝上前去。|一馬當先|畏首畏尾,瞻前顧後,臨陣脫逃
+合約已經簽好，＿＿＿＿，再也無法改變了。|木已成舟|朝令夕改,舉棋不定,懸而未決
+這篇評論分析得＿＿＿＿，把問題的核心說得非常透徹。|入木三分|浮光掠影,隔靴搔癢,泛泛而談
+兩隊實力＿＿＿＿，比賽一直打到延長賽才分出勝負。|勢均力敵|天壤之別,判若雲泥,相形見絀
+颱風來襲前，家家戶戶都＿＿＿＿，做好防颱準備。|未雨綢繆|亡羊補牢,臨渴掘井,杞人憂天
+這部電影情節＿＿＿＿，觀眾都看得目不轉睛。|扣人心弦|平淡無奇,索然無味,味同嚼蠟
+大家意見＿＿＿＿，討論了一整天還沒有結論。|眾說紛紜|異口同聲,不約而同,眾口一詞
+工作要＿＿＿＿，一步一步來，不能急躁。|按部就班|急於求成,一步登天,好高騖遠
+你提出的方法真是＿＿＿＿，一下子解決了兩個問題。|一舉兩得|事倍功半,得不償失,徒勞無功
+法官審案必須＿＿＿＿，不能偏袒任何一方。|大公無私|徇私舞弊,貪贓枉法,假公濟私
+她聽到這個好消息，高興得＿＿＿＿。|手舞足蹈|捶胸頓足,無精打采,垂頭喪氣
+他倆從小一起長大，是＿＿＿＿的好朋友。|青梅竹馬|萍水相逢,素昧平生,一面之交
+只要＿＿＿＿，再難的事也能完成。|持之以恆|半途而廢,虎頭蛇尾,淺嘗輒止
+這次能反敗為勝，全靠大家＿＿＿＿。|上下一心|各自為政,一盤散沙,同床異夢
+`;
+  // 專科：較難的句子填空
+  const SENT_B_RAW = `
+這座古廟經過整修後＿＿＿＿，吸引許多遊客前來參觀。|美輪美奐|美中不足,面目全非,滿目瘡痍
+這位作家的新書一上市，消息便＿＿＿＿，很快就賣到斷貨。|不脛而走|石沉大海,默默無聞,祕而不宣
+這次失誤讓他的聲望＿＿＿＿，很難再挽回了。|一落千丈|蒸蒸日上,扶搖直上,如日中天
+他的建議只是＿＿＿＿，根本沒有解決真正的問題。|隔靴搔癢|一針見血,切中要害,對症下藥
+老師的一番話＿＿＿＿，點出了我作文最大的問題。|一針見血|不著邊際,言不及義,隔靴搔癢
+兩家公司的產品＿＿＿＿，消費者幾乎分不出差別。|大同小異|天壤之別,截然不同,迥然不同
+他做人＿＿＿＿，嘴上說一套，心裡想的又是另一套。|口是心非|表裡如一,言行一致,心口如一
+這個案子錯綜複雜，必須＿＿＿＿，才能找出真正的原因。|抽絲剝繭|囫圇吞棗,走馬看花,浮光掠影
+他對這份工作＿＿＿＿，很快就上手了。|得心應手|力不從心,捉襟見肘,束手無策
+公司財務吃緊，處處＿＿＿＿，連文具都要節省。|捉襟見肘|綽綽有餘,揮金如土,遊刃有餘
+這位老師傅修理機器＿＿＿＿，再難的問題也難不倒他。|遊刃有餘|力不從心,捉襟見肘,黔驢技窮
+談判雙方＿＿＿＿，誰也不肯讓步。|針鋒相對|相輔相成,和衷共濟,同舟共濟
+在這場危機中，全體員工＿＿＿＿，終於度過了難關。|同舟共濟|各自為政,分道揚鑣,自相殘殺
+此人做事＿＿＿＿，只要能達到目的，什麼手段都用得出來。|不擇手段|光明磊落,循規蹈矩,奉公守法
+這兩件事毫無關聯，你不要＿＿＿＿。|混為一談|涇渭分明,一清二楚,各行其是
+新規定實施後，問題反而＿＿＿＿，讓民眾更加不滿。|變本加厲|迎刃而解,煙消雲散,冰消瓦解
+他在上百位參賽者中＿＿＿＿，一舉奪下冠軍。|脫穎而出|名落孫山,鎩羽而歸,一敗塗地
+這幅畫的色彩與構圖＿＿＿＿，堪稱傑作。|相得益彰|格格不入,相形見絀,背道而馳
+他提出的理由＿＿＿＿，根本站不住腳。|牽強附會|言之成理,天經地義,無懈可擊
+眼看就要成功，卻因為一點小疏忽而＿＿＿＿。|功虧一簣|大功告成,水到渠成,一蹴而就
+做研究不能＿＿＿＿，要親自實驗求證。|人云亦云|實事求是,獨樹一幟,別出心裁
+這位演員的演技已經＿＿＿＿，把角色詮釋得活靈活現。|爐火純青|初出茅廬,差強人意,乏善可陳
+多年不見，這座小鎮已經＿＿＿＿，我完全認不出來了。|面目全非|一如既往,依然如故,原封不動
+他總是＿＿＿＿，不肯接受任何新的觀念。|墨守成規|推陳出新,與時俱進,標新立異
+這件事牽一髮而動全身，必須＿＿＿＿。|三思而行|輕舉妄動,草率從事,魯莽行事
+他遇事＿＿＿＿，從來不會慌亂。|從容不迫|手足無措,驚慌失措,六神無主
+這篇文章東抄一段、西抄一段，完全是＿＿＿＿。|東拼西湊|自出機杼,匠心獨運,渾然天成
+兩個人的觀點＿＿＿＿，根本無法達成共識。|南轅北轍|不謀而合,如出一轍,殊途同歸
+這兩位畫家風格相近，作品簡直＿＿＿＿。|如出一轍|南轅北轍,大相逕庭,天差地別
+不過是一點小擦傷，你未免太＿＿＿＿了。|小題大作|輕描淡寫,息事寧人,若無其事
+這個計畫看似完美，其實只是＿＿＿＿，執行起來困難重重。|紙上談兵|腳踏實地,實事求是,身體力行
+大家都在努力，你卻在一旁＿＿＿＿，一點忙都不幫。|袖手旁觀|身體力行,挺身而出,見義勇為
+問題已經＿＿＿＿，再不處理就來不及了。|迫在眉睫|遙遙無期,從長計議,高枕無憂
+面對各種誘惑，他始終＿＿＿＿，堅守原則。|不為所動|隨波逐流,見異思遷,朝秦暮楚
+`;
+  // 專科：近義成語（題目｜答案｜干擾選項）
+  const SYN_RAW = `
+畫蛇添足|多此一舉|恰到好處,錦上添花,畫龍點睛
+刻舟求劍|膠柱鼓瑟|隨機應變,見機行事,通權達變
+半途而廢|有始無終|持之以恆,鍥而不捨,善始善終
+異口同聲|眾口一詞|眾說紛紜,各執一詞,議論紛紛
+一目了然|一清二楚|撲朔迷離,霧裡看花,莫名其妙
+杞人憂天|庸人自擾|未雨綢繆,高枕無憂,居安思危
+兢兢業業|勤勤懇懇|敷衍了事,得過且過,馬馬虎虎
+走馬看花|浮光掠影|鞭辟入裡,入木三分,細嚼慢嚥
+九牛一毛|滄海一粟|堆積如山,不計其數,多如牛毛
+大同小異|相差無幾|天壤之別,截然不同,大相逕庭
+鶴立雞群|出類拔萃|平淡無奇,庸庸碌碌,泯然眾人
+心花怒放|喜不自勝|怒髮衝冠,黯然神傷,悶悶不樂
+千鈞一髮|危在旦夕|高枕無憂,安然無恙,穩如泰山
+世外桃源|人間仙境|窮山惡水,人間地獄,龍潭虎穴
+狐假虎威|仗勢欺人|見義勇為,鋤強扶弱,單槍匹馬
+背道而馳|南轅北轍|殊途同歸,不謀而合,齊頭並進
+不知所措|手足無措|從容不迫,泰然自若,胸有成竹
+一諾千金|一言九鼎|出爾反爾,言而無信,食言而肥
+自以為是|剛愎自用|虛懷若谷,從善如流,不恥下問
+欣欣向榮|蒸蒸日上|江河日下,每況愈下,日薄西山
+囫圇吞棗|生吞活剝|融會貫通,觸類旁通,細嚼慢嚥
+天衣無縫|完美無缺|漏洞百出,破綻百出,美中不足
+前所未有|史無前例|司空見慣,屢見不鮮,不足為奇
+談笑風生|妙語如珠|沉默寡言,噤若寒蟬,張口結舌
+不可思議|匪夷所思|理所當然,天經地義,順理成章
+寥寥無幾|屈指可數|不計其數,多如牛毛,車載斗量
+循序漸進|按部就班|一蹴而就,急於求成,揠苗助長
+`;
+  // 大學：望文生義的陷阱題（成語｜正確意思｜常見誤解｜另一個錯誤選項｜說明）
+  const TRAP_RAW = `
+差強人意|大致上還能讓人滿意|很差勁，令人失望|強迫別人接受|「差」是稍微，「強」是振奮，意思是還算令人滿意。
+七月流火|農曆七月大火星西沉，天氣漸漸轉涼|七月天氣炎熱如火|七月容易發生火災|出自《詩經》，「火」指大火星，說的是天氣轉涼。
+罄竹難書|罪狀多到寫不完（只用於壞事）|功績多到寫不完|竹子用完了，沒辦法寫字|只能形容罪惡多，不能用來稱讚。
+不刊之論|不可更改、不可磨滅的言論|不能刊登的言論|從來沒有發表過的文章|「刊」是削除，古人在竹簡上寫錯字要削掉。
+首當其衝|最先受到攻擊或遭遇災難|第一個勇敢地衝上前去|地位最重要、排名第一|「衝」是要衝、交通要道。
+炙手可熱|權勢很大，氣焰逼人（含貶義）|東西很受歡迎、很搶手|天氣熱到手會燙傷|原指權貴氣焰盛大，常被誤用為「熱門搶手」。
+美輪美奐|形容建築物高大華麗|形容女子長得非常美麗|形容風景秀麗迷人|只能用來形容房屋建築。
+目無全牛|技藝純熟，達到得心應手的境界|眼光狹小，看不到全貌|做事馬虎，不夠周全|出自庖丁解牛，熟練到眼中不再是整頭牛。
+明日黃花|已經過時的事物|未來的美好事物|明天才會開的花|出自蘇軾詩，重陽節過後的菊花，比喻過時。
+萬人空巷|人人走出家門，街巷都空了，形容盛況|街上空無一人，非常冷清|很多人住的巷子都搬空了|指大家都跑去看熱鬧或參加盛會。
+文不加點|文章一氣呵成，不需要修改|文章沒有加標點符號|文章寫得太過簡單|「點」是塗改，形容文思敏捷。
+方興未艾|事物正在蓬勃發展，還沒有停止|事情快要結束了|才剛開始就停止了|「艾」是停止、終止。
+期期艾艾|口吃，說話不流利|既期待又怕受傷害|一期一期慢慢進行|出自周昌、鄧艾兩人口吃的典故。
+望其項背|追得上、比得上（常說「難以望其項背」）|只能看到別人的背影，遠遠落後|仰慕崇拜別人|能看到別人的頸背，表示差距不大。
+久假不歸|借了東西很久都不歸還|長時間休假不回來|請假太久回不了家|「假」是借。
+師心自用|固執己見，自以為是|以老師為榜樣，用心學習|老師用心教學|「師心」是以自己的心意為師。
+登堂入室|學問技藝由淺入深，造詣高深|擅自闖進別人家裡|升官進入朝廷|比喻學問或技藝達到更高的境界。
+鬼斧神工|技藝精巧，不像人力所能做到|鬼神作祟的怪事|用斧頭砍伐留下的痕跡|形容建築、雕刻等非常精巧。
+不以為然|不認為是對的（表示不同意）|不放在心上、不在乎|認為理所當然|常和「不以為意」（不放在心上）混淆。
+不忍卒讀|內容悲慘，讓人不忍心讀完|文章寫得太差，讀不下去|文章太長，讀不完|形容文章內容悲慘動人。
+危言危行|說話正直，行為也正直|說危險的話、做危險的事|故意說嚇人的話|「危」是正直，出自《論語》。
+敬謝不敏|推辭做某事的客氣話|非常感謝對方的聰明|恭敬地感謝別人|謙稱自己能力不夠而推辭。
+曾幾何時|沒有經過多少時間|曾經有一段時候|很久很久以前|表示時間過去沒有多久。
+上下其手|玩弄手法，串通作弊|用手上下撫摸|上司和下屬一起動手做事|出自《左傳》伯州犁的故事。
+豆蔻年華|指少女十三、四歲的年紀|指老年人的歲數|指男子二十歲成年|出自杜牧的詩。
+不足為訓|不能當作典範或準則|不值得被教訓|不值得訓練|「訓」是準則、典範。
+蓬蓽生輝|謙稱別人來訪使自家增添光彩|自誇自己家的房子漂亮|稱讚別人的家很華麗|只能用在自己家，不能用來稱讚別人。
+如坐春風|受到好老師的薰陶教誨|坐在春風裡，十分悠閒|形容春天到來|比喻受到良師的教導。
+莫衷一是|意見分歧，無法得出一致的結論|大家意見非常一致|沒有一件事是對的|「衷」是決斷。
+安步當車|慢慢走路，就當作是坐車|安穩地坐在車上|走路非常危險|形容從容不迫，或安於清貧。
+不贊一詞|一句話也不說，或無法再添一句話|一句稱讚的話也不說|完全反對|「贊」是參與、添加。
+胸無城府|為人坦率，沒有心機|沒有見識、胸無大志|窮到沒有房子住|「城府」比喻心機很深。
+屢試不爽|每次試驗都沒有差錯|每次嘗試都不痛快|多次考試都考不好|「爽」是差錯。
+振聾發聵|使糊塗麻木的人清醒過來|聲音很大，震耳欲聾|讓耳朵受傷聽不見|形容言論能驚醒世人。
+始作俑者|第一個開惡例、做壞事的人|第一個發明創造的人|開始製作陶俑的工匠|含貶義，出自《孟子》。
+處心積慮|蓄意已久，千方百計地謀劃（多含貶義）|處處小心，憂慮很多|用心照顧別人|多用在謀劃壞事。
+首鼠兩端|猶豫不決，瞻前顧後|老鼠的頭和尾巴|頭腦靈活，反應很快|形容遲疑不決、動搖不定。
+三人成虎|謠言重複多次，就會被當成真的|三個人可以打敗一隻老虎|團結力量大|出自《戰國策》。
+吹毛求疵|故意挑剔毛病|吹開毛髮檢查傷口，十分細心|追求完美，精益求精|「疵」是小毛病，含貶義。
+始終不渝|自始至終都不改變|一開始就不願意|始終猶豫不決|「渝」是改變。
+`;
+  // 碩士：典故（成語｜故事｜主角）
+  const STORY_RAW = `
+臥薪嘗膽|睡在柴草上、常嘗苦膽，激勵自己不忘國恥|勾踐
+破釜沉舟|渡河後打破鍋子、鑿沉船隻，表示決一死戰|項羽
+四面楚歌|在垓下被圍，夜裡聽到漢軍四面唱起楚地歌謠|項羽
+紙上談兵|熟讀兵書卻不會實戰，在長平之戰大敗|趙括
+完璧歸趙|帶著和氏璧出使秦國，又把它完整地帶回趙國|藺相如
+負荊請罪|背著荊條到藺相如家門前認錯|廉頗
+指鹿為馬|在秦二世面前把鹿說成馬，試探群臣|趙高
+三顧茅廬|三次到隆中拜訪諸葛亮，請他出山|劉備
+聞雞起舞|半夜聽到雞叫就起床練劍|祖逖
+毛遂自薦|自我推薦，跟隨平原君出使楚國|毛遂
+樂不思蜀|投降後在洛陽過得很快樂，不想念故國|劉禪
+草木皆兵|淝水之戰前，看到八公山上的草木都以為是晉兵|苻堅
+望梅止渴|行軍時說前方有梅林，讓士兵流口水解渴|曹操
+退避三舍|與楚軍交戰時，履行諾言先退兵九十里|晉文公
+唇亡齒寒|勸虞君不要借路給晉國攻打虢國|宮之奇
+東山再起|在東山隱居多年後，再度出來做官|謝安
+鑿壁偷光|家貧沒有燈，在牆上鑿洞借鄰居的燭光讀書|匡衡
+囊螢夜讀|用袋子裝螢火蟲照明讀書|車胤
+程門立雪|拜見老師程頤，在門外站到雪深一尺|楊時
+投筆從戎|丟下抄寫文書的筆，從軍報國|班超
+洛陽紙貴|寫成〈三都賦〉後，人們爭相傳抄，紙價上漲|左思
+江郎才盡|晚年文思衰退，再也寫不出好文章|江淹
+一字千金|懸賞說能增減書中一字的人就賞千金|呂不韋
+圖窮匕見|刺殺秦王時，地圖打開到最後露出了匕首|荊軻
+背水一戰|背對河水列陣，讓士兵沒有退路而奮戰|韓信
+管鮑之交|和鮑叔牙之間互相了解、深厚的友誼|管仲
+高山流水|彈琴時，鍾子期能聽出他的心意|伯牙
+割席分坐|因為和華歆志趣不同，割斷席子分開坐|管寧
+刮目相看|發憤讀書後，讓魯肅大為改觀|呂蒙
+七步成詩|在七步之內作出一首詩|曹植
+夜郎自大|問漢朝使者：「漢朝和我國哪一個大？」|夜郎國君
+鞠躬盡瘁|在〈後出師表〉中表明為國盡心盡力，至死方休|諸葛亮
+揭竿而起|舉起竹竿當旗幟，起義反抗秦朝|陳勝
+約法三章|進入咸陽後，與百姓約定三條法令|劉邦
+黃袍加身|在陳橋兵變中被部下披上黃袍，擁立為皇帝|趙匡胤
+孟母三遷|為了孩子的教育環境搬家三次|孟母
+磨杵成針|看到老婦人要把鐵杵磨成針，從此發憤讀書|李白
+入木三分|寫在木板上的字，墨跡滲入木頭三分深|王羲之
+畫龍點睛|為牆上畫的龍點上眼睛，龍就破壁飛走|張僧繇
+鶴立雞群|在人群中氣宇軒昂，像鶴站在雞群裡|嵇紹
+老馬識途|隨齊桓公出征迷路，放老馬帶路找到歸途|管仲
+竊符救趙|偷得兵符，率領魏軍救援趙國|信陵君
+雞鳴狗盜|靠著會學雞叫、會偷東西的門客逃出秦國|孟嘗君
+唾面自乾|教弟弟被人吐口水也不要擦，讓它自己乾|婁師德
+口蜜腹劍|表面說好聽的話，暗中卻陷害別人|李林甫
+請君入甕|用周興自己提出的酷刑來審問周興|來俊臣
+`;
+  // 博士：冷僻成語（成語｜解釋）
+  const RARE_RAW = `
+篳路藍縷|駕著柴車、穿著破衣去開闢山林，形容創業艱辛。
+首鼠兩端|形容猶豫不決、瞻前顧後。
+鳩占鵲巢|比喻強占別人的位置或住所。
+蠅營狗苟|比喻不顧廉恥，到處鑽營謀利。
+韋編三絕|形容讀書勤奮刻苦。
+沆瀣一氣|比喻臭味相投的人結合在一起。
+魑魅魍魎|比喻各種害人的壞人。
+擢髮難數|比喻罪狀多得像頭髮一樣數不清。
+怙惡不悛|堅持作惡，不肯悔改。
+噤若寒蟬|形容不敢出聲說話。
+甚囂塵上|形容議論紛紛，傳得很厲害。
+莘莘學子|指眾多的學生。
+耄耋之年|指八、九十歲的高齡。
+踽踽獨行|一個人孤單地行走。
+睚眥必報|極小的怨恨也一定要報復。
+惴惴不安|形容憂愁恐懼、心神不安。
+煢煢孑立|孤單無依的樣子。
+呶呶不休|說話嘮叨，沒完沒了。
+尸位素餐|空占職位，享受俸祿而不做事。
+鞭辟入裡|形容分析透徹，切中要害。
+錙銖必較|連極少的錢或極小的事都要計較。
+涸轍之鮒|比喻處於困境、急待救援的人。
+茹毛飲血|形容上古人類還不知用火的原始生活。
+蓽門圭竇|形容貧苦人家簡陋的住處。
+戛然而止|聲音突然停止。
+叱吒風雲|形容威力極大，能左右局勢。
+暴虎馮河|比喻有勇無謀，冒險行事。
+桀驁不馴|性情倔強，不肯順從。
+皓首窮經|一直到年老都在鑽研經書。
+敝帚自珍|比喻東西雖然不好，自己卻很珍惜。
+惡貫滿盈|罪惡極多，已到盡頭。
+方枘圓鑿|比喻彼此格格不入，不能相合。
+夙夜匪懈|日夜勤奮，不敢懈怠。
+毀家紓難|捐出全部家產，以解救國家的危難。
+貽笑大方|讓內行人笑話。
+繩鋸木斷|比喻力量雖小，只要持之以恆，也能成功。
+黔驢技窮|比喻僅有的一點本領也已經用完了。
+東窗事發|比喻陰謀或罪行敗露。
+一曝十寒|比喻做事沒有恆心，時作時停。
+嘔心瀝血|形容費盡心思。
+`;
+  // 博士：古文原句（原句｜成語｜出處）
+  const QUOTE_RAW = `
+宋人有耕者，田中有株，兔走觸株，折頸而死。|守株待兔|《韓非子》
+楚人有涉江者，其劍自舟中墜於水，遽契其舟。|刻舟求劍|《呂氏春秋》
+宋人有閔其苗之不長而揠之者。|揠苗助長|《孟子》
+楚人有鬻盾與矛者，譽之曰：「吾盾之堅，物莫能陷也。」|自相矛盾|《韓非子》
+齊宣王使人吹竽，必三百人。南郭處士請為王吹竽。|濫竽充數|《韓非子》
+溫故而知新，可以為師矣。|溫故知新|《論語》
+青，取之於藍，而青於藍。|青出於藍|《荀子》
+鍥而舍之，朽木不折；鍥而不舍，金石可鏤。|鍥而不捨|《荀子》
+蚌方出曝，而鷸啄其肉，蚌合而箝其喙。|鷸蚌相爭|《戰國策》
+虎求百獸而食之，得狐。|狐假虎威|《戰國策》
+蛇固無足，子安能為之足？|畫蛇添足|《戰國策》
+見兔而顧犬，未為晚也；亡羊而補牢，未為遲也。|亡羊補牢|《戰國策》
+近塞上之人有善術者，馬無故亡而入胡。|塞翁失馬|《淮南子》
+杞國有人憂天地崩墜，身亡所寄，廢寢食者。|杞人憂天|《列子》
+北山愚公者，年且九十，面山而居。|愚公移山|《列子》
+趙高欲為亂，恐群臣不聽，乃先設驗，持鹿獻於二世。|指鹿為馬|《史記》
+夜聞漢軍四面皆楚歌，項王乃大驚。|四面楚歌|《史記》
+皆沉船，破釜甑，燒廬舍，持三日糧，以示士卒必死。|破釜沉舟|《史記》
+秦王發圖，圖窮而匕首見。|圖窮匕見|《史記》
+士別三日，即更刮目相待。|刮目相看|《三國志》
+風霜高潔，水落而石出者，山間之四時也。|水落石出|歐陽脩〈醉翁亭記〉
+先帝不以臣卑鄙，猥自枉屈，三顧臣於草廬之中。|三顧茅廬|諸葛亮〈出師表〉
+臣鞠躬盡瘁，死而後已。|鞠躬盡瘁|諸葛亮〈後出師表〉
+敏而好學，不恥下問。|不恥下問|《論語》
+舉一隅不以三隅反，則不復也。|舉一反三|《論語》
+後生可畏，焉知來者之不如今也？|後生可畏|《論語》
+無欲速，無見小利。欲速則不達，見小利則大事不成。|欲速不達|《論語》
+知彼知己，百戰不殆。|知己知彼|《孫子》
+投我以桃，報之以李。|投桃報李|《詩經》
+他山之石，可以攻玉。|他山之石|《詩經》
+天行健，君子以自強不息。|自強不息|《易經》
+臨淵羨魚，不如退而結網。|臨淵羨魚|《漢書》
+老驥伏櫪，志在千里。|老驥伏櫪|曹操〈步出夏門行〉
+願乘長風，破萬里浪。|乘風破浪|《宋書》
+好讀書，不求甚解；每有會意，便欣然忘食。|不求甚解|陶淵明〈五柳先生傳〉
+初極狹，纔通人。復行數十步，豁然開朗。|豁然開朗|陶淵明〈桃花源記〉
+黃髮垂髫，並怡然自樂。|怡然自樂|陶淵明〈桃花源記〉
+狡兔有三窟，僅得免其死耳。|狡兔三窟|《戰國策》
+井蛙不可以語於海者，拘於虛也。|井底之蛙|《莊子》
+鵬之徙於南冥也，水擊三千里，摶扶搖而上者九萬里。|鵬程萬里|《莊子》
+是可忍也，孰不可忍也？|孰不可忍|《論語》
+名不正，則言不順；言不順，則事不成。|名正言順|《論語》
+師也過，商也不及。|過猶不及|《論語》
+`;
+  const rows = (raw) => raw.trim().split('\n').map((l) => l.split('|').map((s) => s.trim()));
+  const SENT_A = rows(SENT_A_RAW).map(([s, a, d]) => ({ s, a, d: d.split(',') }));
+  const SENT_B = rows(SENT_B_RAW).map(([s, a, d]) => ({ s, a, d: d.split(',') }));
+  const SYN = rows(SYN_RAW).map(([w, a, d]) => ({ w, a, d: d.split(',') }));
+  const TRAP = rows(TRAP_RAW).map(([w, m, x1, x2, ex]) => ({ w, m, x1, x2, ex }));
+  const STORY = rows(STORY_RAW).map(([w, s, who]) => ({ w, s, who }));
+  const RARE = rows(RARE_RAW).map(([w, m]) => ({ w, m }));
+  const QUOTE = rows(QUOTE_RAW).map(([q, w, src]) => ({ q, w, src }));
+  const meaningOf = (w) => { const it = BY_WORD.get(w); if (it) return it.m; const r = RARE.find((x) => x.w === w); if (r) return r.m; const t = TRAP.find((x) => x.w === w); return t ? t.m : ''; };
+
+  /** 依學歷出一題（通用格式：prompt 題目、tiles 字卡、quote 引文、options 選項、answer 正解、idiom、ex 說明） */
+  function eduPickFrom(rng, pool, avoid, key) {
+    for (let i = 0; i < 50; i++) { const x = pick(rng, pool); if (!avoid || !avoid.has(key(x))) return x; }
+    return pick(rng, pool);
+  }
+  const EDU_TYPES = [
+    ['efill', 'emean', 'emoji'],
+    ['fill', 'meaning', 'error', 'antonym', 'chain'],
+    ['sentA', 'sentA', 'fill2', 'meaning'],
+    ['sentB', 'sentB', 'syn', 'meanRev'],
+    ['trap', 'trap', 'trap', 'sentB', 'syn'],
+    ['story', 'story', 'who', 'trap'],
+    ['rare', 'rareRev', 'rareFill', 'quote', 'quote'],
+  ];
+  const EDU_TYPE_NAME = { efill: '補字', emean: '看解釋', emoji: '猜表情', fill: '補字', meaning: '看解釋', error: '找錯字', antonym: '反義成語', chain: '成語接龍', sentA: '句子填空', fill2: '補兩字', sentB: '語境判斷', syn: '近義成語', meanRev: '選解釋', trap: '望文生義', story: '典故', who: '故事主角', rare: '冷僻成語', rareRev: '冷僻成語', rareFill: '冷僻補字', quote: '古文原句' };
+  function makeEduQuestion(lv, rng, avoid) {
+    const type = pick(rng, EDU_TYPES[lv]);
+    let q;
+    const opts4 = (right, wrongs) => { const o = shuffle(rng, [right, ...wrongs.slice(0, 3)]); return { options: o, answer: o.indexOf(right) }; };
+    if (type === 'efill' || type === 'fill') {
+      const it = eduPickFrom(rng, type === 'efill' ? EASY : IDIOMS, avoid, (x) => x.w);
+      const chars = [...it.w]; const pos = Math.floor(R(rng)() * 4); const right = chars[pos];
+      const wrongs = sampleOthers(rng, CHAR_POOL, 3, (c) => { if (c === right || chars.includes(c)) return true; const a = chars.slice(); a[pos] = c; return BY_WORD.has(a.join('')); });
+      q = { prompt: '填入缺少的字', tiles: chars.map((c, i) => (i === pos ? null : c)), ...opts4(right, wrongs), idiom: it.w, ex: it.m, small: true };
+    } else if (type === 'emean' || type === 'meaning') {
+      const pool = type === 'emean' ? EASY : IDIOMS;
+      const it = eduPickFrom(rng, pool, avoid, (x) => x.w);
+      const wrongs = sampleOthers(rng, pool, 3, (x) => x.w === it.w || x.m === it.m).map((x) => x.w);
+      q = { prompt: '哪一個成語符合這個解釋？', quote: it.m, ...opts4(it.w, wrongs), idiom: it.w, ex: it.m };
+    } else if (type === 'emoji') {
+      const e = eduPickFrom(rng, EASY_EMOJI.length >= 8 ? EASY_EMOJI : EMOJIS, avoid, (x) => x.w);
+      const wrongs = sampleOthers(rng, EASY, 3, (x) => x.w === e.w).map((x) => x.w);
+      q = { prompt: '猜猜這組表情是哪一個成語？', big: e.e, ...opts4(e.w, wrongs), idiom: e.w, ex: meaningOf(e.w) };
+    } else if (type === 'error') {
+      const e = eduPickFrom(rng, ERRORS, avoid, (x) => x.w);
+      const shown = [...e.w]; shown[e.pos] = e.bad;
+      q = { prompt: '下面這句成語，哪一個字寫錯了？', tiles: shown, options: shown.slice(), answer: e.pos, idiom: e.w, ex: `正確寫法是「${e.w}」，「${e.bad}」應改為「${e.w[e.pos]}」。${meaningOf(e.w)}`, small: true };
+    } else if (type === 'antonym') {
+      const pr = pick(rng, ANTONYMS); const flip = R(rng)() < 0.5;
+      const from = flip ? pr.b : pr.a, right = flip ? pr.a : pr.b;
+      const pool = ANTONYMS.filter((x) => x.cat !== pr.cat).flatMap((x) => [x.a, x.b]);
+      q = { prompt: '找出和它意思相反的成語', tiles: [...from], ...opts4(right, shuffle(rng, pool)), idiom: right, ex: `「${from}」：${meaningOf(from)}　「${right}」：${meaningOf(right)}` };
+    } else if (type === 'chain') {
+      const it = eduPickFrom(rng, CHAINABLE, avoid, (x) => x.w);
+      const last = it.w[3]; const right = pick(rng, BY_FIRST.get(last).filter((y) => y.w !== it.w));
+      const wrongs = sampleOthers(rng, IDIOMS, 3, (x) => x.w[0] === last || x.w === it.w).map((x) => x.w);
+      q = { prompt: `哪一句能接在後面？（第一個字要是「${last}」）`, tiles: [...it.w], ...opts4(right.w, wrongs), idiom: right.w, ex: right.m };
+    } else if (type === 'sentA' || type === 'sentB') {
+      const s = eduPickFrom(rng, type === 'sentA' ? SENT_A : SENT_B, avoid, (x) => x.a);
+      q = { prompt: '空格中最適合填入哪一個成語？', quote: s.s, ...opts4(s.a, s.d), idiom: s.a, ex: meaningOf(s.a) || `本句應填「${s.a}」。` };
+    } else if (type === 'fill2') {
+      const it = eduPickFrom(rng, IDIOMS, avoid, (x) => x.w);
+      const chars = [...it.w]; const p1 = Math.floor(R(rng)() * 3); const pos = [p1, p1 + 1 + Math.floor(R(rng)() * (3 - p1))];
+      const right = pos.map((p) => chars[p]).join('');
+      const wrongs = [];
+      for (let g = 0; wrongs.length < 3 && g < 300; g++) {
+        const a = chars.slice(); const keep = R(rng)() < 0.5 ? 0 : 1; // 讓一個字對、一個字錯，增加難度
+        pos.forEach((p, k) => { if (k !== keep || g > 100) a[p] = pick(rng, CHAR_POOL); });
+        const cand = pos.map((p) => a[p]).join('');
+        if (cand !== right && !wrongs.includes(cand) && !BY_WORD.has(a.join(''))) wrongs.push(cand);
+      }
+      q = { prompt: '補上缺少的兩個字', tiles: chars.map((c, i) => (pos.includes(i) ? null : c)), ...opts4(right, wrongs), idiom: it.w, ex: it.m };
+    } else if (type === 'syn') {
+      const s = eduPickFrom(rng, SYN, avoid, (x) => x.w);
+      q = { prompt: '哪一個成語的意思和它最接近？', tiles: [...s.w], ...opts4(s.a, s.d), idiom: s.a, ex: `「${s.w}」和「${s.a}」意思相近。${meaningOf(s.w)}` };
+    } else if (type === 'meanRev') {
+      const it = eduPickFrom(rng, IDIOMS, avoid, (x) => x.w);
+      const wrongs = sampleOthers(rng, IDIOMS, 3, (x) => x.w === it.w || x.m === it.m).map((x) => x.m);
+      q = { prompt: '這個成語是什麼意思？', tiles: [...it.w], ...opts4(it.m, wrongs), idiom: it.w, ex: it.m, long: true };
+    } else if (type === 'trap') {
+      const t = eduPickFrom(rng, TRAP, avoid, (x) => x.w);
+      q = { prompt: '這個成語的正確意思是？（小心望文生義）', tiles: [...t.w], ...opts4(t.m, [t.x1, t.x2, pick(rng, TRAP.filter((x) => x.w !== t.w)).m]), idiom: t.w, ex: t.ex, long: true };
+    } else if (type === 'story') {
+      const s = eduPickFrom(rng, STORY, avoid, (x) => x.w);
+      const wrongs = sampleOthers(rng, STORY, 3, (x) => x.w === s.w).map((x) => x.w);
+      q = { prompt: '這個典故是哪一個成語？', quote: `${s.who}：${s.s}`, ...opts4(s.w, wrongs), idiom: s.w, ex: `主角是${s.who}。${meaningOf(s.w)}` };
+    } else if (type === 'who') {
+      const s = eduPickFrom(rng, STORY, avoid, (x) => x.w);
+      const names = [...new Set(STORY.map((x) => x.who))].filter((n) => n !== s.who);
+      q = { prompt: '這個成語故事的主角是誰？', tiles: [...s.w], ...opts4(s.who, shuffle(rng, names)), idiom: s.w, ex: `${s.who}：${s.s}` };
+    } else if (type === 'rare') {
+      const r = eduPickFrom(rng, RARE, avoid, (x) => x.w);
+      const wrongs = sampleOthers(rng, RARE, 3, (x) => x.w === r.w).map((x) => x.w);
+      q = { prompt: '哪一個成語符合這個解釋？', quote: r.m, ...opts4(r.w, wrongs), idiom: r.w, ex: r.m };
+    } else if (type === 'rareRev') {
+      const r = eduPickFrom(rng, RARE, avoid, (x) => x.w);
+      const wrongs = sampleOthers(rng, RARE, 3, (x) => x.w === r.w).map((x) => x.m);
+      q = { prompt: '這個成語是什麼意思？', tiles: [...r.w], ...opts4(r.m, wrongs), idiom: r.w, ex: r.m, long: true };
+    } else if (type === 'rareFill') {
+      const r = eduPickFrom(rng, RARE, avoid, (x) => x.w);
+      const chars = [...r.w]; const pos = Math.floor(R(rng)() * 4); const right = chars[pos];
+      const rareChars = [...new Set(RARE.flatMap((x) => [...x.w]))];
+      const wrongs = sampleOthers(rng, rareChars, 3, (c) => c === right || chars.includes(c));
+      q = { prompt: '填入缺少的字', tiles: chars.map((c, i) => (i === pos ? null : c)), ...opts4(right, wrongs), idiom: r.w, ex: r.m, small: true };
+    } else {
+      const s = eduPickFrom(rng, QUOTE, avoid, (x) => x.w);
+      const wrongs = sampleOthers(rng, QUOTE, 3, (x) => x.w === s.w).map((x) => x.w);
+      q = { prompt: '這段古文是哪一個成語的出處？', quote: s.q, src: s.src, ...opts4(s.w, wrongs), idiom: s.w, ex: `出自${s.src}。${meaningOf(s.w)}` };
+    }
+    if (avoid) avoid.add(q.idiom);
+    return { type: 'edu', kind: type, kindName: EDU_TYPE_NAME[type], id: ++qid, ...q };
+  }
+  function publicEdu(q) {
+    const o = { type: 'edu', kind: q.kind, kindName: q.kindName, id: q.id, prompt: q.prompt, options: q.options };
+    ['tiles', 'quote', 'big', 'src', 'small', 'long'].forEach((k) => { if (q[k] != null) o[k] = q[k]; });
+    return o;
+  }
+
+  /** 挑戰賽考試：每題所有人都可以作答一次，答對依速度得分；單人、電腦、連線共用 */
+  class EduMatch {
+    constructor(opts) {
+      this.lv = Math.max(0, Math.min(EDU_LEVELS.length - 1, opts.lv | 0));
+      const L = EDU_LEVELS[this.lv];
+      this.rounds = L.n; this.limit = L.t * 1000;
+      this.aiLevel = AI_LEVELS[opts.aiLevel] ? opts.aiLevel : 'normal';
+      this.rng = makeRng(opts.seed); this.emit = opts.emit || function () {};
+      this.players = opts.players.map((p) => ({ id: p.id, name: p.name, ai: !!p.ai, avatar: p.avatar || '🙂', xp: p.ai ? AI_XP[this.aiLevel] || AI_XP.normal : p.xp || 0, score: 0, correct: 0 }));
+      this.qi = 0; this.phase = 'idle'; this.timers = new Set(); this.avoid = new Set(); this.q = null; this.answers = new Map(); this.ready = new Set();
+    }
+    later(fn, ms) { const h = setTimeout(() => { this.timers.delete(h); fn(); }, ms); this.timers.add(h); return h; }
+    clearTimers() { this.timers.forEach((h) => clearTimeout(h)); this.timers.clear(); }
+    scores() { return this.players.map((p) => ({ id: p.id, score: p.score, correct: p.correct })); }
+    pub() { return this.players.map(({ id, name, ai, avatar, xp }) => ({ id, name, ai, avatar, xp })); }
+    start() {
+      this.phase = 'countdown';
+      this.emit('edu_start', { lv: this.lv, total: this.rounds, timeLimit: this.limit, players: this.pub() });
+      this.later(() => this.next(), 3200);
+    }
+    next() {
+      this.clearTimers();
+      if (this.qi >= this.rounds) return this.finish();
+      this.q = makeEduQuestion(this.lv, this.rng, this.avoid); this.qi++;
+      this.answers = new Map(); this.ready = new Set(); this.phase = 'question'; this.qStart = Date.now();
+      this.emit('edu_q', { index: this.qi, total: this.rounds, timeLimit: this.limit, q: publicEdu(this.q) });
+      const base = AI_LEVELS[this.aiLevel];
+      const acc = Math.max(0.3, base.acc + 0.12 - this.lv * 0.07);
+      const qid = this.q.id;
+      this.players.filter((p) => p.ai).forEach((p) => {
+        const delay = Math.min(this.limit - 500, (base.min + this.rng() * (base.max - base.min)) * (1 + this.lv * 0.06));
+        const ok = this.rng() < acc;
+        this.later(() => {
+          if (!this.q || this.q.id !== qid) return;
+          let c = this.q.answer;
+          if (!ok) { const w = this.q.options.map((_, i) => i).filter((i) => i !== this.q.answer); c = w[Math.floor(this.rng() * w.length)]; }
+          this.answer(p.id, c);
+        }, delay);
+      });
+      this.later(() => this.reveal(), this.limit);
+    }
+    answer(pid, choice) {
+      if (this.phase !== 'question' || this.answers.has(pid)) return;
+      const p = this.players.find((x) => x.id === pid); if (!p) return;
+      const elapsed = Date.now() - this.qStart;
+      const ok = choice === this.q.answer;
+      const pts = ok ? 100 + Math.max(0, Math.round(50 * (1 - elapsed / this.limit))) : 0;
+      this.answers.set(pid, { choice, ok, pts });
+      p.score += pts; if (ok) p.correct++;
+      this.emit('edu_ans', { id: pid });
+      if (this.answers.size >= this.players.length) this.later(() => this.reveal(), 400);
+    }
+    reveal() {
+      if (this.phase !== 'question') return;
+      this.phase = 'reveal'; this.clearTimers();
+      const q = this.q;
+      this.emit('edu_reveal', {
+        answer: q.answer, idiom: q.idiom, ex: q.ex, scores: this.scores(),
+        results: this.players.map((p) => { const a = this.answers.get(p.id); return { id: p.id, choice: a ? a.choice : null, ok: !!(a && a.ok), pts: a ? a.pts : 0 }; }),
+      });
+      this.later(() => this.next(), 8000);
+    }
+    /** 玩家看完解說按「下一題」；所有真人都按了就直接進下一題 */
+    setReady(pid) {
+      if (this.phase !== 'reveal') return;
+      this.ready.add(pid);
+      if (this.players.filter((p) => !p.ai).every((p) => this.ready.has(p.id))) this.next();
+    }
+    finish() {
+      this.phase = 'ended'; this.clearTimers();
+      const ranking = this.players.slice().sort((a, b) => b.score - a.score || b.correct - a.correct)
+        .map((p, i) => ({ rank: i + 1, id: p.id, name: p.name, ai: p.ai, avatar: p.avatar, xp: p.xp, score: p.score, correct: p.correct, stars: eduStars(this.lv, p.score) }));
+      this.ranking = ranking;
+      this.emit('match_end', { ranking, edu: true, lv: this.lv, total: this.rounds });
+    }
+    stop() { this.phase = 'ended'; this.clearTimers(); }
+    snapshot() {
+      return {
+        edu: true, lv: this.lv, phase: this.phase, index: this.qi, total: this.rounds, timeLimit: this.limit,
+        remain: this.phase === 'question' ? Math.max(0, this.limit - (Date.now() - this.qStart)) : 0,
+        q: this.phase === 'question' && this.q ? publicEdu(this.q) : null, answered: [...this.answers.keys()],
+        players: this.pub(), scores: this.scores(),
+      };
+    }
+  }
+
   return {
     IDIOMS, ERRORS, BY_WORD, BY_FIRST, CHAINABLE, GAMES, CHAR_POOL, RUSH_TYPES,
     ANTONYMS, HISTORY, DIRS, COMPASS, CHAR_IDIOMS, FLOWER_CENTERS, ROWS, COLS,
     COLORS, COLOR_IDIOMS, colorChoices, ECO, ECO_IDIOMS, EMOJIS, PICS, PIC_LIST, COMICS, COMIC_LIST, TONES, TONE_IDIOMS, STROKES, strokesOf, radicalOf, RADS, RADCHARS, RAD_VARIANT, RAD_IDIOMS,
     makeRng, shuffle, pick, makeQuestion, publicQuestion, makeLinkBoard, linkPair,
     TITLES, titleOf, AI_XP,
+    EDU_LEVELS, EDU_STAR, eduMax, eduPct, eduStars, eduNeed, makeEduQuestion, publicEdu, EduMatch, SENT_A, SENT_B, SYN, TRAP, STORY, RARE, QUOTE, EASY,
     AI_LEVELS, AI_NAMES, AVATARS, RushMatch, RaceMatch, RACE_TIME, RACE_MIX, SCORE_GAMES,
   };
 });

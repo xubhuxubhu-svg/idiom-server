@@ -16,7 +16,7 @@ const E = require('./engine.js');
 
 const PORT = process.env.PORT || 3000;
 const DIFFS = ['easy', 'normal', 'hard'];
-const BASE_KEYS = [...Object.keys(E.GAMES), 'mix'];
+const BASE_KEYS = [...Object.keys(E.GAMES), 'mix', 'edu'];
 // 成績代號：遊戲＋難易度，例如 fill:hard、mix:normal；升官記沒有難易度
 const validGame = (g) => { const [k, d] = String(g).split(':'); return BASE_KEYS.includes(k) && (d === undefined || DIFFS.includes(d)); };
 const ROUNDS = [5, 10, 15, 20, 30];
@@ -220,9 +220,15 @@ async function api(req, res, url) {
       const b = await readBody(req); const name = verify(b.token);
       if (!name) return sendJson(res, 401, { error: '請先登入才能登上金榜' });
       const game = String(b.game); const score = Math.floor(Number(b.score));
-      if (!validGame(game) || !(score >= 0) || score > (game === 'rank' ? 10000000 : game.startsWith('mix') ? 2000000 : 100000)) return sendJson(res, 400, { error: '成績格式不正確' });
+      if (!validGame(game) || !(score >= 0) || score > (game === 'rank' ? 10000000 : game === 'edu' ? 100000 : game.startsWith('mix') ? 2000000 : 100000)) return sendJson(res, 400, { error: '成績格式不正確' });
       const best = await db.submitScore(name, game, score);
       return sendJson(res, 200, { best });
+    }
+    if (p === '/api/ice') {
+      // 語音連線用的穿透伺服器設定；可在環境變數另外加上轉接伺服器
+      const ice = [{ urls: ['stun:stun.l.google.com:19302', 'stun:stun1.l.google.com:19302'] }];
+      if (process.env.TURN_URL) ice.push({ urls: process.env.TURN_URL.split(',').map((s) => s.trim()), username: process.env.TURN_USER || '', credential: process.env.TURN_PASS || '' });
+      return sendJson(res, 200, { iceServers: ice });
     }
     if (p === '/api/leaderboard') {
       const game = url.searchParams.get('game') || 'rush';
@@ -277,10 +283,14 @@ function makeCode() {
 function roomView(room) {
   return {
     code: room.code, host: room.host, humanMax: room.humanMax, aiCount: room.aiCount, aiLevel: room.aiLevel,
-    rounds: room.rounds, qtype: room.qtype, mode: room.mode, game: room.game, raceRounds: room.raceRounds, state: room.state,
+    rounds: room.rounds, qtype: room.qtype, mode: room.mode, game: room.game, raceRounds: room.raceRounds, eduLevel: room.eduLevel || 0, state: room.state,
     members: room.members.map((m) => ({ name: m.name, avatar: m.avatar, xp: m.xp || 0, online: !!m.socketId, host: m.name === room.host })),
   };
 }
+function pushVoiceRoom(room) { io.to(room.code).emit('voice_list', [...(room.voice || new Map()).entries()].map(([name, v]) => ({ name, muted: !!v.muted }))); }
+// 不雅字詞過濾（聊天用）
+const BAD_WORDS = ['幹你', '幹妳', '幹您', '幹拎', '幹林', '幹恁', '靠北', '靠杯', '靠夭', '操你', '肏', '他媽的', '他媽', '媽的', '雞掰', '機掰', '雞巴', '機八', '白痴', '白癡', '智障', '腦殘', '去死', '賤人', '婊子', '王八蛋', '畜生', 'fuck', 'shit', 'bitch', 'damn'];
+function cleanWords(s) { let out = s; for (const w of BAD_WORDS) { const re = new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'); out = out.replace(re, '＊'.repeat([...w].length)); } return out; }
 function pushRoom(room) { io.to(room.code).emit('room', roomView(room)); }
 function scheduleCleanup(room) {
   clearTimeout(room.cleanup);
@@ -304,7 +314,9 @@ io.on('connection', (socket) => {
 
   function leave() {
     if (!myRoom) return;
-    const room = myRoom; myRoom = null;
+    const room = myRoom;
+    if (me && room.voice && room.voice.get(me.name) && room.voice.get(me.name).socketId === socket.id) { room.voice.delete(me.name); pushVoiceRoom(room); }
+    myRoom = null;
     socket.leave(room.code);
     const m = room.members.find((x) => x.name === me.name);
     if (room.state === 'waiting') {
@@ -325,9 +337,10 @@ io.on('connection', (socket) => {
       aiLevel: E.AI_LEVELS[opt.aiLevel] ? opt.aiLevel : 'normal',
       rounds: ROUNDS.includes(opt.rounds) ? opt.rounds : 10,
       qtype: E.RUSH_TYPES.includes(opt.qtype) ? opt.qtype : 'mix',
-      mode: opt.mode === 'race' ? 'race' : 'rush',
+      mode: ['race', 'edu'].includes(opt.mode) ? opt.mode : 'rush',
       game: E.RACE_TIME[opt.game] || opt.game === 'mix' ? opt.game : 'mix',
       raceRounds: ROUNDS.includes(opt.raceRounds) ? opt.raceRounds : 10,
+      eduLevel: Math.max(0, Math.min(E.EDU_LEVELS.length - 1, opt.eduLevel | 0)),
       state: 'waiting', members: [{ name: me.name, avatar: me.avatar, xp: liveXp.get(me.name) || 0, socketId: socket.id }], match: null,
     };
     rooms.set(room.code, room);
@@ -361,7 +374,8 @@ io.on('connection', (socket) => {
     if (E.AI_LEVELS[opt.aiLevel]) room.aiLevel = opt.aiLevel;
     if (ROUNDS.includes(opt.rounds)) room.rounds = opt.rounds;
     if (opt.qtype === 'mix' || E.RUSH_TYPES.includes(opt.qtype)) room.qtype = opt.qtype;
-    if (opt.mode === 'race' || opt.mode === 'rush') room.mode = opt.mode;
+    if (['race', 'rush', 'edu'].includes(opt.mode)) room.mode = opt.mode;
+    if (opt.eduLevel !== undefined && E.EDU_LEVELS[opt.eduLevel | 0]) room.eduLevel = opt.eduLevel | 0;
     if (E.RACE_TIME[opt.game] || opt.game === 'mix') room.game = opt.game;
     if (ROUNDS.includes(opt.raceRounds)) room.raceRounds = opt.raceRounds;
     pushRoom(room);
@@ -379,12 +393,12 @@ io.on('connection', (socket) => {
       ...names.map((n, i) => ({ id: 'ai' + i, name: n + '（電腦）', ai: true, avatar: aiAv[i] })),
     ];
     room.state = 'playing';
-    const Match = room.mode === 'race' ? E.RaceMatch : E.RushMatch;
+    const Match = room.mode === 'race' ? E.RaceMatch : room.mode === 'edu' ? E.EduMatch : E.RushMatch;
     room.match = new Match({
-      game: room.game, players, rounds: room.mode === 'race' ? room.raceRounds : room.rounds, aiLevel: room.aiLevel, types: room.qtype && room.qtype !== 'mix' ? [room.qtype] : null,
+      game: room.game, lv: room.eduLevel || 0, players, rounds: room.mode === 'race' ? room.raceRounds : room.rounds, aiLevel: room.aiLevel, types: room.qtype && room.qtype !== 'mix' ? [room.qtype] : null,
       emit: (evt, data) => {
         io.to(room.code).emit('m', { evt, data });
-        if (evt === 'match_end') finishRoom(room, data.ranking);
+        if (evt === 'match_end') finishRoom(room, data.ranking, data.edu ? E.EDU_LEVELS[data.lv].mult : 1);
       },
     });
     pushRoom(room);
@@ -397,6 +411,11 @@ io.on('connection', (socket) => {
     myRoom.match.answer(me.name, choice | 0);
   });
 
+  socket.on('edu_ready', () => {
+    if (!myRoom || !myRoom.match || !me || !myRoom.match.setReady) return;
+    myRoom.match.setReady(me.name);
+  });
+
   socket.on('race_progress', ({ k, n } = {}) => {
     if (!myRoom || !myRoom.match || !me || !myRoom.match.progress) return;
     myRoom.match.progress(me.name, k | 0, n | 0);
@@ -407,23 +426,57 @@ io.on('connection', (socket) => {
     myRoom.match.done(me.name, k | 0);
   });
 
-  socket.on('chat', ({ text } = {}) => {
+  // ───── 文字聊天 ─────
+  const chatLog = [];
+  socket.on('chat', ({ text, kind } = {}) => {
     if (!myRoom || !me) return;
-    const t = String(text || '').slice(0, 30);
-    if (t) io.to(myRoom.code).emit('chat', { name: me.name, text: t });
+    const now = Date.now();
+    while (chatLog.length && now - chatLog[0] > 10000) chatLog.shift();
+    if (chatLog.length >= 8 || (chatLog.length && now - chatLog[chatLog.length - 1] < 350)) return socket.emit('chat_err', { error: '訊息傳太快了，休息一下再傳' });
+    let t = String(text || '').replace(/[\u0000-\u001f<>]/g, '').trim().slice(0, 60);
+    if (!t) return;
+    chatLog.push(now);
+    t = cleanWords(t);
+    io.to(myRoom.code).emit('chat', { name: me.name, avatar: me.avatar, text: t, kind: kind === 'emoji' || kind === 'quick' ? kind : 'text', t: now });
   });
 
-  socket.on('leave_room', () => leave());
-  socket.on('disconnect', () => { if (me) leave(); });
+  // ───── 語音聊天（伺服器只負責轉交連線資訊，聲音由玩家之間直接傳送） ─────
+  function voiceList(room) { return [...(room.voice || new Map()).entries()].map(([name, v]) => ({ name, muted: !!v.muted })); }
+  function pushVoice(room) { io.to(room.code).emit('voice_list', voiceList(room)); }
+  function voiceLeave() {
+    const room = myRoom; if (!room || !me || !room.voice || !room.voice.has(me.name) || room.voice.get(me.name).socketId !== socket.id) return;
+    room.voice.delete(me.name); pushVoice(room);
+  }
+  socket.on('voice_join', (_, cb = () => {}) => {
+    if (!myRoom || !me) return cb({ error: '請先進入房間' });
+    myRoom.voice = myRoom.voice || new Map();
+    const others = [...myRoom.voice.keys()].filter((n) => n !== me.name);
+    myRoom.voice.set(me.name, { socketId: socket.id, muted: false });
+    cb({ ok: true, others }); pushVoice(myRoom);
+  });
+  socket.on('voice_mute', ({ muted } = {}) => {
+    if (!myRoom || !me || !myRoom.voice || !myRoom.voice.has(me.name)) return;
+    myRoom.voice.get(me.name).muted = !!muted; pushVoice(myRoom);
+  });
+  socket.on('voice_leave', () => voiceLeave());
+  socket.on('voice_signal', ({ to, data } = {}) => {
+    if (!myRoom || !me || !myRoom.voice || !myRoom.voice.has(me.name)) return;
+    const v = myRoom.voice.get(String(to)); if (!v) return;
+    io.to(v.socketId).emit('voice_signal', { from: me.name, data });
+  });
+  socket.on('voice_who', (_, cb = () => {}) => { cb(myRoom ? voiceList(myRoom) : []); });
+
+  socket.on('leave_room', () => { voiceLeave(); leave(); });
+  socket.on('disconnect', () => { if (me) { voiceLeave(); leave(); } });
 });
 
-async function finishRoom(room, ranking) {
+async function finishRoom(room, ranking, mult = 1) {
   room.state = 'waiting';
   room.match = null;
   const humans = ranking.filter((r) => !r.ai);
   for (const r of humans) {
     try { await db.recordRush(r.name, r.rank === 1, r.score); } catch (e) { console.error('記錄對戰失敗', e); }
-    try { if (r.score > 0) { const nx = await db.addXp(r.name, Math.min(20000, r.score)); const m = room.members.find((x) => x.name === r.name); if (m) m.xp = nx; liveXp.set(r.name, nx); } } catch (e) { console.error('記錄積分失敗', e); }
+    try { if (r.score > 0) { const nx = await db.addXp(r.name, Math.min(20000, Math.round(r.score * mult))); const m = room.members.find((x) => x.name === r.name); if (m) m.xp = nx; liveXp.set(r.name, nx); } } catch (e) { console.error('記錄積分失敗', e); }
   }
   // 比賽中離線的人，比賽結束後移出房間
   room.members = room.members.filter((m) => m.socketId);

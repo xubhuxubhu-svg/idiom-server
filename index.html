@@ -1147,6 +1147,144 @@ input{font:inherit}
 @keyframes stampIn{from{transform:scale(2.4) rotate(-6deg);opacity:0}to{transform:scale(1) rotate(-6deg);opacity:1}}
 .xp-gain{font-size:13px;font-weight:900;color:#8a5a12;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:6px}
 .xp-gain b{color:#d62828}
+/* ═══ 連線聊天 ═══ */
+#comm-dock{position:absolute;right:8px;top:8px;z-index:60;display:none;gap:6px}
+#comm-dock.low{top:62px}
+#comm-dock.on{display:flex}
+.cm-btn{position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;width:44px;padding:4px 0 3px;border-radius:14px;background:rgba(30,20,40,.72);border:2px solid rgba(255,214,107,.7);color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.3);backdrop-filter:blur(3px)}
+.cm-btn b{font-size:20px;line-height:1.1}.cm-btn small{font-size:10px;font-weight:900;white-space:nowrap}
+.cm-btn:active{transform:translateY(2px)}
+.cm-btn.live{background:linear-gradient(#36c27a,#1d8a52);border-color:#c8ffd9;animation:cmPulse 1.6s infinite}
+.cm-btn.muted{background:linear-gradient(#e0574f,#a3221c);border-color:#ffd0c8;animation:none}
+.cm-btn.busy{opacity:.6}
+@keyframes cmPulse{0%,100%{box-shadow:0 3px 0 rgba(0,0,0,.3),0 0 0 0 rgba(80,230,140,.6)}50%{box-shadow:0 3px 0 rgba(0,0,0,.3),0 0 0 6px rgba(80,230,140,0)}}
+.cm-badge{position:absolute;top:-7px;right:-6px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:#ff3b30;color:#fff;font-style:normal;font-size:11px;font-weight:900;line-height:18px;text-align:center;display:none;border:2px solid #fff}
+.cm-badge.on{display:block}
+#cm-vcount{background:#1d8a52}
+#comm-panel{position:absolute;left:0;right:0;bottom:0;z-index:70;height:min(58%,470px);display:flex;flex-direction:column;background:linear-gradient(#2a1c34,#1a1220);border-top:3px solid #f2c14e;border-radius:20px 20px 0 0;color:#fff;transform:translateY(105%);transition:transform .28s cubic-bezier(.2,.9,.3,1);box-shadow:0 -8px 30px rgba(0,0,0,.4)}
+#comm-panel.on{transform:none}
+.cp-head{display:flex;align-items:center;gap:8px;padding:10px 12px 6px;font-weight:900;color:#ffd66b}
+.cp-voice{flex:1;font-size:11px;color:#7dffb0;font-weight:700;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+#cp-close{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:16px;font-weight:900}
+.cp-list{flex:1;overflow-y:auto;padding:4px 12px;display:flex;flex-direction:column;gap:8px}
+.cp-msg{display:flex;gap:6px;align-items:flex-start;max-width:85%}
+.cp-msg .av{font-size:22px;line-height:1}
+.cp-msg small{font-size:11px;color:#ffd66b;font-weight:700}
+.cp-msg p{margin:2px 0 0;padding:6px 10px;border-radius:4px 14px 14px 14px;background:#fff;color:#2a1a10;font-size:15px;font-weight:700;word-break:break-word}
+.cp-msg.me{align-self:flex-end;flex-direction:row-reverse;text-align:right}
+.cp-msg.me p{background:#ffd66b;border-radius:14px 4px 14px 14px}
+.cp-msg.emo p{background:none;font-size:34px;padding:0}
+.cp-quick{display:flex;gap:6px;overflow-x:auto;padding:5px 10px;scrollbar-width:none}
+.cp-quick::-webkit-scrollbar{display:none}
+.cp-quick button{flex:none;padding:5px 11px;border-radius:99px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,214,107,.5);color:#fff;font-weight:800;font-size:13px;white-space:nowrap}
+#cp-emoji button{font-size:22px;padding:2px 7px;background:none;border-color:transparent}
+.cp-input{display:flex;gap:6px;padding:6px 10px calc(10px + env(safe-area-inset-bottom))}
+.cp-input input{flex:1;min-width:0;height:42px;border-radius:12px;border:2px solid #f2c14e;padding:0 12px;font-size:16px;font-weight:700;background:#fff;color:#2a1a10}
+.cp-input .btn{flex:none;height:42px;padding:0 16px}
+.chat-bub{position:absolute;z-index:75;max-width:62%;padding:6px 11px;border-radius:14px;background:#fff;color:#2a1a10;font-weight:800;font-size:14px;line-height:1.3;box-shadow:0 4px 12px rgba(0,0,0,.3);border:2px solid #f2c14e;transform:translate(-50%,-100%);pointer-events:none;word-break:break-word;animation:bubIn .25s cubic-bezier(.2,1.6,.4,1);transition:opacity .4s}
+.chat-bub.down{transform:translate(-50%,0)}
+.chat-bub.big{font-size:32px;padding:2px 8px;background:#fffbe8}
+.chat-bub.up::after,.chat-bub.down::after{content:"";position:absolute;left:50%;margin-left:-7px;border:7px solid transparent}
+.chat-bub.up::after{top:100%;border-top-color:#f2c14e}
+.chat-bub.down::after{bottom:100%;border-bottom-color:#f2c14e}
+.chat-bub.top{left:50%;top:112px;transform:translate(-50%,0)}
+.chat-bub.top span{display:block;font-size:11px;color:#9a6a1f}
+.chat-bub.out{opacity:0}
+@keyframes bubIn{from{opacity:0;scale:.6}to{opacity:1;scale:1}}
+.seat,.pcard,.rp{position:relative}
+.talking{box-shadow:0 0 0 3px #4dff9a,0 0 16px rgba(77,255,154,.8)!important;transition:box-shadow .1s}
+.vc::before{content:"🎤";position:absolute;top:-6px;left:-4px;font-size:13px;z-index:2;filter:drop-shadow(0 1px 1px rgba(0,0,0,.5))}
+.vc-mute::before{content:"🔇"}
+.voice-audio{display:none}
+.rp.vc::before{top:1px;left:auto;right:3px;font-size:11px}
+
+/* ═══ 挑戰賽 ═══ */
+#s-edu{overflow-y:auto;background:#ecd9b4}
+.academy-bg{position:absolute;inset:0;background:
+  radial-gradient(ellipse at 50% -10%,rgba(255,255,255,.7),transparent 60%),
+  repeating-linear-gradient(0deg,transparent 0 31px,rgba(150,100,40,.09) 31px 32px),
+  linear-gradient(#f7ecd4,#ecd9b4)}
+.academy-bg::after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;background:
+  linear-gradient(transparent,rgba(120,60,20,.12)),repeating-linear-gradient(90deg,#8a4a1e 0 6px,#7a3e16 6px 60px);opacity:.25}
+.academy-bg.exam::after{display:none}
+.edu-title{color:#7a2a10;font-family:"Kaiti TC","BiauKai","KaiTi",serif;letter-spacing:.15em}
+.edu-score{background:#7a2a10;color:#ffe7a0}
+.edu-sub{position:relative;z-index:3;text-align:center;font-size:13px;font-weight:800;color:#8a5a2a;margin:-2px 0 6px}
+.edu-scroll{flex:1;position:relative;z-index:3;padding:4px 0 24px;overflow-y:auto}
+.edu-summary{margin:4px 16px 10px;padding:10px 14px;border-radius:16px;background:linear-gradient(#7a2a10,#5a1a08);color:#ffe7a0;display:flex;align-items:center;gap:10px;font-weight:800;box-shadow:0 4px 0 #3a0e04}
+.edu-summary .big{font-size:30px}.edu-summary b{font-size:20px;color:#fff}.edu-summary small{display:block;font-size:12px;opacity:.85;font-weight:700}
+.edu-list{display:flex;flex-direction:column;gap:10px;padding:0 16px}
+.edu-lv{position:relative;display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:16px;text-align:left;background:#fffaf0;border:3px solid #c8901a;box-shadow:0 5px 0 #8a5a12;color:#4a2a0a;width:100%}
+.edu-lv:active{transform:translateY(3px);box-shadow:0 2px 0 #8a5a12}
+.edu-lv .ic{width:52px;height:52px;flex:none;border-radius:14px;display:grid;place-items:center;font-size:28px;background:linear-gradient(#fff1c2,#f2c14e);border:2px solid #b8862a}
+.edu-lv .mid{flex:1;min-width:0}
+.edu-lv .nm{display:block;font-family:"Kaiti TC","BiauKai","KaiTi",serif;font-size:22px;font-weight:900;letter-spacing:.15em;color:#7a2a10}
+.edu-lv .ds{display:block;font-size:11.5px;color:#7a5a3a;line-height:1.35;margin-top:1px}
+.edu-lv .rt{text-align:right;flex:none}
+.edu-stars{font-size:18px;letter-spacing:1px;color:#f2b400;text-shadow:0 1px 0 #8a5a12}
+.edu-stars .off{color:#d8cbb0;text-shadow:none}
+.edu-lv .best{font-size:11px;color:#8a6a3a;font-weight:800}
+.edu-lv.lock{background:#ece4d4;border-color:#b8a88a;box-shadow:0 5px 0 #8a7a5a;filter:grayscale(.6)}
+.edu-lv.lock .ic{background:#d8cfbe}
+.edu-lv.lock::after{content:"🔒";position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:24px}
+.edu-lv.lock .rt{visibility:hidden}
+.edu-lv.next{animation:eduGlow 1.6s infinite}
+@keyframes eduGlow{0%,100%{box-shadow:0 5px 0 #8a5a12,0 0 0 0 rgba(214,40,40,.45)}50%{box-shadow:0 5px 0 #8a5a12,0 0 0 7px rgba(214,40,40,0)}}
+.edu-actions{display:flex;flex-direction:column;gap:12px;padding:18px 16px 8px}
+.edu-actions .btn{width:100%}
+.edu-need{display:flex;justify-content:center;gap:8px;margin:10px 0;flex-wrap:wrap}
+.edu-need span{padding:5px 10px;border-radius:10px;background:#fff4dc;border:2px solid #e0c08a;font-size:13px;font-weight:800;color:#6a3a10}
+/* 考場 */
+.edu-players{position:relative;z-index:4;display:flex;gap:6px;padding:2px 12px 4px;overflow-x:auto;scrollbar-width:none}
+.edu-players:empty{display:none}
+.ecard{position:relative;flex:1 0 0;min-width:70px;display:flex;align-items:center;gap:5px;padding:4px 6px;border-radius:12px;background:#fffaf0;border:2px solid #d8b878;font-size:12px;font-weight:800;color:#4a2a0a}
+.ecard .av{font-size:20px}.ecard .nm{flex:1;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.ecard .sc{font-weight:900;color:#b3202c;font-size:14px}
+.ecard .gm{font-size:9px;padding:2px 4px}.ecard .gm::before,.ecard .gm::after{display:none}
+.ecard.me{border-color:#d62828;background:#fff1e6}
+.ecard.done::after{content:"✍️";position:absolute;right:-4px;top:-8px;font-size:15px}
+.ecard.ok{background:#e2f8ea;border-color:#2e9a5a}.ecard.ok::after{content:"⭕";font-size:15px;position:absolute;right:-4px;top:-8px}
+.ecard.ng{background:#fde8e6;border-color:#c8252c}.ecard.ng::after{content:"❌";font-size:13px;position:absolute;right:-4px;top:-7px}
+.edu-meta{position:relative;z-index:4;display:flex;justify-content:space-between;align-items:center;padding:4px 18px;font-weight:900;color:#7a2a10;font-size:14px}
+.edu-kind{padding:2px 10px;border-radius:99px;background:#7a2a10;color:#ffe7a0;font-size:12.5px}
+.edu-tbar{background:rgba(122,42,16,.15)}.edu-tbar i{background:linear-gradient(90deg,#d62828,#f2c14e)}
+.edu-paper{position:relative;z-index:4;margin:10px 14px 0;padding:14px 14px 16px;border-radius:6px;background:#fffdf6;border:2px solid #c8252c;outline:4px double rgba(200,37,44,.35);outline-offset:-9px;box-shadow:0 6px 16px rgba(90,40,10,.18);text-align:center;color:#2a1a0a;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.edu-paper .pr{font-size:15px;font-weight:900;color:#7a2a10;font-family:system-ui,sans-serif}
+.edu-paper .qt{font-size:19px;line-height:1.6;font-weight:700;text-align:left;width:100%;padding:8px 10px;border-left:4px solid #c8901a;background:rgba(242,193,78,.12)}
+.edu-paper .qt u{display:inline-block;min-width:3.6em;border-bottom:2.5px solid #c8252c;text-decoration:none;color:#c8252c}
+.edu-paper .src{font-size:12px;color:#8a6a3a;align-self:flex-end}
+.edu-paper .big{font-size:44px;letter-spacing:4px}
+.edu-tiles{display:flex;gap:8px;justify-content:center}
+.edu-tiles span{width:54px;height:54px;display:grid;place-items:center;font-size:32px;font-weight:900;border-radius:10px;background:#fff4dc;border:2.5px solid #c8901a;box-shadow:0 3px 0 #b8862a;color:#4a1a0a}
+.edu-tiles span.q{background:#ffe0d0;border-color:#d62828;color:#d62828}
+.edu-opts{position:relative;z-index:4;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 14px 0}
+.edu-opts.one{grid-template-columns:repeat(4,1fr)}
+.edu-opts.long{grid-template-columns:1fr}
+.eans{min-height:54px;padding:8px 10px;border-radius:14px;background:#fff;border:3px solid #c8901a;box-shadow:0 4px 0 #8a5a12;font-size:20px;font-weight:900;color:#4a1a0a;line-height:1.3}
+.edu-opts.one .eans{font-size:30px;min-height:64px}
+.edu-opts.long .eans{font-size:15.5px;text-align:left;font-family:system-ui,sans-serif;font-weight:800;padding:10px 14px}
+.eans:active{transform:translateY(3px);box-shadow:0 1px 0 #8a5a12}
+.eans.mine{background:#fff1c2;border-color:#d62828}
+.eans.good{background:#d8f7e2;border-color:#2e9a5a;box-shadow:0 4px 0 #1d6a3d}
+.eans.bad{background:#fde0dc;border-color:#c8252c;opacity:.85}
+.eans[disabled]{pointer-events:none}
+.edu-reveal{position:relative;z-index:4;margin:12px 14px 0;padding:10px 14px;border-radius:14px;background:#fff8e2;border:2px dashed #c8901a;display:none;color:#4a2a0a}
+.edu-reveal.on{display:block;animation:bubIn .3s}
+.edu-reveal .res{font-size:18px;font-weight:900}
+.edu-reveal .res.ok{color:#1d8a52}.edu-reveal .res.ng{color:#c8252c}
+.edu-reveal .idm{font-family:"Kaiti TC","BiauKai","KaiTi",serif;font-size:22px;font-weight:900;color:#7a2a10;margin:4px 0 2px}
+.edu-reveal .ex{font-size:14px;line-height:1.55}
+.edu-reveal .row{justify-content:flex-end;margin-top:8px}
+/* 結業證書 */
+.diploma{position:relative;margin:4px 0 6px;padding:20px 18px 16px;border-radius:6px;background:linear-gradient(#fffaf0,#f7ecd4);border:3px solid #b8862a;outline:5px double #c8252c;outline-offset:-12px;color:#3a1a0a;text-align:center;font-family:"Kaiti TC","BiauKai","STKaiti","KaiTi",serif}
+.diploma h3{font-size:30px;letter-spacing:.4em;color:#b3202c;margin:4px 0 8px;text-indent:.4em}
+.diploma p{font-size:16px;line-height:1.9;text-align:left;margin:0 4px}
+.diploma .nm{font-size:22px;font-weight:900;color:#7a2a10;border-bottom:2px solid #7a2a10;padding:0 6px}
+.diploma .dstars{font-size:28px;color:#f2b400;letter-spacing:4px;margin:6px 0;text-shadow:0 1px 0 #8a5a12}
+.diploma .dstars .off{color:#d8cbb0;text-shadow:none}
+.diploma .foot{display:flex;justify-content:space-between;align-items:flex-end;margin-top:10px;font-size:13px}
+.diploma .seal{width:62px;height:62px;border:3px solid #c8252c;color:#c8252c;border-radius:6px;display:grid;place-items:center;font-size:15px;line-height:1.1;font-weight:900;transform:rotate(-8deg);background:rgba(200,37,44,.06);animation:stampIn .5s .3s both}
+.edu-fail{font-size:15px;color:#6a4a2a;margin:8px 0}
 </style>
 </head>
 <body data-theme="sky">
@@ -1184,6 +1322,7 @@ input{font:inherit}
     <div class="logo">成語擂台<small>字字珠璣・爭奪狀元</small></div>
     <div style="display:flex;flex-direction:column;gap:16px;margin-top:5vh;align-items:center">
       <button class="btn big red outlined" data-go="battle">⚔ 搶答對戰</button>
+      <button class="btn big blue outlined" data-go="edu">🎓 挑戰賽</button>
       <button class="btn big" data-go="solo">📜 單人闖關</button>
     </div>
   </div>
@@ -1706,8 +1845,8 @@ input{font:inherit}
   <div class="scroll" style="flex:1;position:relative;z-index:3;padding:60px 0 24px">
     <div class="menu-card">
       <h3>🏮 與電腦對戰<span class="muted" style="font-size:12px;letter-spacing:0">（不需連線）</span></h3>
-      <div class="opt-line">對戰方式<div class="seg" data-seg="soloMode"><button data-v="rush" class="on">搶答</button><button data-v="race">競速</button></div></div>
-      <div class="mode-tip m-rush">搶答：大家同時看同一題，最先答對得分</div><div class="mode-tip m-race hidden">競速：大家玩同一關，最先完成的人拿下這關（選「綜合」每關隨機換遊戲）</div>
+      <div class="opt-line">對戰方式<div class="seg" data-seg="soloMode"><button data-v="rush" class="on">搶答</button><button data-v="race">競速</button><button data-v="edu">挑戰賽</button></div></div>
+      <div class="mode-tip m-rush">搶答：大家同時看同一題，最先答對得分</div><div class="mode-tip m-edu hidden">挑戰賽：和電腦同場考同一份學歷試卷，每題大家都能作答，比誰分數高</div><div class="opt-line m-edu hidden" style="align-items:flex-start">學歷<div class="seg wrap" data-seg="soloEdu"><button data-v="0" class="on">x</button><button data-v="1">x</button><button data-v="2">x</button><button data-v="3">x</button><button data-v="4">x</button><button data-v="5">x</button><button data-v="6">x</button></div></div><div class="mode-tip m-race hidden">競速：大家玩同一關，最先完成的人拿下這關（選「綜合」每關隨機換遊戲）</div>
       <div class="opt-line">電腦人數<div class="seg" data-seg="soloAi"><button>1</button><button class="on">2</button><button>3</button><button>4</button></div></div>
       <div class="opt-line">電腦程度<div class="seg" data-seg="soloLv"><button data-v="easy">書僮</button><button data-v="normal" class="on">秀才</button><button data-v="hard">狀元</button></div></div>
       <div class="opt-line m-rush">題數<div class="seg" data-seg="soloRounds"><button>5</button><button class="on">10</button><button>15</button><button>20</button><button>30</button></div></div>
@@ -1726,6 +1865,36 @@ input{font:inherit}
   </div>
 </section>
 
+
+<!-- ═════════ 挑戰賽：學歷選單 ═════════ -->
+<section class="screen" id="s-edumenu" data-theme="academy">
+  <div class="academy-bg"></div>
+  <div class="hud"><button class="back" data-go="lobby" style="color:#7a3a10">◀</button><div class="title edu-title">🎓 挑戰賽</div><button class="help-btn" id="edu-help">？</button></div>
+  <div class="edu-sub">從小學一路考到博士・達到及格分數才能升學</div>
+  <div class="scroll edu-scroll">
+    <div class="edu-summary" id="edu-summary"></div>
+    <div class="edu-list" id="edu-list"></div>
+    <div class="edu-actions">
+      <button class="btn orange" id="edu-ai">🤖 與電腦同場應試</button>
+      <button class="btn red" id="edu-online">👥 和朋友連線比賽</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 挑戰賽：考場 ═════════ -->
+<section class="screen" id="s-edu" data-theme="academy">
+  <div class="academy-bg exam"></div>
+  <div class="hud"><button class="back" id="edu-quit" style="color:#7a3a10">◀</button><div class="title edu-title" id="edu-head">小學考場</div><div class="score edu-score" id="edu-score">0</div></div>
+  <div class="edu-players" id="edu-players"></div>
+  <div class="edu-meta"><span id="edu-idx">第 1 / 10 題</span><span class="edu-kind" id="edu-kind">補字</span></div>
+  <div class="tbar edu-tbar"><i id="edu-bar"></i></div>
+  <div class="edu-paper serif" id="edu-paper"></div>
+  <div class="edu-opts serif" id="edu-opts"></div>
+  <div class="edu-reveal" id="edu-reveal"></div>
+  <div class="sp" style="flex-grow:1"></div>
+  <div class="countdown" id="edu-cd"></div>
+</section>
+
 <!-- ═════════ 等候房間 ═════════ -->
 <section class="screen" id="s-room" data-theme="night">
   <div class="night-bg"><div class="stars"></div></div><div class="lantern-row"></div>
@@ -1741,7 +1910,8 @@ input{font:inherit}
       <div class="opt-line">真人座位<div class="seg" data-rs="humanMax"><button>1</button><button>2</button><button>3</button><button>4</button></div></div>
       <div class="opt-line">電腦人數<div class="seg" data-rs="aiCount"><button>0</button><button>1</button><button>2</button><button>3</button><button>4</button></div></div>
       <div class="opt-line">電腦程度<div class="seg" data-rs="aiLevel"><button data-v="easy">書僮</button><button data-v="normal">秀才</button><button data-v="hard">狀元</button></div></div>
-      <div class="opt-line">對戰方式<div class="seg" data-rs="mode"><button data-v="rush">搶答</button><button data-v="race">競速</button></div></div>
+      <div class="opt-line">對戰方式<div class="seg" data-rs="mode"><button data-v="rush">搶答</button><button data-v="race">競速</button><button data-v="edu">挑戰賽</button></div></div>
+      <div class="opt-line r-edu" style="align-items:flex-start">學歷<div class="seg wrap" data-rs="eduLevel"><button data-v="0">x</button><button data-v="1">x</button><button data-v="2">x</button><button data-v="3">x</button><button data-v="4">x</button><button data-v="5">x</button><button data-v="6">x</button></div></div>
       <div class="opt-line r-race">遊戲<select class="game-sel" id="room-game"></select></div>
       <div class="opt-line r-race">關數<div class="seg" data-rs="raceRounds"><button>5</button><button>10</button><button>15</button><button>20</button><button>30</button></div></div>
       <div class="opt-line r-rush">題數<div class="seg" data-rs="rounds"><button>5</button><button>10</button><button>15</button><button>20</button><button>30</button></div></div>
@@ -1842,9 +2012,11 @@ function show(id) {
   BGM.hold(id === 's-tone');
   const th = $('#' + id).dataset.theme;
   document.body.dataset.theme = th;
-  const page = { sky: '#1b9fe0', cream: '#f5e7a3', ink: '#e9efdf', navy: '#1c2e4a', paper: '#d9e4ea', 'candy-sky': '#1ea4e0', candy: '#ff8fbd', night: '#260f2c', gold: '#7a1414', star: '#120f33', porcelain: '#eef3fa', blocks: '#8fd3ff', taiji: '#efe9dc', garden: '#fde6ee', telegraph: '#16211b', map: '#e3cd98', sea: '#0c3f4c', bamboo: '#e4ecd2', storybook: '#fff4d0', chat: '#2f6b54', neon: '#0b0820', puzzle: '#f4c27a', goboard: '#d9a35a', manga: '#f4f4f4', palace: '#8a1a1a', mist: '#8fa3a0', apothecary: '#3a2416', cave: '#26221f', studio: '#fbf8f2', glass: '#5a3a9a', steam: '#2a1c12', aqua: '#6cc6e0', prism: '#1a0a30', puppet: '#2a1208', qin: '#24142e', strata: '#6a3e22', rosewood: '#3a1c14' }[th] || '#333';
+  const page = { sky: '#1b9fe0', cream: '#f5e7a3', ink: '#e9efdf', navy: '#1c2e4a', paper: '#d9e4ea', 'candy-sky': '#1ea4e0', candy: '#ff8fbd', night: '#260f2c', gold: '#7a1414', star: '#120f33', porcelain: '#eef3fa', blocks: '#8fd3ff', taiji: '#efe9dc', garden: '#fde6ee', telegraph: '#16211b', map: '#e3cd98', sea: '#0c3f4c', bamboo: '#e4ecd2', storybook: '#fff4d0', chat: '#2f6b54', neon: '#0b0820', puzzle: '#f4c27a', goboard: '#d9a35a', manga: '#f4f4f4', palace: '#8a1a1a', mist: '#8fa3a0', apothecary: '#3a2416', cave: '#26221f', studio: '#fbf8f2', glass: '#5a3a9a', steam: '#2a1c12', aqua: '#6cc6e0', prism: '#1a0a30', puppet: '#2a1208', qin: '#24142e', strata: '#6a3e22', rosewood: '#3a1c14', academy: '#f1e3c4' }[th] || '#333';
   document.body.style.setProperty('--page', page);
   $('meta[name=theme-color]').setAttribute('content', page);
+  if (Comm) Comm.update();
+  $('#app').scrollTop = 0;
 }
 let toastT;
 function toast(msg, ms = 2200) {
@@ -1882,7 +2054,10 @@ const BGM = {
   play() { if (this.on && this.started && !this.held && this.el) this.el.play().catch(() => {}); },
   pause() { if (this.el) this.el.pause(); },
   hold(v) { this.held = v; if (v) this.pause(); else this.play(); },
-  duck(ms) { if (!this.el) return; this.el.volume = 0.06; clearTimeout(this.dt); this.dt = setTimeout(() => { this.el.volume = 0.32; }, ms); },
+  base: 0.32,
+  duck(ms) { if (!this.el) return; this.el.volume = 0.06; clearTimeout(this.dt); this.dt = setTimeout(() => { this.el.volume = this.base; }, ms); },
+  /** 語音聊天時把背景音樂調小聲 */
+  voice(v) { this.base = v ? 0.08 : 0.32; if (this.el) this.el.volume = this.base; },
   set(v) { this.on = v; store.set('music', v ? '1' : '0'); if (v) { this.started = true; this.play(); } else this.pause(); this.icon(); },
   icon() { const b = $('#btn-music'); if (b) { b.textContent = this.on ? '🎵' : '🔇'; b.title = this.on ? '關閉音樂' : '開啟音樂'; } },
 };
@@ -3013,7 +3188,7 @@ function titleDialog() {
     <div class="row" style="margin-top:12px"><button class="btn sm white" id="gm-close">關閉</button><button class="btn sm red" id="gm-rank">🏯 去升官記</button></div>`);
   $('#gm-close').onclick = closeModal;
   $('#gm-rank').onclick = () => { closeModal(); Solo.home = current === 's-lobby' ? 's-lobby' : null; Solo.start('rank'); };
-  const now = $('#gm-table .now'); if (now) now.scrollIntoView({ block: 'center' });
+  const now = $('#gm-table .now'); const tb = $('#gm-table'); if (now) tb.scrollTop = now.offsetTop - tb.offsetTop - tb.clientHeight / 2 + now.offsetHeight / 2;
 }
 /** 單人關卡評等（仿殿試分三甲） */
 function levelGrade(passed, leftFrac) {
@@ -3023,7 +3198,7 @@ function levelGrade(passed, leftFrac) {
   return { cls: 'c', t: '三甲', s: '賜同進士出身' };
 }
 /* ───────── 存檔：每個帳號各自一份，登入後同步到雲端 ───────── */
-const CLOUD_KEYS = ['rank_pts', 'eco_col', 'fossil_count', 'mix_prog', 'xp_mig'];
+const CLOUD_KEYS = ['rank_pts', 'eco_col', 'fossil_count', 'mix_prog', 'xp_mig', 'edu_prog'];
 function acctKey(k) { return CLOUD_KEYS.includes(k) ? `${ST.guest || !ST.token ? 'guest' : 'u_' + ST.name}_${k}` : k; }
 function localGet(k, d) {
   try { let raw = store.get(acctKey(k)); if (raw == null && CLOUD_KEYS.includes(k)) raw = store.get(k); const v = JSON.parse(raw); return v == null ? d : v; } catch (e) { return d; }
@@ -3052,6 +3227,7 @@ const Cloud = {
       rank_pts: Math.max(r.rank_pts || 0, L.rank_pts || 0),
       fossil_count: Math.max(r.fossil_count || 0, L.fossil_count || 0),
       xp_mig: Math.max(r.xp_mig || 0, L.xp_mig || 0) || null,
+      edu_prog: (() => { const a = r.edu_prog || {}, b = L.edu_prog || {}; if (!a.stars && !b.stars) return null; const m = (x, y) => [0, 1, 2, 3, 4, 5, 6].map((i) => Math.max((x || [])[i] || 0, (y || [])[i] || 0)); return { best: m(a.best, b.best), stars: m(a.stars, b.stars) }; })(),
       eco_col: [...new Set([...(r.eco_col || []), ...(L.eco_col || [])])],
       mix_prog: [r.mix_prog, L.mix_prog].filter(Boolean).sort((a, b) => (b.t || 0) - (a.t || 0))[0] || null,
     };
@@ -3853,10 +4029,11 @@ const HOWTO = {
   fossil: ['岩塊下面是一塊刻著成語的石碑。', '點岩塊把它敲掉，露出更多字。', '看出來就從下方選出答案；敲得越少，分數越高。', '選錯扣 3 秒。'],
   slide: ['四乘四的木盤裡有 15 塊字塊和 1 個空格。', '點和空格在同一橫列或同一直行的木塊，就能把它推向空格（可以一次推好幾塊）。', '上方是這盤的目標：把兩句成語各排成一橫列（由左到右），排好的那列會變綠色。', '兩句都排出來就過關；難度越高，打亂得越多、提示越少。'],
   rush: ['所有參賽者同時看到同一題，最先答對的人得分（越快分數越高）。', '答錯會扣 20 分，而且這一題不能再搶。', '每位玩家的卡片上會顯示分數與「搶到幾題」。', '每題的思考時間依題型不同（15～25 秒）；題數可選 5～30 題。'],
+  edu: ['依學歷分成七級：小學、國中、高中、專科、大學、碩士、博士，越高越難。', '每題限時作答一次，答對就得分，答得越快分數越高；答錯不扣分。', '總分換算成百分制：60 分及格（一顆星）、75 分兩顆星、90 分三顆星；及格就能畢業、解鎖下一級，還會頒發畢業證書。', '可以自己考、和電腦同場應試，也能在連線房間和朋友比同一份試卷。學歷越高，功名積分倍數越高。'],
   race: ['所有參賽者玩「同一關」同一個謎題，最先完成的人拿下這一關（越快分數越高）。', '有人完成後，會公布是誰搶到，接著大家一起進入下一關。', '每位玩家的卡片上會顯示分數與「搶到幾關」。', '每一關有時間限制，時間到都沒人完成就直接下一關；遊戲可選「綜合」，每關隨機換一種玩法。'],
 };
 function showHelp(key, onClose) {
-  const g = E.GAMES[key]; const title = key === 'rush' ? '搶答對戰' : key === 'race' ? '競速對戰' : g ? g.name : '遊戲說明';
+  const g = E.GAMES[key]; const title = key === 'rush' ? '搶答對戰' : key === 'race' ? '競速對戰' : key === 'edu' ? '挑戰賽' : g ? g.name : '遊戲說明';
   const lines = HOWTO[key] || [];
   modal(`<h2>📖 ${title}</h2><div class="howto">${lines.map((l, i) => `<p><b>${i + 1}</b>${l}</p>`).join('')}</div>
     ${E.GAMES[key] && !E.GAMES[key].noTimer ? `<div class="help-rule">闖關規則：依難易度答對 <b>5／10／20</b> 題（或完成相同數量的成語）就過關；時間用完就結束，剩餘時間會換成加分。</div>` : ''}
@@ -3949,6 +4126,7 @@ const Race = {
   },
   renderPlayers() {
     $('#rb-players').innerHTML = this.players.map((p) => `<div class="rp ${p.id === this.myId ? 'me' : ''}" data-id="${esc(p.id)}"><span class="av">${esc(p.avatar)}</span><span class="nm">${esc(p.name)}</span><b class="sc">${p.score}</b><small class="ct">${plate(p.xp)} ${this.scoreMode ? `本關 ${p.n || 0} 句・` : ''}搶到 ${p.correct} 關</small></div>`).join('');
+    Voice.decorate();
   },
   applyScores(scores) {
     scores.forEach((s) => { const p = this.players.find((x) => x.id === s.id); if (p) { p.score = s.score; p.correct = s.correct; } });
@@ -4054,11 +4232,11 @@ GAMES.slide = {
 };
 
 /* ───────── 金榜 ───────── */
-const BOARD_TABS = [['xp', '📜 功名榜'], ['rush', '對戰勝場'], ['mix', '綜合挑戰'], ...Object.entries(E.GAMES).filter(([k]) => k !== 'rank').map(([k, g]) => [k, g.name])];
+const BOARD_TABS = [['xp', '📜 功名榜'], ['edu', '🎓 挑戰賽'], ['rush', '對戰勝場'], ['mix', '綜合挑戰'], ...Object.entries(E.GAMES).filter(([k]) => k !== 'rank').map(([k, g]) => [k, g.name])];
 let boardTab = 'xp', boardDiff = Solo.diff;
 function renderBoardTabs() {
   $('#bang-tabs').innerHTML = BOARD_TABS.map(([k, n]) => `<button data-b="${k}" class="${k === boardTab ? 'on' : ''}">${n}</button>`).join('');
-  const needDiff = boardTab !== 'rush' && boardTab !== 'xp';
+  const needDiff = !['rush', 'xp', 'edu'].includes(boardTab);
   $('#bang-diff').classList.toggle('hidden', !needDiff);
   $('#bang-diff').innerHTML = `難易度：${Object.entries(DIFF).map(([k, d]) => `<button data-d="${k}" class="${k === boardDiff ? 'on' : ''}">${d.label}（${d.n} 題）</button>`).join('')}`;
 }
@@ -4067,16 +4245,460 @@ $('#bang-diff').onclick = (e) => { const b = e.target.closest('[data-d]'); if (!
 async function loadBoard() {
   const list = $('#bang-list');
   list.innerHTML = `<div class="muted" style="text-align:center;padding:30px">載入中…</div>`;
-  const key = boardTab === 'rush' || boardTab === 'xp' ? boardTab : `${boardTab}:${boardDiff}`;
+  const key = ['rush', 'xp', 'edu'].includes(boardTab) ? boardTab : `${boardTab}:${boardDiff}`;
   try {
     const r = await api('/api/leaderboard?game=' + encodeURIComponent(key));
     if (!r.rows.length) { list.innerHTML = `<div class="muted" style="text-align:center;padding:30px">目前還沒有人上榜，快來搶頭香！</div>`; return; }
     const medal = ['🥇', '🥈', '🥉'];
-    const unit = boardTab === 'rush' ? null : boardTab === 'xp' ? '積分' : `分・${DIFF[boardDiff].label}`;
+    const unit = boardTab === 'rush' ? null : boardTab === 'xp' ? '積分' : boardTab === 'edu' ? '' : `分・${DIFF[boardDiff].label}`;
     list.innerHTML = r.rows.map((x, i) => `<div class="brow ${x.name === ST.name && !ST.guest ? 'me' : ''}">
       <span class="rk">${medal[i] || i + 1}</span><span class="av">${esc(x.avatar || '🙂')}</span><span class="nm"><span>${esc(x.name)}</span>${plate(x.xp || 0)}</span>
-      <span class="val">${Number(x.value).toLocaleString()}<small>${unit || `勝／${x.games} 場`}</small></span></div>`).join('');
+      <span class="val">${boardTab === 'edu' ? eduBoardText(x.value) : Number(x.value).toLocaleString()}<small>${unit != null ? unit : `勝／${x.games} 場`}</small></span></div>`).join('');
   } catch (e) { list.innerHTML = `<div class="muted" style="text-align:center;padding:30px">${esc(zhError(e))}</div>`; }
+}
+
+
+/* ═══════════════════════ 連線聊天：文字＋即時語音 ═══════════════════════ */
+const QUICK_PHRASES = ['厲害！', '好險！', '承讓承讓', '手下留情', '再來一局！', '加油！', '等我一下', '哈哈哈', '好難喔', '我來了'];
+const QUICK_EMOJI = ['😆', '😱', '👍', '🔥', '😭', '🤔', '🙏', '🎉', '😎', '💪'];
+var Comm = {
+  msgs: [], code: null, open: false, unread: 0, mounted: false,
+  mount() {
+    if (this.mounted) return; this.mounted = true;
+    const dock = document.createElement('div'); dock.id = 'comm-dock';
+    dock.innerHTML = `<button class="cm-btn" id="cm-voice" title="語音聊天"><b>🎤</b><small>語音</small><i class="cm-badge" id="cm-vcount"></i></button>
+      <button class="cm-btn" id="cm-chat" title="文字聊天"><b>💬</b><small>聊天</small><i class="cm-badge" id="cm-unread"></i></button>`;
+    const panel = document.createElement('div'); panel.id = 'comm-panel';
+    panel.innerHTML = `<div class="cp-head"><span>💬 房間聊天</span><span class="cp-voice" id="cp-voice"></span><button id="cp-close" aria-label="關閉">✕</button></div>
+      <div class="cp-list" id="cp-list"></div>
+      <div class="cp-quick" id="cp-emoji">${QUICK_EMOJI.map((e) => `<button data-e="${e}">${e}</button>`).join('')}</div>
+      <div class="cp-quick" id="cp-phr">${QUICK_PHRASES.map((p) => `<button data-p="${p}">${p}</button>`).join('')}</div>
+      <form class="cp-input" id="cp-form" autocomplete="off"><input id="cp-text" maxlength="60" placeholder="輸入訊息（最多 60 字）" enterkeyhint="send"><button type="submit" class="btn sm red">送出</button></form>`;
+    $('#app').append(dock, panel);
+    $('#cm-chat').onclick = () => this.toggle();
+    $('#cp-close').onclick = () => this.toggle(false);
+    $('#cm-voice').onclick = () => (Voice.on ? Voice.askLeave() : Voice.join());
+    $('#cp-emoji').onclick = (e) => { const b = e.target.closest('[data-e]'); if (b) this.send(b.dataset.e, 'emoji'); };
+    $('#cp-phr').onclick = (e) => { const b = e.target.closest('[data-p]'); if (b) this.send(b.dataset.p, 'quick'); };
+    $('#cp-form').onsubmit = (e) => { e.preventDefault(); const v = $('#cp-text').value.trim(); if (!v) return; this.send(v, 'text'); $('#cp-text').value = ''; };
+  },
+  /** 只有在連線房間裡（等候、搶答、競速）才顯示聊天按鈕 */
+  update() {
+    if (!this.mounted) return;
+    const inRoom = !!(Room.view && sock);
+    const scr = current;
+    const show = inRoom && (scr === 's-room' || (scr === 's-rush' && Rush.mode === 'online') || (scr === 's-edu' && Edu.mode === 'online') || (Race.active && Race.mode === 'online'));
+    $('#comm-dock').classList.toggle('on', show); $('#comm-dock').classList.toggle('low', !!show && !['s-room', 's-rush', 's-edu'].includes(scr));
+    if (!show) this.toggle(false);
+    if (show && !store.get('chat_tip')) { store.set('chat_tip', '1'); setTimeout(() => toast('💬 右上角可以和朋友文字聊天，🎤 可以開即時語音', 3500), 600); }
+    if (Room.view && Room.view.code !== this.code) { this.code = Room.view.code; this.msgs = []; this.unread = 0; this.render(); }
+    if (!Room.view && Voice.on) Voice.leave(true);
+    this.badge();
+  },
+  toggle(v) {
+    this.open = v == null ? !this.open : v;
+    $('#comm-panel').classList.toggle('on', this.open);
+    if (this.open) { this.unread = 0; this.badge(); this.render(); }
+    else { const i = $('#cp-text'); if (i) i.blur(); }
+  },
+  badge() {
+    const u = $('#cm-unread'); if (u) { u.textContent = this.unread > 9 ? '9+' : this.unread || ''; u.classList.toggle('on', this.unread > 0); }
+  },
+  send(text, kind) {
+    if (!sock || !Room.view) return toast('要在連線房間裡才能聊天');
+    sock.emit('chat', { text, kind });
+  },
+  onChat(m) {
+    this.msgs.push(m); if (this.msgs.length > 60) this.msgs.shift();
+    if (this.open) this.render(); else if (m.name !== ST.name) { this.unread++; this.badge(); SFX.tap(); }
+    this.bubble(m.name, m.text, m.kind === 'emoji', m.avatar);
+  },
+  render() {
+    const el = $('#cp-list'); if (!el) return;
+    el.innerHTML = this.msgs.length ? this.msgs.map((m) => `<div class="cp-msg ${m.name === ST.name ? 'me' : ''} ${m.kind === 'emoji' ? 'emo' : ''}"><span class="av">${esc(m.avatar || '🙂')}</span><div><small>${esc(m.name)}</small><p>${esc(m.text)}</p></div></div>`).join('')
+      : '<div class="muted" style="text-align:center;padding:16px 0">還沒有訊息，打聲招呼吧！<br>也可以點下方的表情或常用短語快速送出</div>';
+    el.scrollTop = el.scrollHeight;
+  },
+  /** 找出畫面上這位玩家的卡片（座位、搶答卡、競速卡） */
+  cardsOf(name) {
+    const sel = `.seat[data-name="${CSS.escape(name)}"], .pcard[data-id="${CSS.escape(name)}"], .rp[data-id="${CSS.escape(name)}"], .ecard[data-id="${CSS.escape(name)}"]`;
+    return $$(sel).filter((x) => x.offsetParent !== null);
+  },
+  bubble(name, text, big, avatar) {
+    const app = $('#app').getBoundingClientRect();
+    const card = this.cardsOf(name)[0];
+    $$('.chat-bub').forEach((x) => { if (x.dataset.who === name || (!card && x.classList.contains('top'))) x.remove(); });
+    const b = document.createElement('div'); b.className = 'chat-bub' + (big ? ' big' : '') + (card ? '' : ' top');
+    b.dataset.who = name;
+    b.innerHTML = card ? esc(text) : `<span>${esc(avatar || '🙂')} ${esc(name)}</span>${esc(text)}`;
+    $('#app').appendChild(b);
+    if (card) {
+      const r = card.getBoundingClientRect();
+      const x = Math.min(Math.max(r.left - app.left + r.width / 2, 70), app.width - 70);
+      const below = r.top - app.top < 90;
+      b.style.left = x + 'px'; b.style.top = (below ? r.bottom - app.top + 8 : r.top - app.top - 8) + 'px';
+      b.classList.add(below ? 'down' : 'up');
+    }
+    setTimeout(() => b.classList.add('out'), 3200); setTimeout(() => b.remove(), 3700);
+  },
+};
+
+const Voice = {
+  on: false, muted: false, stream: null, peers: new Map(), list: [], ice: null, ctx: null, meters: new Map(), timer: null,
+  supported() { return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.RTCPeerConnection); },
+  async iceServers() {
+    if (this.ice) return this.ice;
+    try { const r = await api('/api/ice'); this.ice = r.iceServers; } catch (e) { this.ice = [{ urls: 'stun:stun.l.google.com:19302' }]; }
+    return this.ice;
+  },
+  async join() {
+    if (!sock || !Room.view) return toast('要在連線房間裡才能語音聊天');
+    if (!this.supported()) return toast('這個瀏覽器不支援語音聊天，請改用 Chrome 或 Safari 最新版');
+    $('#cm-voice').classList.add('busy');
+    try {
+      await this.iceServers();
+      this.stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }, video: false });
+    } catch (e) {
+      $('#cm-voice').classList.remove('busy');
+      return toast(e && e.name === 'NotAllowedError' ? '需要允許使用麥克風才能語音聊天（可在瀏覽器網址列旁的設定開啟）' : '找不到麥克風，或麥克風正被其他程式使用', 4000);
+    }
+    this.on = true; this.muted = false; this.watch(ST.name, this.stream);
+    sock.emit('voice_join', {}, (r) => {
+      $('#cm-voice').classList.remove('busy');
+      if (!r || r.error) { toast((r && r.error) || '語音連線失敗'); return this.leave(true); }
+      r.others.forEach((n) => this.peer(n, true));
+      toast(r.others.length ? '🎤 已加入語音聊天' : '🎤 已開啟語音，等朋友加入就能聽到彼此', 2600);
+    });
+    BGM.voice(true); this.ui();
+  },
+  askLeave() {
+    modal(`<h2>🎤 語音聊天</h2><p class="muted">「靜音」：朋友聽不到你，但你還聽得到朋友。<br>「關閉語音」：雙方都聽不到。</p>
+      <div class="row" style="margin-top:14px"><button class="btn sm green" id="vl-no">繼續語音</button><button class="btn sm orange" id="vl-mute">${this.muted ? '取消靜音' : '靜音就好'}</button><button class="btn sm red" id="vl-yes">關閉語音</button></div>`);
+    $('#vl-no').onclick = closeModal;
+    $('#vl-mute').onclick = () => { closeModal(); this.setMute(!this.muted); };
+    $('#vl-yes').onclick = () => { closeModal(); this.leave(); };
+  },
+  leave(silent) {
+    if (!this.on && !this.stream) return;
+    this.on = false;
+    if (sock && !silent) sock.emit('voice_leave');
+    this.peers.forEach((_, n) => this.drop(n)); this.peers.clear();
+    if (this.stream) this.stream.getTracks().forEach((t) => t.stop()); this.stream = null;
+    this.unwatch(ST.name); BGM.voice(false); this.ui();
+    if (!silent) toast('語音聊天已關閉');
+  },
+  setMute(v) {
+    if (!this.on) return;
+    this.muted = v; if (this.stream) this.stream.getAudioTracks().forEach((t) => { t.enabled = !v; });
+    if (sock) sock.emit('voice_mute', { muted: v });
+    toast(v ? '🔇 麥克風已靜音（還聽得到別人）' : '🎙️ 麥克風已打開'); this.ui();
+  },
+  /** 和一位玩家建立語音連線；initiator 由後加入的人主動發起 */
+  peer(name, initiator) {
+    if (this.peers.has(name)) return this.peers.get(name);
+    const pc = new RTCPeerConnection({ iceServers: this.ice || [] });
+    const P = { pc, name, queue: [], audio: null, warned: false };
+    this.peers.set(name, P);
+    if (this.stream) this.stream.getTracks().forEach((t) => pc.addTrack(t, this.stream));
+    pc.onicecandidate = (e) => { if (e.candidate && sock) sock.emit('voice_signal', { to: name, data: { ice: e.candidate } }); };
+    pc.ontrack = (e) => {
+      const st = e.streams[0] || new MediaStream([e.track]);
+      if (!P.audio) { P.audio = document.createElement('audio'); P.audio.autoplay = true; P.audio.setAttribute('playsinline', ''); P.audio.className = 'voice-audio'; document.body.appendChild(P.audio); }
+      P.audio.srcObject = st; P.audio.play().catch(() => toast('點一下畫面就能聽到朋友的聲音'));
+      this.watch(name, st);
+    };
+    pc.onconnectionstatechange = () => {
+      if (pc.connectionState === 'failed' && !P.warned) { P.warned = true; toast(`與「${name}」的語音連不上（可能是網路限制），文字聊天仍可使用`, 4000); }
+    };
+    if (initiator) {
+      pc.onnegotiationneeded = async () => {
+        try { await pc.setLocalDescription(await pc.createOffer()); sock.emit('voice_signal', { to: name, data: { sdp: pc.localDescription } }); } catch (e) {}
+      };
+    }
+    return P;
+  },
+  async onSignal({ from, data }) {
+    if (!this.on || !data) return;
+    const P = this.peer(from, false); const pc = P.pc;
+    try {
+      if (data.sdp) {
+        await pc.setRemoteDescription(data.sdp);
+        if (data.sdp.type === 'offer') { await pc.setLocalDescription(await pc.createAnswer()); sock.emit('voice_signal', { to: from, data: { sdp: pc.localDescription } }); }
+        P.queue.splice(0).forEach((c) => pc.addIceCandidate(c).catch(() => {}));
+      } else if (data.ice) {
+        if (pc.remoteDescription) await pc.addIceCandidate(data.ice).catch(() => {}); else P.queue.push(data.ice);
+      }
+    } catch (e) {}
+  },
+  drop(name) {
+    const P = this.peers.get(name); if (!P) return;
+    try { P.pc.close(); } catch (e) {}
+    if (P.audio) { P.audio.srcObject = null; P.audio.remove(); }
+    this.peers.delete(name); this.unwatch(name);
+  },
+  onList(list) {
+    const before = new Set(this.list.map((x) => x.name));
+    this.list = list || [];
+    const names = new Set(this.list.map((x) => x.name));
+    [...this.peers.keys()].forEach((n) => { if (!names.has(n)) this.drop(n); });
+    if (!this.on) this.list.forEach((x) => { if (!before.has(x.name) && x.name !== ST.name) toast(`🎤 ${x.name} 開啟了語音聊天，點右上角🎤就能加入`, 3000); });
+    this.ui();
+  },
+  /** 偵測誰正在說話，卡片會亮綠光 */
+  watch(name, stream) {
+    try {
+      this.ctx = this.ctx || new (window.AudioContext || window.webkitAudioContext)();
+      if (this.ctx.state === 'suspended') this.ctx.resume();
+      this.unwatch(name);
+      const src = this.ctx.createMediaStreamSource(stream); const an = this.ctx.createAnalyser(); an.fftSize = 512; src.connect(an);
+      this.meters.set(name, { an, buf: new Uint8Array(an.fftSize), src });
+      if (!this.timer) this.timer = setInterval(() => this.tick(), 150);
+    } catch (e) {}
+  },
+  unwatch(name) { const m = this.meters.get(name); if (m) { try { m.src.disconnect(); } catch (e) {} this.meters.delete(name); } this.mark(name, false); },
+  tick() {
+    if (!this.meters.size) { clearInterval(this.timer); this.timer = null; return; }
+    this.meters.forEach((m, name) => {
+      m.an.getByteTimeDomainData(m.buf); let s = 0; for (let i = 0; i < m.buf.length; i += 4) { const v = (m.buf[i] - 128) / 128; s += v * v; }
+      const talking = Math.sqrt(s / (m.buf.length / 4)) > 0.04 && !(name === ST.name && this.muted);
+      this.mark(name, talking);
+    });
+  },
+  mark(name, on) { Comm.cardsOf(name).forEach((c) => c.classList.toggle('talking', on)); },
+  /** 更新按鈕與卡片上的麥克風標記 */
+  ui() {
+    const vb = $('#cm-voice'); if (!vb) return;
+    vb.classList.toggle('live', this.on); vb.classList.toggle('muted', this.on && this.muted);
+    $('b', vb).textContent = this.on ? (this.muted ? '🔇' : '🎤') : '🎤';
+    $('small', vb).textContent = this.on ? (this.muted ? '已靜音' : '語音中') : '語音';
+    const others = this.list.filter((x) => x.name !== ST.name).length;
+    const vc = $('#cm-vcount'); vc.textContent = others ? others + '人' : ''; vc.classList.toggle('on', !!others);
+    const cv = $('#cp-voice'); if (cv) cv.textContent = this.list.length ? `🎤 語音中：${this.list.map((x) => x.name + (x.muted ? '（靜音）' : '')).join('、')}` : '';
+    this.decorate();
+  },
+  decorate() {
+    const inV = new Map(this.list.map((x) => [x.name, x]));
+    $$('.seat[data-name], .pcard[data-id], .rp[data-id], .ecard[data-id]').forEach((c) => {
+      const n = c.dataset.name || c.dataset.id; const v = inV.get(n);
+      c.classList.toggle('vc', !!v); c.classList.toggle('vc-mute', !!(v && v.muted));
+    });
+  },
+  /** 重新連線後自動回到語音 */
+  async rejoin() {
+    if (!this.on || !sock) return;
+    [...this.peers.keys()].forEach((n) => this.drop(n));
+    sock.emit('voice_join', {}, (r) => { if (r && r.ok) { r.others.forEach((n) => this.peer(n, true)); if (this.muted) sock.emit('voice_mute', { muted: true }); } });
+  },
+};
+
+
+/* ═══════════════════════ 挑戰賽（依學歷分級的考試） ═══════════════════════ */
+const EDU = E.EDU_LEVELS;
+function eduProg() { const p = localGet('edu_prog', null) || {}; return { best: (p.best || []).slice(), stars: (p.stars || []).slice() }; }
+/** 目前可以報考的最高學歷（通過前一級才解鎖） */
+function eduUnlocked() { const p = eduProg(); let k = 0; while (k < EDU.length - 1 && (p.stars[k] || 0) >= 1) k++; return k; }
+function eduHighest() { const p = eduProg(); let hi = 0; p.stars.forEach((s, i) => { if (s >= 1) hi = i + 1; }); return hi; }
+function eduTotalStars() { return eduProg().stars.reduce((a, b) => a + (b || 0), 0); }
+function starHTML(n, cls = 'edu-stars') { return `<span class="${cls}">${[0, 1, 2].map((i) => (i < n ? '★' : '<span class="off">★</span>')).join('')}</span>`; }
+/** 金榜用的數值：最高學歷×100＋總星數 */
+function eduBoardValue() { return eduHighest() * 100 + eduTotalStars(); }
+function eduBoardText(v) { const hi = Math.floor(v / 100), st = v % 100; return `${hi ? EDU[hi - 1].name + '畢業' : '尚未畢業'}・★${st}`; }
+function rocDate() { const d = new Date(); return `中華民國 ${d.getFullYear() - 1911} 年 ${d.getMonth() + 1} 月 ${d.getDate()} 日`; }
+
+function renderEduMenu() {
+  const p = eduProg(); const un = eduUnlocked(); const hi = eduHighest();
+  $('#edu-summary').innerHTML = `<span class="big">🎓</span><div>目前學歷 <b>${hi ? EDU[hi - 1].name + '畢業' : '尚未畢業'}</b><small>累積星星 ★ ${eduTotalStars()} / ${EDU.length * 3}　${hi >= EDU.length ? '已取得最高學歷！' : `可報考：${EDU[un].name}`}</small></div>`;
+  $('#edu-list').innerHTML = EDU.map((L, i) => {
+    const lock = i > un; const st = p.stars[i] || 0;
+    return `<button class="edu-lv ${lock ? 'lock' : ''} ${i === un && !st ? 'next' : ''}" data-lv="${i}"><span class="ic">${L.icon}</span>
+      <span class="mid"><span class="nm">${L.name}</span><span class="ds">${L.desc}</span></span>
+      <span class="rt">${starHTML(st)}<div class="best">${p.best[i] ? `最佳 ${E.eduPct(i, p.best[i])} 分` : '尚未應考'}</div></span></button>`;
+  }).join('');
+}
+function eduIntro(lv) {
+  const L = EDU[lv]; const need = E.eduNeed(lv); const p = eduProg();
+  modal(`<h2>${L.icon} ${L.name}考試</h2><p class="muted" style="margin:4px 0">${L.desc}</p>
+    <div class="muted">共 ${L.n} 題・每題 ${L.t} 秒<br>答對就得分，答得越快分數越高<br>滿分 100 分（全部秒答才有滿分）</div>
+    <div class="edu-need"><span>60 分及格 ★</span><span>75 分 ★★</span><span>90 分 ★★★</span></div>
+    ${p.best[lv] ? `<div class="muted">你的最佳：${E.eduPct(lv, p.best[lv])} 分 ${starHTML(p.stars[lv] || 0)}</div>` : ''}
+    <div class="row" style="margin-top:12px"><button class="btn sm white" id="ei-no">取消</button><button class="btn sm red" id="ei-go">開始考試</button></div>`);
+  $('#ei-no').onclick = closeModal;
+  $('#ei-go').onclick = () => { closeModal(); Edu.begin(lv, 0, 'normal', true); };
+}
+
+const Edu = {
+  mode: null, match: null, myId: null, players: [], q: null, locked: false, lv: 0, solo: false, last: null,
+  begin(lv, nAi, aiLevel, solo) {
+    if (this.match) this.match.stop();
+    this.mode = 'local'; this.myId = 'me'; this.solo = solo && !nAi; this.last = { lv, nAi, aiLevel, solo };
+    const names = E.shuffle(null, E.AI_NAMES).slice(0, nAi); const avs = E.shuffle(null, E.AVATARS.filter((a) => a !== ST.avatar));
+    const players = [{ id: 'me', name: ST.guest || !ST.token ? '我' : ST.name, avatar: ST.avatar, xp: XP.get() }, ...names.map((nm, i) => ({ id: 'ai' + i, name: nm, ai: true, avatar: avs[i] }))];
+    this.match = new E.EduMatch({ lv, players, aiLevel, emit: (e, d) => setTimeout(() => this.handle(e, d), 0) });
+    this.match.start();
+  },
+  card(id) { return $(`#edu-players .ecard[data-id="${CSS.escape(id)}"]`); },
+  handle(evt, d) {
+    if (evt === 'edu_start') {
+      if (!(this.mode === 'local' && this.match)) { this.mode = 'online'; this.myId = ST.name; this.solo = false; }
+      this.lv = d.lv; this.total = d.total;
+      closeModal(); show('s-edu');
+      this.players = d.players.map((p) => ({ ...p, score: 0, correct: 0 }));
+      $('#edu-head').textContent = `${EDU[d.lv].name}考場`;
+      $('#edu-score').textContent = '0 分'; $('#edu-score').style.visibility = this.mode === 'online' ? 'hidden' : '';
+      this.renderPlayers();
+      $('#edu-paper').innerHTML = `<div class="pr">${EDU[d.lv].icon} ${EDU[d.lv].name}考試即將開始</div><div class="muted">共 ${d.total} 題・每題 ${Math.round(d.timeLimit / 1000)} 秒</div>`;
+      $('#edu-opts').innerHTML = ''; $('#edu-reveal').classList.remove('on');
+      $('#edu-idx').textContent = `共 ${d.total} 題`; $('#edu-kind').textContent = '準備';
+      if (!d.noCountdown) this.countdown();
+    } else if (evt === 'edu_q') {
+      this.q = d.q; this.locked = false;
+      $('#edu-reveal').classList.remove('on');
+      $$('#edu-players .ecard').forEach((c) => c.classList.remove('done', 'ok', 'ng'));
+      $('#edu-idx').textContent = `第 ${d.index} / ${d.total} 題`; $('#edu-kind').textContent = d.q.kindName;
+      $('#s-edu').scrollTop = 0; this.renderQ(d.q); this.runBar(d.remain != null ? d.remain : d.timeLimit, d.timeLimit);
+    } else if (evt === 'edu_ans') {
+      const c = this.card(d.id); if (c) c.classList.add('done');
+    } else if (evt === 'edu_reveal') {
+      this.stopBar(); this.lock();
+      const mine = d.results.find((r) => r.id === this.myId);
+      const good = $(`#edu-opts [data-i="${d.answer}"]`); if (good) good.classList.add('good');
+      if (mine && mine.choice != null && !mine.ok) { const b = $(`#edu-opts [data-i="${mine.choice}"]`); if (b) b.classList.add('bad'); }
+      d.results.forEach((r) => { const c = this.card(r.id); if (c) { c.classList.remove('done'); c.classList.add(r.ok ? 'ok' : 'ng'); } });
+      if (mine && mine.ok) SFX.ok(); else SFX.bad();
+      this.applyScores(d.scores);
+      const res = !mine ? '' : mine.ok ? `<div class="res ok">⭕ 答對了！ +${Math.round((mine.pts / E.eduMax(this.lv)) * 1000) / 10} 分</div>` : mine.choice == null ? '<div class="res ng">⏰ 時間到，沒有作答</div>' : '<div class="res ng">❌ 答錯了</div>';
+      const others = this.players.length > 1 ? `<div class="muted" style="font-size:12.5px;margin-top:4px">本題答對：${d.results.filter((r) => r.ok).map((r) => esc((this.players.find((p) => p.id === r.id) || {}).name || '')).join('、') || '沒有人'}</div>` : '';
+      const rv = $('#edu-reveal');
+      rv.innerHTML = `${res}<div class="idm">${esc(d.idiom)}</div><div class="ex">${esc(d.ex || '')}</div>${others}
+        <div class="row"><button class="btn sm red" id="edu-next">下一題 ▶</button></div>`;
+      rv.classList.add('on');
+      $('#edu-next').onclick = () => {
+        $('#edu-next').disabled = true; $('#edu-next').textContent = this.players.filter((p) => !p.ai).length > 1 ? '等待其他人…' : '下一題 ▶';
+        if (this.mode === 'local') this.match.setReady(this.myId); else if (sock) sock.emit('edu_ready');
+      };
+      setTimeout(() => { const sc = $('#s-edu'); const y = rv.offsetTop + rv.offsetHeight + 12 - sc.clientHeight; if (y > sc.scrollTop) sc.scrollTo({ top: y, behavior: 'smooth' }); }, 120);
+    } else if (evt === 'match_end') {
+      this.stopBar(); this.showEnd(d);
+    }
+  },
+  renderPlayers() {
+    const el = $('#edu-players');
+    el.innerHTML = this.players.length < 2 ? '' : this.players.map((p) => `<div class="ecard ${p.id === this.myId ? 'me' : ''}" data-id="${esc(p.id)}"><span class="av">${esc(p.avatar)}</span><span class="nm">${esc(p.name)}<br>${plate(p.xp)}</span><b class="sc">${E.eduPct(this.lv, p.score)}</b></div>`).join('');
+    Voice.decorate();
+  },
+  applyScores(scores) {
+    scores.forEach((s) => { const p = this.players.find((x) => x.id === s.id); if (p) { p.score = s.score; p.correct = s.correct; } const c = this.card(s.id); if (c) $('.sc', c).textContent = E.eduPct(this.lv, s.score); });
+    const me = this.players.find((p) => p.id === this.myId); $('#edu-score').textContent = `${me ? E.eduPct(this.lv, me.score) : 0} 分`;
+  },
+  renderQ(q) {
+    let h = `<div class="pr">${esc(q.prompt)}</div>`;
+    if (q.tiles) h += `<div class="edu-tiles">${q.tiles.map((c) => `<span class="${c ? '' : 'q'}">${c ? esc(c) : '？'}</span>`).join('')}</div>`;
+    if (q.big) h += `<div class="big">${esc(q.big)}</div>`;
+    if (q.quote) h += `<div class="qt">${esc(q.quote).replace('＿＿＿＿', '<u>　？　</u>')}</div>`;
+    if (q.src) h += `<div class="src">——${esc(q.src)}</div>`;
+    $('#edu-paper').innerHTML = h;
+    const g = $('#edu-opts');
+    g.className = 'edu-opts serif' + (q.small ? ' one' : q.long ? ' long' : '');
+    g.innerHTML = q.options.map((o, i) => `<button class="eans" data-i="${i}">${esc(o)}</button>`).join('');
+    g.onclick = (e) => this.choose(e.target.closest('[data-i]'));
+  },
+  choose(b) {
+    if (!b || this.locked || !this.q) return;
+    this.locked = true; b.classList.add('mine'); SFX.tap(); this.lock();
+    const i = +b.dataset.i;
+    if (this.mode === 'local') this.match.answer(this.myId, i); else if (sock) sock.emit('answer', { choice: i });
+  },
+  lock() { $$('#edu-opts .eans').forEach((b) => { b.disabled = true; }); },
+  runBar(remain, total) {
+    const bar = $('#edu-bar'); bar.style.transition = 'none'; bar.style.transform = `scaleX(${remain / total})`;
+    void bar.offsetWidth; bar.style.transition = `transform ${remain}ms linear`; bar.style.transform = 'scaleX(0)';
+  },
+  stopBar() { const bar = $('#edu-bar'); const m = getComputedStyle(bar).transform; bar.style.transition = 'none'; bar.style.transform = m === 'none' ? '' : m; },
+  countdown() {
+    const cd = $('#edu-cd'); cd.classList.add('on');
+    ['3', '2', '1', '開始作答'].forEach((t, i) => setTimeout(() => { cd.innerHTML = `<span style="${i === 3 ? 'font-size:56px' : ''}">${t}</span>`; i < 3 ? SFX.tick() : SFX.win(); }, i * 800));
+    setTimeout(() => cd.classList.remove('on'), 3200);
+  },
+  /** 記錄成績：只有報考資格內的學歷才算數（通過前一級才行） */
+  record(lv, score, stars) {
+    if (lv > eduUnlocked()) return { counted: false };
+    const p = eduProg(); const was = p.stars[lv] || 0;
+    p.best[lv] = Math.max(p.best[lv] || 0, score); p.stars[lv] = Math.max(was, stars);
+    for (let i = 0; i < EDU.length; i++) { p.best[i] = p.best[i] || 0; p.stars[i] = p.stars[i] || 0; }
+    localSet('edu_prog', p);
+    const firstPass = stars >= 1 && was < 1; const newStars = stars > was;
+    if (!ST.guest && ST.token && newStars) api('/api/score', { token: ST.token, game: 'edu', score: eduBoardValue() }).catch(() => {});
+    return { counted: true, firstPass, newStars, best: p.best[lv] };
+  },
+  diploma(lv, score, stars, name) {
+    return `<div class="diploma"><h3>畢業證書</h3>
+      <p>學生 <span class="nm">${esc(name)}</span> 修業期滿，參加成語擂台「${EDU[lv].name}」成語會考，成績 <b>${E.eduPct(lv, score)}</b> 分，准予畢業，特頒此證。</p>
+      <div class="dstars">${[0, 1, 2].map((i) => (i < stars ? '★' : '<span class="off">★</span>')).join('')}</div>
+      <div class="foot"><span style="text-align:left">成語擂台 教務處<br>${rocDate()}</span><span class="seal">成語<br>擂台</span></div></div>`;
+  },
+  showEnd(d) {
+    const lv = d.lv; const L = EDU[lv]; const mine = d.ranking.find((r) => r.id === this.myId);
+    const score = mine ? mine.score : 0, stars = mine ? mine.stars : 0;
+    const rec = mine ? this.record(lv, score, stars) : { counted: false };
+    const gain = mine ? XP.add(Math.round(score * L.mult), { online: this.mode === 'online', delay: 1500 }) : 0;
+    const need = E.eduNeed(lv); const next = EDU[lv + 1];
+    const myName = ST.guest || !ST.token ? '訪客' : ST.name;
+    const verdict = stars >= 1
+      ? this.diploma(lv, score, stars, myName)
+      : `<h2>📝 這次沒考過</h2><div style="font-size:48px;font-weight:900;color:#b3202c">${E.eduPct(lv, score)}<small style="font-size:18px"> 分</small></div><p class="edu-fail">60 分才及格，還差 ${60 - E.eduPct(lv, score)} 分。<br>看看每題的解說，再考一次吧！</p>`;
+    const rank = d.ranking.length > 1 ? `<div class="rank-rest" style="margin-top:8px">${d.ranking.map((r) => `<div><span>${r.rank}. ${esc(r.avatar)} ${esc(r.name)}${plate(r.xp)}</span><span>${E.eduPct(lv, r.score)} 分 ${starHTML(r.stars, 'edu-stars')}</span></div>`).join('')}</div>` : '';
+    const note = !rec.counted ? `<p class="muted" style="font-size:12px">你還沒有報考「${L.name}」的資格，這場成績不列入學歷紀錄</p>`
+      : rec.firstPass && next ? `<p style="font-weight:900;color:#1d8a52;margin:6px 0">🔓 已解鎖「${next.name}」考試！</p>` : rec.firstPass && !next ? '<p style="font-weight:900;color:#b3202c;margin:6px 0">🎉 恭喜取得最高學歷──博士！</p>' : '';
+    const canNext = next && lv + 1 <= eduUnlocked() && this.mode === 'local';
+    modal(`${verdict}${rank}${note}
+      ${gain ? `<div class="xp-gain">功名積分 <b>+${gain}</b>（${L.name}×${L.mult}）${plate(XP.get())}</div>` : ''}
+      <div class="row" style="margin-top:12px;flex-wrap:wrap"><button class="btn sm white" id="ee-out">${this.mode === 'online' ? '離開房間' : '回選單'}</button>
+      <button class="btn sm orange" id="ee-again">${this.mode === 'online' ? '回到房間' : '再考一次'}</button>
+      ${canNext ? `<button class="btn sm red" id="ee-next">報考${next.name} ▶</button>` : ''}</div>`);
+    if (stars >= 1) SFX.win(); else SFX.bad();
+    $('#ee-out').onclick = () => { closeModal(); if (this.mode === 'online') Room.leave(); else { this.match = null; renderEduMenu(); show('s-edumenu'); } };
+    $('#ee-again').onclick = () => { closeModal(); if (this.mode === 'online') show('s-room'); else { const l = this.last; this.begin(l.lv, l.nAi, l.aiLevel, l.solo); } };
+    const nx = $('#ee-next'); if (nx) nx.onclick = () => { closeModal(); const l = this.last; this.begin(lv + 1, l.nAi, l.aiLevel, l.solo); };
+  },
+  askQuit() {
+    modal(`<h2>離開考場？</h2><p class="muted">${this.mode === 'online' ? '離開後這場比賽的分數不會保留' : '這次考試會直接結束，不列入成績'}</p>
+      <div class="row" style="margin-top:14px"><button class="btn sm green" id="eq-no">繼續作答</button><button class="btn sm red" id="eq-yes">離開</button></div>`);
+    $('#eq-no').onclick = closeModal;
+    $('#eq-yes').onclick = () => { closeModal(); this.quit(); };
+  },
+  quit() {
+    this.stopBar(); $('#edu-cd').classList.remove('on');
+    if (this.mode === 'local') { if (this.match) this.match.stop(); this.match = null; renderEduMenu(); show(this.solo ? 's-edumenu' : 's-battle'); }
+    else Room.leave();
+  },
+  resume(s) {
+    this.mode = 'online'; this.myId = ST.name;
+    this.handle('edu_start', { lv: s.lv, total: s.total, timeLimit: s.timeLimit, players: s.players, noCountdown: true });
+    this.applyScores(s.scores);
+    if (s.q) { this.handle('edu_q', { index: s.index, total: s.total, timeLimit: s.timeLimit, remain: s.remain, q: s.q }); (s.answered || []).forEach((id) => this.handle('edu_ans', { id })); if ((s.answered || []).includes(this.myId)) this.lock(); }
+  },
+};
+$('#edu-quit').onclick = () => Edu.askQuit();
+$('#edu-list').onclick = (e) => {
+  const b = e.target.closest('[data-lv]'); if (!b) return; const lv = +b.dataset.lv;
+  if (lv > eduUnlocked()) { SFX.bad(); toast(`要先通過「${EDU[lv - 1].name}」考試，才能報考${EDU[lv].name}`); return; }
+  SFX.tap(); eduIntro(lv);
+};
+$('#edu-help').onclick = () => showHelp('edu');
+$('#edu-ai').onclick = () => {
+  show('s-battle'); const m = $('[data-seg="soloMode"] [data-v="edu"]'); if (m) m.click();
+  const lv = $(`[data-seg="soloEdu"] [data-v="${eduUnlocked()}"]`); if (lv) lv.click();
+};
+$('#edu-online').onclick = () => {
+  if (needAccount()) return;
+  Room.preset = { mode: 'edu', eduLevel: eduUnlocked() };
+  $('#online-hint').textContent = ''; show('s-battle');
+  setTimeout(() => { const c = $('#btn-create'); const sc = c && c.closest('.scroll'); if (sc) sc.scrollTo({ top: Math.max(0, c.offsetTop - 120), behavior: 'smooth' }); toast('按「建立房間」就會開一間挑戰賽房間；朋友輸入房號加入', 3500); }, 200);
+};
+/** 對戰選單／房間裡，還沒解鎖的學歷不能選 */
+function eduLockButtons(sel, isHost = true) {
+  const un = eduUnlocked();
+  $$(sel + ' button').forEach((b) => { const i = +b.dataset.v; const lock = i > un; b.classList.toggle('lockd', lock); if (lock) b.disabled = true; else if (isHost) b.disabled = false; b.textContent = (lock ? '🔒' : '') + EDU[i].name; });
 }
 
 /* ───────── 分段選擇元件 ───────── */
@@ -4085,7 +4707,7 @@ $$('[data-seg]').forEach((seg) => seg.onclick = (e) => { const b = e.target.clos
 
 /* ───────── 連線 ───────── */
 let sock = null, sockWaiters = [];
-function disconnectSocket() { if (sock) { sock.removeAllListeners(); sock.disconnect(); sock = null; } Room.view = null; }
+function disconnectSocket() { Voice.leave(true); if (sock) { sock.removeAllListeners(); sock.disconnect(); sock = null; } Room.view = null; }
 function ensureSocket() {
   return new Promise((resolve, reject) => {
     if (typeof io === 'undefined') return reject(new Error('連線元件載入失敗，請確認網路'));
@@ -4105,7 +4727,11 @@ function ensureSocket() {
       sock.on('connect_error', () => { if (sockWaiters.length) $('#online-hint').textContent = '正在喚醒伺服器，請稍候（最多約一分鐘）…'; });
       sock.on('disconnect', () => { if (sock) sock.authed = false; if (Room.view) { Room.lost = true; toast('連線中斷，重新連線中…'); } });
       sock.on('room', (v) => Room.onRoom(v));
-      sock.on('m', ({ evt, data }) => (evt.startsWith('race_') || (evt === 'match_end' && data.race) ? Race.handle(evt, data) : Rush.handle(evt, data)));
+      sock.on('chat', (m) => Comm.onChat(m));
+      sock.on('chat_err', (r) => toast(r.error));
+      sock.on('voice_list', (l) => Voice.onList(l));
+      sock.on('voice_signal', (d) => Voice.onSignal(d));
+      sock.on('m', ({ evt, data }) => (evt.startsWith('edu_') || (evt === 'match_end' && data.edu) ? Edu.handle(evt, data) : evt.startsWith('race_') || (evt === 'match_end' && data.race) ? Race.handle(evt, data) : Rush.handle(evt, data)));
     }
     setTimeout(() => { const i = sockWaiters.findIndex((w) => w.resolve === resolve); if (i >= 0) { sockWaiters.splice(i, 1); reject(new Error('連不上伺服器，請稍後再試')); } }, 75000);
   });
@@ -4117,14 +4743,15 @@ function needAccount() {
 
 const Room = {
   view: null, lost: false,
-  resetLocal() { Rush.mode = 'online'; if (Rush.match) Rush.match.stop(); Rush.match = null; Race.mode = 'online'; if (Race.match) Race.match.stop(); Race.match = null; },
+  resetLocal() { if (Edu.match) Edu.match.stop(); Edu.match = null; Edu.mode = 'online'; Rush.mode = 'online'; if (Rush.match) Rush.match.stop(); Rush.match = null; Race.mode = 'online'; if (Race.match) Race.match.stop(); Race.match = null; },
   async create() {
     if (needAccount()) return;
     this.resetLocal();
     $('#online-hint').textContent = '連線中…';
     try {
       const s = await ensureSocket();
-      s.emit('create_room', { humanMax: 4, aiCount: 0, aiLevel: 'normal', rounds: 10, qtype: 'mix', mode: 'rush', game: 'mix', raceRounds: 10 }, (r) => {
+      const pre = Room.preset || {}; Room.preset = null;
+      s.emit('create_room', { humanMax: 4, aiCount: 0, aiLevel: 'normal', rounds: 10, qtype: 'mix', mode: pre.mode || 'rush', game: 'mix', raceRounds: 10, eduLevel: pre.eduLevel || 0 }, (r) => {
         if (r.error) return toast(r.error);
         $('#online-hint').textContent = ''; this.onRoom(r.room); show('s-room');
       });
@@ -4140,21 +4767,21 @@ const Room = {
       s.emit('join_room', { code }, (r) => {
         if (r.error) { $('#online-hint').textContent = r.error; return; }
         $('#online-hint').textContent = ''; this.onRoom(r.room);
-        if (r.snapshot) (r.snapshot.race ? Race.resume(r.snapshot) : Rush.resume(r.snapshot)); else show('s-room');
+        if (r.snapshot) (r.snapshot.edu ? Edu.resume(r.snapshot) : r.snapshot.race ? Race.resume(r.snapshot) : Rush.resume(r.snapshot)); else show('s-room');
       });
     } catch (e) { $('#online-hint').textContent = zhError(e); }
   },
   rejoin() {
     if (!this.view) return;
-    sock.emit('join_room', { code: this.view.code }, (r) => { if (r.error) { toast(r.error); this.view = null; show('s-battle'); return; } this.onRoom(r.room); if (r.snapshot) (r.snapshot.race ? Race.resume(r.snapshot) : Rush.resume(r.snapshot)); toast('已重新連線'); });
+    sock.emit('join_room', { code: this.view.code }, (r) => { if (r.error) { toast(r.error); this.view = null; Voice.leave(true); show('s-battle'); return; } this.onRoom(r.room); Voice.rejoin(); sock.emit('voice_who', {}, (l) => Voice.onList(l)); if (r.snapshot) (r.snapshot.edu ? Edu.resume(r.snapshot) : r.snapshot.race ? Race.resume(r.snapshot) : Rush.resume(r.snapshot)); toast('已重新連線'); });
   },
-  leave() { if (sock) sock.emit('leave_room'); this.view = null; show('s-battle'); },
+  leave() { Voice.leave(true); if (sock) sock.emit('leave_room'); this.view = null; Comm.toggle(false); show('s-battle'); },
   onRoom(v) {
     this.view = v;
     const isHost = v.host === ST.name;
     $('#room-code').textContent = v.code;
     const seats = [];
-    v.members.forEach((m) => seats.push(`<div class="seat filled"><span class="av">${esc(m.avatar || '🙂')}</span>${esc(m.name)}${plate(m.xp)}${m.host ? '<span class="tag">房主</span>' : ''}${m.online ? '' : '<span class="muted">離線</span>'}</div>`));
+    v.members.forEach((m) => seats.push(`<div class="seat filled" data-name="${esc(m.name)}"><span class="av">${esc(m.avatar || '🙂')}</span>${esc(m.name)}${plate(m.xp)}${m.host ? '<span class="tag">房主</span>' : ''}${m.online ? '' : '<span class="muted">離線</span>'}</div>`));
     for (let i = v.members.length; i < v.humanMax; i++) seats.push(`<div class="seat">等待加入…</div>`);
     for (let i = 0; i < v.aiCount; i++) seats.push(`<div class="seat filled" style="background:#fff8e6"><span class="av">🤖</span>電腦<span class="muted">${E.AI_LEVELS[v.aiLevel].label}</span></div>`);
     $('#seat-list').innerHTML = seats.join('');
@@ -4163,11 +4790,14 @@ const Room = {
       $$('button', seg).forEach((b) => { b.classList.toggle('on', (b.dataset.v || +b.textContent) === val); b.disabled = !isHost; });
     });
     $('#host-only').textContent = isHost ? '' : '（只有房主可調整）';
-    const race = v.mode === 'race';
-    $$('#room-settings .r-race').forEach((x) => x.classList.toggle('hidden', !race)); $$('#room-settings .r-rush').forEach((x) => x.classList.toggle('hidden', race));
+    const race = v.mode === 'race', edu = v.mode === 'edu';
+    $$('#room-settings .r-race').forEach((x) => x.classList.toggle('hidden', !race)); $$('#room-settings .r-rush').forEach((x) => x.classList.toggle('hidden', race || edu)); $$('#room-settings .r-edu').forEach((x) => x.classList.toggle('hidden', !edu));
+    $$('[data-rs="eduLevel"] button').forEach((b) => b.classList.toggle('on', +b.dataset.v === (v.eduLevel || 0)));
+    if (isHost) eduLockButtons('[data-rs="eduLevel"]', true); else $$('[data-rs="eduLevel"] button').forEach((b) => { b.textContent = EDU[+b.dataset.v].name; b.disabled = true; });
     $('#room-game').value = v.game || 'mix'; $('#room-game').disabled = !isHost;
     $('#btn-start').classList.toggle('hidden', !isHost);
     $('#room-wait').textContent = isHost ? `共 ${v.members.length + v.aiCount} 位參賽者，準備好就開擂！` : '等待房主開始比賽…';
+    Comm.update(); Voice.decorate();
   },
 };
 $$('[data-rs]').forEach((seg) => seg.onclick = (e) => {
@@ -4263,6 +4893,7 @@ const Rush = {
     const n = this.players.length;
     const el = $('#rush-players'); el.style.gridTemplateColumns = `repeat(${n <= 4 ? n : Math.ceil(n / 2)},1fr)`;
     el.innerHTML = this.players.map((p) => `<div class="pcard ${p.id === this.myId ? 'me' : ''}" data-id="${esc(p.id)}"><span class="av">${esc(p.avatar)}</span><span class="nm">${esc(p.name)}</span>${plate(p.xp)}<span class="sc">0</span><span class="ct">搶到 0 題</span></div>`).join('');
+    Voice.decorate();
   },
   applyScores(scores) {
     scores.forEach((s) => { const c = $(`.pcard[data-id="${CSS.escape(s.id)}"] .sc`); if (c) c.textContent = s.score; const t = $(`.pcard[data-id="${CSS.escape(s.id)}"] .ct`); if (t) t.textContent = `搶到 ${s.correct} 題`; const p = this.players.find((x) => x.id === s.id); if (p) p.score = s.score; });
@@ -4345,13 +4976,14 @@ const Rush = {
     $('#end-again').onclick = () => { closeModal(); if (this.mode === 'online') show('s-room'); else this.startLocal(); };
   },
 };
-$('#btn-local').onclick = () => (segVal('soloMode') === 'race' ? Race.startLocal() : Rush.startLocal());
+$('#btn-local').onclick = () => { const md = segVal('soloMode'); if (md === 'edu') { const lv = +(segVal('soloEdu') || 0); if (lv > eduUnlocked()) return toast('這個學歷還沒解鎖'); Edu.begin(lv, segVal('soloAi'), segVal('soloLv'), false); } else if (md === 'race') Race.startLocal(); else Rush.startLocal(); };
 (function () {
   const opts = '<option value="mix">🎲 綜合（每關隨機）</option>' + Object.entries(E.GAMES).filter(([k]) => k !== 'rank').map(([k, g]) => `<option value="${k}">${g.name}</option>`).join('');
   ['#solo-game', '#room-game'].forEach((id) => { $(id).innerHTML = opts; });
-  const sync = (seg) => { const card = $(`[data-seg="${seg}"]`).closest('.menu-card'); const race = segVal(seg) === 'race';
-    $$('.m-race', card).forEach((x) => x.classList.toggle('hidden', !race)); $$('.m-rush', card).forEach((x) => x.classList.toggle('hidden', race));
-    const btn = $('#btn-local', card); if (btn) btn.textContent = race ? '開始競速賽' : '開始擂台賽'; };
+  const sync = (seg) => { const card = $(`[data-seg="${seg}"]`).closest('.menu-card'); const md = segVal(seg); const race = md === 'race', edu = md === 'edu';
+    $$('.m-race', card).forEach((x) => x.classList.toggle('hidden', !race)); $$('.m-rush', card).forEach((x) => x.classList.toggle('hidden', race || edu)); $$('.m-edu', card).forEach((x) => x.classList.toggle('hidden', !edu));
+    if (edu) eduLockButtons('[data-seg="soloEdu"]');
+    const btn = $('#btn-local', card); if (btn) btn.textContent = race ? '開始競速賽' : edu ? '開始挑戰賽' : '開始擂台賽'; };
   ['soloMode'].forEach((seg) => $(`[data-seg="${seg}"]`).addEventListener('click', () => setTimeout(() => sync(seg), 0)));
   $('#room-game').onchange = () => { if (sock) sock.emit('room_settings', { game: $('#room-game').value }); };
   $$('.game-sel').forEach((sel) => sel.addEventListener('change', () => { if (sel.id !== 'room-game') { const k = sel.value; if (!localGet('seen_' + k, false)) { localSet('seen_' + k, true); showHelp(k); } } }));
@@ -4371,16 +5003,20 @@ document.addEventListener('click', (e) => {
   else if (to === 'battle') { $('#online-hint').textContent = ST.guest ? '訪客只能與電腦對戰；連線對戰請先登入帳號' : ''; show('s-battle'); }
   else if (to === 'board') { renderBoardTabs(); show('s-board'); loadBoard(); }
   else if (to === 'credits') show('s-credits');
+  else if (to === 'edu') { renderEduMenu(); show('s-edumenu'); if (!localGet('seen_edu', false)) { localSet('seen_edu', true); showHelp('edu'); } }
   else if (to === 'rankgame') { Solo.home = 's-lobby'; Solo.start('rank'); }
   else if (to === 'lobby') show('s-lobby');
 });
 $('#btn-settings').onclick = settingsDialog;
+// 整個畫面框不應該被捲動（某些瀏覽器自動捲動時會把底部的聊天視窗露出來）
+$('#app').addEventListener('scroll', () => { const a = $('#app'); if (a.scrollTop && !(document.activeElement && document.activeElement.id === 'cp-text')) a.scrollTop = 0; });
+Comm.mount();
 $('#me-pill').onclick = () => { SFX.tap(); titleDialog(); };
 $('#btn-music').onclick = () => BGM.set(!BGM.on);
 
 /* ───────── 啟動 ───────── */
 /* ───────── 手機返回鍵、關閉網頁的確認 ───────── */
-function inPlay() { return (Solo.game && !Solo.over && current === 's-' + Solo.game) || Race.active || (current === 's-rush' && (Rush.match || Rush.mode === 'online')); }
+function inPlay() { return (Solo.game && !Solo.over && current === 's-' + Solo.game) || Race.active || (current === 's-rush' && (Rush.match || Rush.mode === 'online')) || (current === 's-edu' && (Edu.match || Edu.mode === 'online')); }
 window.addEventListener('beforeunload', (e) => { Cloud.flush(); XP.flush(); if (inPlay()) { e.preventDefault(); e.returnValue = ''; } });
 try { history.pushState({ app: 1 }, ''); } catch (e) {}
 window.addEventListener('popstate', () => {
